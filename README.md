@@ -1,17 +1,17 @@
 # envirohome_simulator
 Simulator module for Envirohome
 
-###Requirements:
+### Requirements:
 Docker must be installed
 
 __[Install docker](https://docs.docker.com/install/)__ - navigate to your Operating System and follow instructions
 
-###Build instructions:
+### Build instructions:
 
 1. From project root directory run - 
 `$ docker-compose build`
 
-###Run instructions:
+### Run instructions:
 
 1. From project root directory run - 
 `$ docker-compose up -d`
@@ -19,7 +19,7 @@ __[Install docker](https://docs.docker.com/install/)__ - navigate to your Operat
 __[http://localhost:5000/](http://localhost:5000/)__ or __[http://127.0.0.1:5000/](http://127.0.0.1:5000/)__
 
 
-###Troubleshooting:
+### Troubleshooting:
 
 First steps:
 1. Remove container and volumes - 
@@ -28,11 +28,13 @@ First steps:
 `$ docker-compose build`
 
 
-###Useful commands:
-call create_db CLI command inside manage.py file:
+### Useful commands:
+#### Call CLI commands
+run create_db inside services/web/manage.py:
+
 `$ docker-compose exec web python manage.py create_db`
 
-Some postgres stuff:
+#### Some postgres stuff:
 
 	// shell command to open connection to db
 	$ docker-compose exec db psql --username=envirohome_db --dbname=envirohome_db_dev
@@ -40,7 +42,7 @@ Some postgres stuff:
 	psql (12.0)
 	Type "help" for help.
 
-	//list databases
+	// List databases
 	envirohome_db_dev=# \l
 	                                        List of databases
 	      Name       |    Owner    | Encoding |  Collate   |   Ctype    |      Access privileges
