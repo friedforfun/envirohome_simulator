@@ -2,11 +2,34 @@ version: '3.7'
 
 services:
   web:
+    # Build directory relative to compose file
     build: ./services/web
+
+    # Python command to run service
     command: python manage.py run -h 0.0.0.0
     volumes:
+      # Bind web directory to ust/src/app/ inside container
       - ./services/web/:/usr/src/app/
     ports:
+      # Port binding
       - 5000:5000
     env_file:
+      # File to configure environment variables 
       - ./.env.dev
+ # Postgres DB image
+    depends_on:
+      - db
+  db:
+    # Docker image pulled for container
+    image: postgres:12.0-alpine
+    volumes:
+      # Store db data at this location inside container
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      # User, Password, and DB name
+      - POSTGRES_USER=envirohome_db
+      - POSTGRES_PASSWORD=envirohome_db
+      - POSTGRES_DB=envirohome_db_dev
+
+volumes:
+  postgres_data:
