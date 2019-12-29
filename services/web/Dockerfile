@@ -16,6 +16,13 @@ RUN apk update \
 RUN pip install --upgrade pip
 COPY ./requirements.txt /usr/src/app/requirements.txt
 RUN pip install -r requirements.txt
+# COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+
+RUN /bin/sh
 
 # copy project
 COPY . /usr/src/app/
+RUN apk add dos2unix && dos2unix /usr/src/app/entrypoint.sh
+
+# run entrypoint.sh
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
