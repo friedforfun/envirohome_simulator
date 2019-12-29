@@ -56,7 +56,7 @@ Example of running custom CLI command create_db (look inside services/web/manage
 	psql (12.0)
 	Type "help" for help.
 
-	//list databases
+	// List databases
 	envirohome_db_dev=# \l
 	                                        List of databases
 	      Name       |    Owner    | Encoding |  Collate   |   Ctype    |      Access privileges
