@@ -1,12 +1,19 @@
-node {
-	def commit_id
-	stage('Preparation'){
-		checkout scm
-		sh "git rev-parse --short HEAD > .git/commit-id"
-		commit_id = readfile('.git/commit-id').trim()
-	}
-	stage('build'){
-		sh 'docker-compose -f docker-compose.yml build'
-		sh 'docker-compose -f docker-compose.yml up --abort-on-container-exit'
-	}
+node{
+    stage('Preparation'){
+        git branch: 'dev',
+        credentialsId: 'gitid',
+        url:"https://github.com/friedforfun/envirohome_simulator.git"
+        echo "scm checked out"
+
+    }
+    stage('Build'){
+        sh "docker-compose build"
+        sh "docker-compose up --force-recreate --abort-on-container-exit"
+    }
+    post {
+      always {
+         sh "docker-compose down || true"
+         sh "rm -r /usr/src/app/."
+      }
+   }   
 }

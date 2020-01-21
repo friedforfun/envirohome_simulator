@@ -25,4 +25,5 @@ COPY . /usr/src/app/
 RUN apk add dos2unix && dos2unix /usr/src/app/entrypoint.sh
 
 # run entrypoint.sh
+RUN chmod 755 entrypoint.sh
 ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
