@@ -1,4 +1,10 @@
 node{
+    parameters {
+        choice(
+            choices: ['pass' , 'fail'],
+            description: '',
+            name: 'PASS_FAIL')
+    }
     stage('Preparation'){
         git branch: 'dev',
         credentialsId: 'gitid',
@@ -8,7 +14,19 @@ node{
     }
     stage('Build'){
         sh "docker-compose build"
-        sh "docker-compose up --force-recreate --abort-on-container-exit"
+        sh "docker-compose up"
+    }
+    stage('Test'){
+        echo "run tests here"
+        when{
+            expression{
+                // pass in test pass/fail to test CI, parse xml ect in real file
+                params.PASS_FAIL == 'pass'
+            }
+        }
+        steps{
+            echo "tests passed, git push to master here"
+        }
     }
     post {
       always {
