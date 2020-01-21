@@ -1,0 +1,131 @@
+SCOPE
+-----
+
+This document talks about an inital scope for a preliminary model of our system, ready for 06/02/2020.
+
+1 - Control and Monitor power usage and state of in home IoT
+2 - Basic user management page (mock)
+3 - Simple Automation
+4 - Recommender
+5 - Social Media? (tweet avg daily household usage for example)
+
+
+Control and Monitor power usage and state of in home IoT
+--------------------------------------------------------
+
+# Devices:
+- Thermostat
+- Boiler
+- Lights
+- Smart TV
+- Plugs?
+
+# Functions:
+
+- General
+-- provide usage statistics
+-- provide usage recommendatations
+-- show faults in devices
+
+- Heating
+-- change thermostat temperature
+-- turn heating off and on
+
+- TV
+-- change channel
+-- volume
+-- inputs
+-- on/off
+-- colour saturation and brightness etc
+
+- Lights
+-- on off
+-- intensity
+-- colour (a la philips hue lights)
+
+- boiler
+-- on/off
+-- water temperature
+
+- Plugs
+-- on/off
+
+
+# Information:
+- Device identifiers (device ID, device name, device type)
+- Device state (on/off, channel (TV), temperature (heating/boiler), light colour/intensity (lights)
+- Usage data (per device) (total used today so far, history of daily totals, usage on an hourly basis (detailed diagrams))
+- Automation events (how the fuck?)
+
+Table 1: list of devices
+- deviceID
+- device name
+- device type ID (FK)
+- fault?
+
+Table 2: list of device types
+- device type ID
+- device type (txt)
+
+Table 3: TV state
+- device ID
+- on?
+- channel
+- input (ENUM HDMI1/2, ANT, DVD, VIDEO)
+- volume (0-100%)
+- colour sat
+- brightness
+
+Table 4: Thermostat state
+- device ID
+- on?
+- temp
+
+Table 5: Boiler state
+- device ID
+- on?
+- temp
+
+Table 6: Plug
+- deviceID
+- on?
+
+Table 7: Lights
+- deviceID
+- on/off
+- intensity
+- colour (RGB)
+
+Table 8: Usage Statistics
+- deviceID
+- usage right now (kw)
+- usage this hour (kwh)
+- usage every hour previous (kwh) (NOTE enables detailed power breakdown, may be unscalable)
+
+# Services:
+
+What services should our controller provide our view?
+
+- JSON data about usage statistics of a device
+-- ask for an interval (hourly, daily) and a range (between 9am and 5pm) (every hour between 12am and 8pm yesterday)
+
+- JSON data for device information
+-- fault status
+-- on/off status
+-- device specific params
+
+- Recommendations
+-- based on the current state information
+-- grabbed by view polling the controller for new update suggestions
+
+- User Settings
+-- only for mock, stored as variables in the controller rather than database
+
+- Social Media
+-- based on the current state information
+-- grabbed by view polling the controller for new social media updates
+-- if you've used less power than average, offer to tweet "look at me, i've used x% less power than the national average!"
+
+- Automation
+-- start off with time based state changes for simples
+-- need good plan, will probably become more obvious as time goes on
