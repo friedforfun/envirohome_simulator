@@ -2,7 +2,6 @@
 # services/users/manage.py
 
 from flask.cli import FlaskGroup
-
 from project import app, db, User
 
 
@@ -17,9 +16,7 @@ def create_db():
 
 @cli.command("seed_db")
 def seed_db():
-    #db.session.add(User(username="admin"))
-    #db.session.add(User(password="password"))
-    db.session.add(User(email="nobody@nowhere.address"))
+    db.session.add(User(username="admin", email="nobody@nowhere.address", password_hash="totally a real hash"))
     db.session.commit()
 
 # flaskgroup instance to exend the normal cli with flask commands
