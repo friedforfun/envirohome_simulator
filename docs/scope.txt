@@ -59,6 +59,7 @@ Control and Monitor power usage and state of in home IoT
 
 Table 1: list of devices
 - deviceID
+- mac addr
 - device name
 - device type ID (FK)
 - fault?
@@ -102,12 +103,17 @@ Table 8: Usage Statistics
 - usage this hour (kwh)
 - usage every hour previous (kwh) (NOTE enables detailed power breakdown, may be unscalable)
 
+ROOM TABLE: HOUSE HAS ROOMS, ROOMS HAVE DEVICES
+
+
 # Services:
 
 What services should our controller provide our view?
 
 - JSON data about usage statistics of a device
 -- ask for an interval (hourly, daily) and a range (between 9am and 5pm) (every hour between 12am and 8pm yesterday)
+
+- adding devices??
 
 - JSON data for device information
 -- fault status
