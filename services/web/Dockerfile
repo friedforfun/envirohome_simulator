@@ -22,8 +22,9 @@ RUN /bin/sh
 
 # copy project
 COPY . /usr/src/app/
-RUN apk add dos2unix && dos2unix /usr/src/app/entrypoint.sh
+COPY ./entrypoint.sh /
+RUN apk add dos2unix && dos2unix /entrypoint.sh
 
 # run entrypoint.sh
 RUN chmod 755 entrypoint.sh
-ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
