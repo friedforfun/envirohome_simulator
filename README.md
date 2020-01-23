@@ -2,9 +2,10 @@
 Simulator module for Envirohome
 
 ### Requirements:
-Docker must be installed
+Docker and docker-compose must be installed
 
 __[Install docker](https://docs.docker.com/install/)__ - navigate to your Operating System and follow instructions
+__[Install docker-compose](https://docs.docker.com/compose/install/)__ - Same as above, find OS and follow instructions
 
 ### Build instructions:
 
@@ -18,6 +19,19 @@ __[Install docker](https://docs.docker.com/install/)__ - navigate to your Operat
 2. In browser navigate to:
 __[http://localhost:5000/](http://localhost:5000/)__ or __[http://127.0.0.1:5000/](http://127.0.0.1:5000/)__
 
+### API routes:
+
+__/login__ - Method: `[POST]`
+parses JSON:- username, password
+
+__/register__ - Method: `[POST]`
+parses JSON:- username, email, password
+
+__/api/floorplan__ - Method `[GET]`
+returns floorplan.png image
+
+__/api/devices__ - Method `[GET]`
+returns JSON:- devicename, deviceroom, devicestatus
 
 ### Troubleshooting:
 
@@ -47,6 +61,8 @@ View log:
 #### Custom CLI command:
 Example of running custom CLI command create_db (look inside services/web/manage.py):
 `$ docker-compose exec web python manage.py create_db`
+Run seed_db to populate db (both create_db and seed_db are managed by entrypoint.sh)
+`$ docker-compose exec web python manage.py seed_db`
 
 #### Some postgres stuff:
 
@@ -80,6 +96,13 @@ Example of running custom CLI command create_db (look inside services/web/manage
 	--------+------+-------+-------------
 	 public | user | table | envirohome_db
 	(1 row)
+	
+	// Run basic sql here (for testing only)
+	envirohome_db_dev=# select * from users;
+	 id | username |         email          |    password_hash    | active
+	----+----------+------------------------+---------------------+--------
+	  1 | admin    | nobody@nowhere.address | totally a real hash | t
+	(1 row)
 
-	// Quit
+	// Quit database
 	envirohome_db_dev=# \q
