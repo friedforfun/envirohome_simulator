@@ -6,12 +6,14 @@ from project import app
 def hello_world():
     return jsonify(hello="world")
 
-@app.route("/login", methods = ["POST"])
+
+@app.route("/login", methods=["POST"])
 def login():
     return jsonify(user="password")
 
+
 # Register new user method
-@app.route("/register", methods = ["POST"])
+@app.route("/register", methods=["POST"])
 def new_user():
     # Username and password are generated from a JSON via POST
     # username = request.json.get('username')
@@ -30,15 +32,18 @@ def new_user():
     # user.hash_password(password)
     # db.session.add(user)
     # db.session.commit()
-    # return jsonify({ 'username': user.username }), 201, {'Location': url_for('get_user', id = user.id, _external = True)}
+    # return jsonify({ 'username': user.username }), 201, {'Location': url_for(
+    # 'get_user', id = user.id, _external = True)}
     return jsonify(test="something")
 
-@app.route("/api/devices", methods = ["GET"])
-#@auth.login_required
+
+@app.route("/api/devices", methods=["GET"])
+# @auth.login_required
 def get_devices():
     return jsonify(json="device list")
 
-@app.route("/api/floorplan", methods = ["GET"])
-#@auth.login_required
+
+@app.route("/api/floorplan", methods=["GET"])
+# @auth.login_required
 def get_floorplan():
     return jsonify(image="floorplan.png")
