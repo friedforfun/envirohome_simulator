@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from project import db
+from project import app
 
 
 # Create user table in database, with id, email, and active columns
