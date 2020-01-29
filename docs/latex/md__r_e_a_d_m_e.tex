@@ -1,7 +1,7 @@
 Simulator module for Envirohome\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysubsection{Requirements\+:}\label{md__r_e_a_d_m_e_autotoc_md1}
-Docker must be installed
+Docker and docker-\/compose must be installed
 
-{\bfseries{\href{https://docs.docker.com/install/}{\texttt{ Install docker}}}} -\/ navigate to your Operating System and follow instructions\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysubsection{Build instructions\+:}\label{md__r_e_a_d_m_e_autotoc_md2}
+{\bfseries{\href{https://docs.docker.com/install/}{\texttt{ Install docker}}}} -\/ navigate to your Operating System and follow instructions {\bfseries{\href{https://docs.docker.com/compose/install/}{\texttt{ Install docker-\/compose}}}} -\/ Same as above, find OS and follow instructions\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysubsection{Build instructions\+:}\label{md__r_e_a_d_m_e_autotoc_md2}
 
 \begin{DoxyEnumerate}
 \item From project root directory run -\/ {\ttfamily \$ docker-\/compose build}
@@ -10,23 +10,30 @@ Docker must be installed
 \begin{DoxyEnumerate}
 \item From project root directory run -\/ {\ttfamily \$ docker-\/compose up -\/d}
 \item In browser navigate to\+: {\bfseries{\href{http://localhost:5000/}{\texttt{ http\+://localhost\+:5000/}}}} or {\bfseries{\href{http://127.0.0.1:5000/}{\texttt{ http\+://127.\+0.\+0.\+1\+:5000/}}}}
-\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysubsection{Troubleshooting\+:}\label{md__r_e_a_d_m_e_autotoc_md4}
-\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysubsubsection{First steps\+:}\label{md__r_e_a_d_m_e_autotoc_md5}
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysubsection{A\+P\+I routes\+:}\label{md__r_e_a_d_m_e_autotoc_md4}
+\+\_\+\+\_\+/login\+\_\+\+\_\+ -\/ Method\+: {\ttfamily \mbox{[}P\+O\+ST\mbox{]}} parses J\+S\+ON\+:-\/ username, password
+
+\+\_\+\+\_\+/register\+\_\+\+\_\+ -\/ Method\+: {\ttfamily \mbox{[}P\+O\+ST\mbox{]}} parses J\+S\+ON\+:-\/ username, email, password
+
+\+\_\+\+\_\+/api/floorplan\+\_\+\+\_\+ -\/ Method {\ttfamily \mbox{[}G\+ET\mbox{]}} returns floorplan.\+png image
+
+\+\_\+\+\_\+/api/devices\+\_\+\+\_\+ -\/ Method {\ttfamily \mbox{[}G\+ET\mbox{]}} returns J\+S\+ON\+:-\/ devicename, deviceroom, devicestatus\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysubsection{Troubleshooting\+:}\label{md__r_e_a_d_m_e_autotoc_md5}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysubsubsection{First steps\+:}\label{md__r_e_a_d_m_e_autotoc_md6}
 
 \begin{DoxyEnumerate}
 \item Make sure container is up -\/ {\ttfamily \$ docker ps}
 \item Remove container and volumes -\/ {\ttfamily \$ docker-\/compose down -\/v}
 \item Rebuild container\+: from project root directory run -\/ {\ttfamily \$ docker-\/compose build}
 \item Check line endings on any shell script files (files ending \char`\"{}.\+sh\char`\"{}) they must be unix line endings!
-\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysubsubsection{Database problems\+:}\label{md__r_e_a_d_m_e_autotoc_md6}
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysubsubsection{Database problems\+:}\label{md__r_e_a_d_m_e_autotoc_md7}
 Table not created\+:
 
-Check services/web/entrypoint.\+sh file permissions, should be executable\+: {\ttfamily \$ chmod +x services/web/entrypoint.\+sh}\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysubsubsection{Gather docker logs\+:}\label{md__r_e_a_d_m_e_autotoc_md7}
+Check services/web/entrypoint.\+sh file permissions, should be executable\+: {\ttfamily \$ chmod +x services/web/entrypoint.\+sh}\hypertarget{md__r_e_a_d_m_e_autotoc_md8}{}\doxysubsubsection{Gather docker logs\+:}\label{md__r_e_a_d_m_e_autotoc_md8}
 If unable to identify problem view the docker compose log, or redirect it to a file and share it with the group.
 
-View log\+: {\ttfamily \$ docker-\/compose logs -\/f}\hypertarget{md__r_e_a_d_m_e_autotoc_md8}{}\doxysubsection{Useful commands\+:}\label{md__r_e_a_d_m_e_autotoc_md8}
-\hypertarget{md__r_e_a_d_m_e_autotoc_md9}{}\doxysubsubsection{Custom C\+L\+I command\+:}\label{md__r_e_a_d_m_e_autotoc_md9}
-Example of running custom C\+LI command create\+\_\+db (look inside services/web/manage.\+py)\+: {\ttfamily \$ docker-\/compose exec web python manage.\+py create\+\_\+db}\hypertarget{md__r_e_a_d_m_e_autotoc_md10}{}\doxysubsubsection{Some postgres stuff\+:}\label{md__r_e_a_d_m_e_autotoc_md10}
+View log\+: {\ttfamily \$ docker-\/compose logs -\/f}\hypertarget{md__r_e_a_d_m_e_autotoc_md9}{}\doxysubsection{Useful commands\+:}\label{md__r_e_a_d_m_e_autotoc_md9}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md10}{}\doxysubsubsection{Custom C\+L\+I command\+:}\label{md__r_e_a_d_m_e_autotoc_md10}
+Example of running custom C\+LI command create\+\_\+db (look inside \mbox{\hyperlink{manage_8py}{services/web/manage.\+py}})\+: {\ttfamily \$ docker-\/compose exec web python \mbox{\hyperlink{manage_8py}{manage.\+py}} create\+\_\+db} Run seed\+\_\+db to populate db (both create\+\_\+db and seed\+\_\+db are managed by entrypoint.\+sh) {\ttfamily \$ docker-\/compose exec web python \mbox{\hyperlink{manage_8py}{manage.\+py}} seed\+\_\+db}\hypertarget{md__r_e_a_d_m_e_autotoc_md11}{}\doxysubsubsection{Some postgres stuff\+:}\label{md__r_e_a_d_m_e_autotoc_md11}
 \begin{DoxyVerb}// shell command to open connection to db
 $ docker-compose exec db psql --username=envirohome_db --dbname=envirohome_db_dev
 
@@ -58,7 +65,14 @@ envirohome_db_dev=# \dt
  public | user | table | envirohome_db
 (1 row)
 
-// Quit
+// Run basic sql here (for testing only)
+envirohome_db_dev=# select * from users;
+ id | username |         email          |    password_hash    | active
+----+----------+------------------------+---------------------+--------
+  1 | admin    | nobody@nowhere.address | totally a real hash | t
+(1 row)
+
+// Quit database
 envirohome_db_dev=# \q
 \end{DoxyVerb}
  
