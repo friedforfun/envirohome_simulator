@@ -1,23 +1,23 @@
-# envirohome_simulator
-Simulator module for Envirohome
+# envirohome_simulator												{#mainpage}
+This is the simulator module for Envirohome. Envirohome is a smart home system to allow you to control all of your smart devices in a
+easy to use and attractive interface. 
 
-### Requirements:
-Docker and docker-compose must be installed
-
-__[Install docker](https://docs.docker.com/install/)__ - navigate to your Operating System and follow instructions
-__[Install docker-compose](https://docs.docker.com/compose/install/)__ - Same as above, find OS and follow instructions
-
-### Build instructions:
-
+### Usage
+To build this project:
 1. From project root directory run - 
 `$ docker-compose build`
 
-### Run instructions:
-
+To run this project:
 1. From project root directory run - 
 `$ docker-compose up -d`
 2. In browser navigate to:
 __[http://localhost:5000/](http://localhost:5000/)__ or __[http://127.0.0.1:5000/](http://127.0.0.1:5000/)__
+
+### Requirements:
+Docker and docker-compose must be installed
+
+1. __[Install docker](https://docs.docker.com/install/)__ - navigate to your Operating System and follow instructions
+2. __[Install docker-compose](https://docs.docker.com/compose/install/)__ - Same as above, find OS and follow instructions
 
 ### API routes:
 
@@ -32,30 +32,6 @@ returns floorplan.png image
 
 __/api/devices__ - Method `[GET]`
 returns JSON:- devicename, deviceroom, devicestatus
-
-### Troubleshooting:
-
-#### First steps:
-1. Make sure container is up - 
-`$ docker ps`
-2. Remove container and volumes - 
-`$ docker-compose down -v`
-3. Rebuild container: from project root directory run - 
-`$ docker-compose build`
-4. Check line endings on any shell script files (files ending ".sh") they must be unix line endings!
-
-#### Database problems: 
-Table not created:
-
-Check services/web/entrypoint.sh file permissions, should be executable:
-`$ chmod +x services/web/entrypoint.sh`
-
-#### Gather docker logs:
-If unable to identify problem view the docker compose log, or redirect it to a file and share it with the group.
-
-View log: 
-`$ docker-compose logs -f`
-
 
 ### Useful commands:
 #### Custom CLI command:
@@ -106,3 +82,80 @@ Run seed_db to populate db (both create_db and seed_db are managed by entrypoint
 
 	// Quit database
 	envirohome_db_dev=# \q
+
+### Contributing
+#### Comments
+	To add comments so that they can be read by the documentation tool Doxygen, use the following format (Python):
+
+
+				## @package pyexample
+				#  Documentation for this module.
+				#
+				#  More details.
+ 
+				## Documentation for a function.
+				#
+				#  More details.
+				def func():
+					pass
+				
+				## Documentation for a class.
+				#
+				#  More details.
+				class PyClass:
+				
+					## The constructor.
+					def __init__(self):
+						self._memVar = 0;
+				
+					## Documentation for a method.
+					#  @param self The object pointer.
+					def PyMethod(self):
+						pass
+					
+					## A class variable.
+					classVar = 0;
+				
+					## @var _memVar
+					#  a member variable
+
+Special commands can be used within comment blocks to automatically document certain areas of code. Use a backslash (\) for these special commands. 
+
+For example:
+
+				## @package init.py
+				#
+				# \brief     briefly describe the file / method / class, etc
+				# \details   add further details here
+				# \author    Tannick Rose
+				# \version   version number
+				# \date      2020
+				# \bug       
+				# \copyright MIT License.
+				#
+
+
+To contribute to this project, clone the repo locally and commit  your  code to a separate branch before opening a pull request.
+
+### Frequently Asked Questions and Troubleshooting
+	See our __[troubleshooting guide](Troubleshooting.md)__ to find answers to some common questions about the project, as well as some ideas to troubleshoot any problems. 
+
+### Support
+	Major versions of this project are supported for six months from the date of release. The table below outlines the end of support dates for all 
+	major versions, and the last minor version for each version. 
+
+	Major Version	|	Last Minor Version	|	End of Support Date
+	---------------	|	-------------------	|	-------------------
+	1				|	1.0					|	N/A
+
+	If you are opening an issue for this project, please mention the version which the issue relates to.
+
+### License
+	Developed under the MIT License.
+
+	Copyright (c) 2020 Tanich Rose
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
