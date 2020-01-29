@@ -1,3 +1,14 @@
+## @package routes.py
+#
+# \brief     
+# \details   
+# \author    Tannick Rose
+# \version   1.0
+# \date      2020
+# \bug       
+# \copyright MIT License.
+#
+
 # from flask import Flask, jsonify
 from project import app
 from flask import jsonify

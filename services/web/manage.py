@@ -1,3 +1,14 @@
+## @package manage.py
+#
+# \brief     
+# \details   
+# \author    Tannick Rose
+# \version   1.0
+# \date      2020
+# \bug       
+# \copyright MIT License.
+#
+
 #!/usr/bin/env python3
 # services/users/manage.py
 from flask.cli import FlaskGroup
