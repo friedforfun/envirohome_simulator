@@ -1,5 +1,6 @@
-#from flask import Flask, jsonify
+# from flask import Flask, jsonify
 from project import app
+from flask import jsonify
 
 # Configure basic route for testing
 @app.route("/")

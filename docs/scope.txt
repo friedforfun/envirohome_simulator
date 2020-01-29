@@ -59,8 +59,9 @@ Control and Monitor power usage and state of in home IoT
 
 Table 1: list of devices
 - deviceID
-- mac addr
+- mac addr (?)
 - device name
+- rated power
 - device type ID (FK)
 - fault?
 
