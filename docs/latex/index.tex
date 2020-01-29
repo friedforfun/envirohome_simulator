@@ -1,4 +1,4 @@
-This is the simulator module for Envirohome\hypertarget{index_autotoc_md0}{}\doxysubsection{Usage}\label{index_autotoc_md0}
+This is the simulator module for Envirohome. Envirohome is a smart home system to allow you to control all of your smart devices in a easy to use and attractive interface.\hypertarget{index_autotoc_md0}{}\doxysubsection{Usage}\label{index_autotoc_md0}
 To build this project\+:
 \begin{DoxyEnumerate}
 \item From project root directory run -\/ {\ttfamily \$ docker-\/compose build}
@@ -11,7 +11,11 @@ To run this project\+:
 \end{DoxyEnumerate}\hypertarget{index_autotoc_md1}{}\doxysubsection{Requirements\+:}\label{index_autotoc_md1}
 Docker and docker-\/compose must be installed
 
-{\bfseries{\href{https://docs.docker.com/install/}{\texttt{ Install docker}}}} -\/ navigate to your Operating System and follow instructions {\bfseries{\href{https://docs.docker.com/compose/install/}{\texttt{ Install docker-\/compose}}}} -\/ Same as above, find OS and follow instructions\hypertarget{index_autotoc_md2}{}\doxysubsection{A\+P\+I routes\+:}\label{index_autotoc_md2}
+
+\begin{DoxyEnumerate}
+\item {\bfseries{\href{https://docs.docker.com/install/}{\texttt{ Install docker}}}} -\/ navigate to your Operating System and follow instructions
+\item {\bfseries{\href{https://docs.docker.com/compose/install/}{\texttt{ Install docker-\/compose}}}} -\/ Same as above, find OS and follow instructions
+\end{DoxyEnumerate}\hypertarget{index_autotoc_md2}{}\doxysubsection{A\+P\+I routes\+:}\label{index_autotoc_md2}
 \+\_\+\+\_\+/login\+\_\+\+\_\+ -\/ Method\+: {\ttfamily \mbox{[}P\+O\+ST\mbox{]}} parses J\+S\+ON\+:-\/ username, password
 
 \+\_\+\+\_\+/register\+\_\+\+\_\+ -\/ Method\+: {\ttfamily \mbox{[}P\+O\+ST\mbox{]}} parses J\+S\+ON\+:-\/ username, email, password
@@ -20,7 +24,7 @@ Docker and docker-\/compose must be installed
 
 \+\_\+\+\_\+/api/devices\+\_\+\+\_\+ -\/ Method {\ttfamily \mbox{[}G\+ET\mbox{]}} returns J\+S\+ON\+:-\/ devicename, deviceroom, devicestatus\hypertarget{index_autotoc_md3}{}\doxysubsection{Useful commands\+:}\label{index_autotoc_md3}
 \hypertarget{index_autotoc_md4}{}\doxysubsubsection{Custom C\+L\+I command\+:}\label{index_autotoc_md4}
-Example of running custom C\+LI command create\+\_\+db (look inside services/web/manage.\+py)\+: {\ttfamily \$ docker-\/compose exec web python manage.\+py create\+\_\+db} Run seed\+\_\+db to populate db (both create\+\_\+db and seed\+\_\+db are managed by entrypoint.\+sh) {\ttfamily \$ docker-\/compose exec web python manage.\+py seed\+\_\+db}\hypertarget{index_autotoc_md5}{}\doxysubsubsection{Some postgres stuff\+:}\label{index_autotoc_md5}
+Example of running custom C\+LI command create\+\_\+db (look inside services/web/manage.\+py)\+: {\ttfamily \$ docker-\/compose exec web python \mbox{\hyperlink{namespacemanage_1_1py}{manage.\+py}} create\+\_\+db} Run seed\+\_\+db to populate db (both create\+\_\+db and seed\+\_\+db are managed by entrypoint.\+sh) {\ttfamily \$ docker-\/compose exec web python \mbox{\hyperlink{namespacemanage_1_1py}{manage.\+py}} seed\+\_\+db}\hypertarget{index_autotoc_md5}{}\doxysubsubsection{Some postgres stuff\+:}\label{index_autotoc_md5}
 \begin{DoxyVerb}// shell command to open connection to db
 $ docker-compose exec db psql --username=envirohome_db --dbname=envirohome_db_dev
 
@@ -62,8 +66,60 @@ envirohome_db_dev=# select * from users;
 // Quit database
 envirohome_db_dev=# \q
 \end{DoxyVerb}
-\hypertarget{index_autotoc_md6}{}\doxysubsection{Frequently Asked Questions and Troubleshooting}\label{index_autotoc_md6}
-See our {\bfseries{\mbox{\hyperlink{md__troubleshooting}{troubleshooting guide}}}} to find answers to some common questions about the project, as well as some ideas to troubleshoot any problems.\hypertarget{index_autotoc_md7}{}\doxysubsection{Support}\label{index_autotoc_md7}
+\hypertarget{index_autotoc_md6}{}\doxysubsection{Contributing}\label{index_autotoc_md6}
+\hypertarget{index_autotoc_md7}{}\doxysubsubsection{Comments}\label{index_autotoc_md7}
+To add comments so that they can be read by the documentation tool Doxygen, use the following format (Python)\+:
+
+\begin{DoxyVerb}            ## @package pyexample
+            #  Documentation for this module.
+            #
+            #  More details.
+
+            ## Documentation for a function.
+            #
+            #  More details.
+            def func():
+                pass
+
+            ## Documentation for a class.
+            #
+            #  More details.
+            class PyClass:
+
+                ## The constructor.
+                def __init__(self):
+                    self._memVar = 0;
+
+                ## Documentation for a method.
+                #  @param self The object pointer.
+                def PyMethod(self):
+                    pass
+
+                ## A class variable.
+                classVar = 0;
+
+                ## @var _memVar
+                #  a member variable
+\end{DoxyVerb}
+
+
+Special commands can be used within comment blocks to automatically document certain areas of code. Use a backslash () for these special commands.
+
+For example\+: \begin{DoxyVerb}            ## @package init.py
+            #
+            # \brief     briefly describe the file / method / class, etc
+            # \details   add further details here
+            # \author    Tannick Rose
+            # \version   version number
+            # \date      2020
+            # \bug       
+            # \copyright MIT License.
+            #
+\end{DoxyVerb}
+
+
+To contribute to this project, clone the repo locally and commit your code to a separate branch before opening a pull request.\hypertarget{index_autotoc_md8}{}\doxysubsection{Frequently Asked Questions and Troubleshooting}\label{index_autotoc_md8}
+See our {\bfseries{\mbox{\hyperlink{md__troubleshooting}{troubleshooting guide}}}} to find answers to some common questions about the project, as well as some ideas to troubleshoot any problems.\hypertarget{index_autotoc_md9}{}\doxysubsection{Support}\label{index_autotoc_md9}
 Major versions of this project are supported for six months from the date of release. The table below outlines the end of support dates for all major versions, and the last minor version for each version.
 
 \tabulinesep=1mm
@@ -80,8 +136,7 @@ Major versions of this project are supported for six months from the date of rel
 \end{longtabu}
 
 
-If you are opening an issue for this project, please mention the version which the issue relates to.\hypertarget{index_autotoc_md8}{}\doxysubsection{Contributing}\label{index_autotoc_md8}
-To contribute to this project, clone the repo locally and commit your code to a separate branch before opening a pull request.\hypertarget{index_autotoc_md9}{}\doxysubsection{License}\label{index_autotoc_md9}
+If you are opening an issue for this project, please mention the version which the issue relates to.\hypertarget{index_autotoc_md10}{}\doxysubsection{License}\label{index_autotoc_md10}
 Developed under the M\+IT License.
 
 Copyright (c) 2020 Tanich Rose

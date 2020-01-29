@@ -23,13 +23,23 @@ for the JavaScript code in this file
 var NAVTREE =
 [
   [ "Envirohome", "index.html", [
-    [ "envirohome_simulator", "md__r_e_a_d_m_e.html", null ]
+    [ "envirohome_simulator", "index.html", null ],
+    [ "Frequently Asked Questions and Troubleshooting", "md__troubleshooting.html", null ],
+    [ "Bug List", "bug.html", null ],
+    [ "Packages", "namespaces.html", [
+      [ "Packages", "namespaces.html", "namespaces_dup" ]
+    ] ],
+    [ "Classes", "annotated.html", [
+      [ "Class List", "annotated.html", "annotated_dup" ],
+      [ "Class Index", "classes.html", null ],
+      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ]
+    ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"index.html"
+".html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
