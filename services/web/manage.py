@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # services/users/manage.py
 from flask.cli import FlaskGroup
-from project import app
+from project import app, db
+from project.models import User
 
 
 cli = FlaskGroup(app)
