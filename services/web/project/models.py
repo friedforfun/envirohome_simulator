@@ -42,9 +42,12 @@ class Devices(db.Model):
     device_name = db.Column(db.String(64), nullable=False)
     rated_power = db.Column(db.Integer, nullable=False)
     device_type = db.Column(db.Enum('tv', 'plug', 'lights',
-                                    name="device_type"))
+                                    name='device_type'))
     fault = db.Column(db.Boolean, default=False, nullable=False)
     tv = db.relationship('TV', backref='device', uselist=False)
+    therm = db.relationship('Thermostat', backref='device', uselist=False)
+    plug = db.relationship('Plug', backref='device', uselist=False)
+    light = db.relationship('Lights', backref='device', uselist=False)
 
 
 class TV(db.Model):
@@ -56,15 +59,24 @@ class TV(db.Model):
     volume = db.Column(db.Integer, default=100)
 
 
-"""
 class Thermostat(db.Model):
+    therm_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))
+    temp = db.Column(db.Integer, default=23)
 
 
 class Plug(db.Model):
+    plug_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))
 
 
 class Lights(db.Model):
+    light_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))
+    intensity = db.Column(db.Integer, default=1)  # 0-100%, dimmer
+    colour = db.Column(db.Integer, default=0)  # RGB values
 
 
+"""
 class Usage(db.Model):
 """
