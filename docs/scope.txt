@@ -71,8 +71,6 @@ Table 2: TV state
 - channel
 - input (ENUM HDMI1/2, ANT, DVD, VIDEO)
 - volume (0-100%)
-- colour sat
-- brightness
 
 Table 3: Thermostat state
 - device ID
