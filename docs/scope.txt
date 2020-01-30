@@ -64,48 +64,37 @@ Table 1: list of devices
 - rated power
 - device type ID (FK)
 - fault?
-
-Table 2: list of device types
-- device type ID
-- device type (txt)
-
-Table 3: TV state
-- device ID
 - on?
+
+Table 2: TV state
+- device ID
 - channel
 - input (ENUM HDMI1/2, ANT, DVD, VIDEO)
 - volume (0-100%)
 - colour sat
 - brightness
 
-Table 4: Thermostat state
+Table 3: Thermostat state
 - device ID
-- on?
 - temp
 
-Table 5: Boiler state
+Table 4: Boiler state
 - device ID
-- on?
 - temp
 
-Table 6: Plug
+Table 5: Plug
 - deviceID
-- on?
 
-Table 7: Lights
+Table 6: Lights
 - deviceID
-- on/off
 - intensity
 - colour (RGB)
 
-Table 8: Usage Statistics
+Table 7: Usage Statistics
 - deviceID
 - usage right now (kw)
 - usage this hour (kwh)
 - usage every hour previous (kwh) (NOTE enables detailed power breakdown, may be unscalable)
-
-ROOM TABLE: HOUSE HAS ROOMS, ROOMS HAVE DEVICES
-
 
 # Services:
 
