@@ -62,7 +62,7 @@ Table 1: list of devices
 - mac addr (?)
 - device name
 - rated power
-- device type ID (FK)
+- device type (ENUM)
 - fault?
 - on?
 
