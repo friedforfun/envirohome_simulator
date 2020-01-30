@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Envirohome: envirohome_simulator</title>
+<title>Envirohome: Frequently Asked Questions and Troubleshooting</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,6 +27,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Envirohome
    </div>
+   <div id="projectbrief">UI to control a smart home system.</div>
   </td>
  </tr>
  </tbody>
@@ -62,7 +63,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('md__r_e_a_d_m_e.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('md__troubleshooting.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -82,28 +83,14 @@ $(document).ready(function(){initNavTree('md__r_e_a_d_m_e.html',''); initResizab
 
 <div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">envirohome_simulator </div>  </div>
+<div class="title">Frequently Asked Questions and Troubleshooting </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Simulator module for Envirohome</p>
-<h2><a class="anchor" id="autotoc_md1"></a>
-Requirements:</h2>
-<p>Docker must be installed</p>
-<p><b><a href="https://docs.docker.com/install/">Install docker</a></b> - navigate to your Operating System and follow instructions</p>
-<h2><a class="anchor" id="autotoc_md2"></a>
-Build instructions:</h2>
-<ol type="1">
-<li>From project root directory run - <code>$ docker-compose build</code></li>
-</ol>
-<h2><a class="anchor" id="autotoc_md3"></a>
-Run instructions:</h2>
-<ol type="1">
-<li>From project root directory run - <code>$ docker-compose up -d</code></li>
-<li>In browser navigate to: <b><a href="http://localhost:5000/">http://localhost:5000/</a></b> or <b><a href="http://127.0.0.1:5000/">http://127.0.0.1:5000/</a></b></li>
-</ol>
-<h2><a class="anchor" id="autotoc_md4"></a>
-Troubleshooting:</h2>
-<h3><a class="anchor" id="autotoc_md5"></a>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md12"></a>
+Frequently Asked Questions</h2>
+<h2><a class="anchor" id="autotoc_md13"></a>
+Troubleshooting</h2>
+<h3><a class="anchor" id="autotoc_md14"></a>
 First steps:</h3>
 <ol type="1">
 <li>Make sure container is up - <code>$ docker ps</code></li>
@@ -111,55 +98,15 @@ First steps:</h3>
 <li>Rebuild container: from project root directory run - <code>$ docker-compose build</code></li>
 <li>Check line endings on any shell script files (files ending ".sh") they must be unix line endings!</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md6"></a>
+<h3><a class="anchor" id="autotoc_md15"></a>
 Database problems:</h3>
 <p>Table not created:</p>
 <p>Check services/web/entrypoint.sh file permissions, should be executable: <code>$ chmod +x services/web/entrypoint.sh</code></p>
-<h3><a class="anchor" id="autotoc_md7"></a>
+<h3><a class="anchor" id="autotoc_md16"></a>
 Gather docker logs:</h3>
 <p>If unable to identify problem view the docker compose log, or redirect it to a file and share it with the group.</p>
-<p>View log: <code>$ docker-compose logs -f</code></p>
-<h2><a class="anchor" id="autotoc_md8"></a>
-Useful commands:</h2>
-<h3><a class="anchor" id="autotoc_md9"></a>
-Custom CLI command:</h3>
-<p>Example of running custom CLI command create_db (look inside services/web/manage.py): <code>$ docker-compose exec web python manage.py create_db</code></p>
-<h3><a class="anchor" id="autotoc_md10"></a>
-Some postgres stuff:</h3>
-<pre class="fragment">// shell command to open connection to db
-$ docker-compose exec db psql --username=envirohome_db --dbname=envirohome_db_dev
-
-psql (12.0)
-Type "help" for help.
-
-// List databases
-envirohome_db_dev=# \l
-                                        List of databases
-      Name       |    Owner    | Encoding |  Collate   |   Ctype    |      Access privileges
------------------+-------------+----------+------------+------------+-----------------------------
- envirohome_db_dev | envirohome_db | UTF8     | en_US.utf8 | en_US.utf8 |
- postgres        | envirohome_db | UTF8     | en_US.utf8 | en_US.utf8 |
- template0       | envirohome_db | UTF8     | en_US.utf8 | en_US.utf8 | =c/envirohome_db             +
-                 |             |          |            |            | envirohome_db=CTc/envirohome_db
- template1       | envirohome_db | UTF8     | en_US.utf8 | en_US.utf8 | =c/envirohome_db             +
-                 |             |          |            |            | envirohome_db=CTc/envirohome_db
-(4 rows)
-
-// Select database
-envirohome_db_dev=# \c envirohome_db_dev
-You are now connected to database "envirohome_db_dev" as user "envirohome_db".
-
-// View database relations
-envirohome_db_dev=# \dt
-          List of relations
- Schema | Name | Type  |    Owner
---------+------+-------+-------------
- public | user | table | envirohome_db
-(1 row)
-
-// Quit
-envirohome_db_dev=# \q
-</pre> </div></div><!-- contents -->
+<p>View log: <code>$ docker-compose logs -f</code> </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

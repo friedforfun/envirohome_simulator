@@ -1,3 +1,14 @@
+## @package init.py
+#
+# \brief     
+# \details   
+# \author    Tannick Rose
+# \version   1.0
+# \date      2020
+# \bug       
+# \copyright MIT License.
+#
+
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
