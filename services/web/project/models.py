@@ -79,6 +79,9 @@ class Lights(db.Model, FlaskSerializeMixin):
     colour = db.Column(db.Integer, default=0)  # RGB values
 
 
-"""
-class Usage(db.Model):
-"""
+class Usage(db.Model, FlaskSerializeMixin):
+    device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'),
+                          primary_key=True, nullable=False)
+    date = db.Column(db.Date, nullable=False, primary_key=True)
+    time = db.Column(db.DateTime, nullable=False, primary_key=True)
+    energy_usage = db.Column(db.Float)
