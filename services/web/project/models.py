@@ -10,11 +10,13 @@
 #
 
 from flask_sqlalchemy import SQLAlchemy
+# https://github.com/Martlark/flask-serialize
+from flask_serialize import FlaskSerializeMixin 
 from project import app, db
 
 
 # Create user table in database, with id, email, and active columns
-class User(db.Model):
+class User(db.Model, FlaskSerializeMixin):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -35,7 +37,7 @@ class User(db.Model):
     #     return pwd_context.verify(password, self.password_hash)
 
 
-class Devices(db.Model):
+class Devices(db.Model, FlaskSerializeMixin):
     __tablename__ = 'devices'
     device_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     mac_addr = db.Column(db.String(17), nullable=True)
@@ -50,7 +52,7 @@ class Devices(db.Model):
     light = db.relationship('Lights', backref='device', uselist=False)
 
 
-class TV(db.Model):
+class TV(db.Model, FlaskSerializeMixin):
     tv_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))
     channel = db.Column(db.Integer, default=1)
@@ -59,18 +61,18 @@ class TV(db.Model):
     volume = db.Column(db.Integer, default=100)
 
 
-class Thermostat(db.Model):
+class Thermostat(db.Model, FlaskSerializeMixin):
     therm_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))
     temp = db.Column(db.Integer, default=23)
 
 
-class Plug(db.Model):
+class Plug(db.Model, FlaskSerializeMixin):
     plug_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))
 
 
-class Lights(db.Model):
+class Lights(db.Model, FlaskSerializeMixin):
     light_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))
     intensity = db.Column(db.Integer, default=1)  # 0-100%, dimmer

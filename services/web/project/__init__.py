@@ -20,3 +20,4 @@ app.config.from_object("project.config.Config")
 db = SQLAlchemy(app)
 
 from project import routes, models
+

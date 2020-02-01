@@ -11,12 +11,13 @@
 
 # from flask import Flask, jsonify
 from project import app
+from project.models import User
 from flask import jsonify
 
 # Configure basic route for testing
 @app.route("/")
 def hello_world():
-    return jsonify(hello="world")
+    return User.get_delete_put_post(1)
 
 
 @app.route("/login", methods=["POST"])
@@ -51,9 +52,17 @@ def new_user():
 
 @app.route("/api/devices", methods=["GET"])
 # @auth.login_required
-def get_devices():
-    return jsonify(json="device list")
 
+## get_devices()
+# instatiates a session to the database and parses everything in the devices table
+# formats it into JSON
+# Returns all devices in JSON format
+def get_devices():
+    return Devices.get_delete_put_post(None)
+
+@app.route("/api/device/<device_pk>", methods=["GET"])
+def get_device(device_pk):
+    return Devices.get_delete_put_post(device_pk)
 
 @app.route("/api/floorplan", methods=["GET"])
 # @auth.login_required
