@@ -1,11 +1,11 @@
 ## @package routes.py
 #
-# \brief     
-# \details   
+# \brief
+# \details
 # \author    Tannick Rose
 # \version   1.0
 # \date      2020
-# \bug       
+# \bug
 # \copyright MIT License.
 #
 
@@ -53,6 +53,7 @@ def new_user():
 @app.route("/api/devices", methods=["GET"])
 # @auth.login_required
 
+
 ## get_devices()
 # instatiates a session to the database and parses everything in the devices table
 # formats it into JSON
@@ -60,9 +61,11 @@ def new_user():
 def get_devices():
     return Devices.get_delete_put_post(None)
 
+
 @app.route("/api/device/<device_pk>", methods=["GET"])
 def get_device(device_pk):
     return Devices.get_delete_put_post(device_pk)
+
 
 @app.route("/api/floorplan", methods=["GET"])
 # @auth.login_required
