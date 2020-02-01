@@ -20,5 +20,4 @@ awk -F';' '{print $1";"$2";"$NF}' last_week.txt > dev_1.txt
 awk -F';' '{print $1";"$2";"$(NF-1)}' last_week.txt > dev_2.txt
 awk -F';' '{print $1";"$2";"$(NF-2)}' last_week.txt > dev_3.txt
 
-
-
+rm last_week.txt
