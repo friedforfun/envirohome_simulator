@@ -16,8 +16,9 @@ awk -F'/' '{print ($1 + 4)"/"$2"/"$3}' last_week.txt > tmp && mv tmp last_week.t
 # awk -F"/" '{print $2"/"$1"/"$3}' last_week.txt > tmp && mv tmp last_week.txt
 
 # split data up into 3 (household_power_consumption.txt has three columns worth of data
-awk -F';' '{print $1";"$2";"$NF}' last_week.txt > dev_1.txt
-awk -F';' '{print $1";"$2";"$(NF-1)}' last_week.txt > dev_2.txt
-awk -F';' '{print $1";"$2";"$(NF-2)}' last_week.txt > dev_3.txt
+echo "device_id;date;time;energy_used" | tee dev_1.txt dev_2.txt dev_3.txt >/dev/null
+awk -F';' '{print "0;"$1";"$2";"$NF}' last_week.txt >> dev_1.txt
+awk -F';' '{print "1;"$1";"$2";"$(NF-1)}' last_week.txt >> dev_2.txt
+awk -F';' '{print "2;"$1";"$2";"$(NF-2)}' last_week.txt >> dev_3.txt
 
 rm last_week.txt
