@@ -1,11 +1,11 @@
 ## @package manage.py
 #
-# \brief     
-# \details   
+# \brief
+# \details
 # \author    Tannick Rose
 # \version   1.0
 # \date      2020
-# \bug       
+# \bug
 # \copyright MIT License.
 #
 
