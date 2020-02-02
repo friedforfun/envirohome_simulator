@@ -44,12 +44,15 @@ class Devices(db.Model, FlaskSerializeMixin):
     device_name = db.Column(db.String(64), nullable=False)
     rated_power = db.Column(db.Integer, nullable=False)
     device_type = db.Column(db.Enum('tv', 'plug', 'lights',
-                                    name='device_type'))
+                                    name='device_type'), nullable=False)
     fault = db.Column(db.Boolean, default=False, nullable=False)
+    room = db.Column(db.Enum('living_room', 'kitchen', 'outside', name='room'),
+                     nullable=False)
     tv = db.relationship('TV', backref='device', uselist=False)
     therm = db.relationship('Thermostat', backref='device', uselist=False)
     plug = db.relationship('Plug', backref='device', uselist=False)
     light = db.relationship('Lights', backref='device', uselist=False)
+    usage = db.relationship('Usage', backref='device', uselist=False)
 
 
 class TV(db.Model, FlaskSerializeMixin):
@@ -83,5 +86,5 @@ class Usage(db.Model, FlaskSerializeMixin):
     device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'),
                           primary_key=True, nullable=False)
     date = db.Column(db.Date, nullable=False, primary_key=True)
-    time = db.Column(db.DateTime, nullable=False, primary_key=True)
+    time = db.Column(db.Time, nullable=False, primary_key=True)
     energy_usage = db.Column(db.Float)

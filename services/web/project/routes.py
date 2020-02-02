@@ -11,7 +11,7 @@
 
 # from flask import Flask, jsonify
 from project import app
-from project.models import User
+from project.models import User, Devices
 from flask import jsonify
 
 # Configure basic route for testing
