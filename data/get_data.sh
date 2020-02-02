@@ -13,12 +13,13 @@ sed -i 's/\/11\//\/01\//' last_week.txt
 awk -F'/' '{print ($1 + 4)"/"$2"/"$3}' last_week.txt > tmp && mv tmp last_week.txt
 
 # americani(z|s)e the date for gnu date
-# awk -F"/" '{print $2"/"$1"/"$3}' last_week.txt > tmp && mv tmp last_week.txt
+awk -F"/" '{print $2"/"$1"/"$3}' last_week.txt > tmp && mv tmp last_week.txt
 
 # split data up into 3 (household_power_consumption.txt has three columns worth of data
-echo "device_id;date;time;energy_used" | tee dev_1.txt dev_2.txt dev_3.txt >/dev/null
-awk -F';' '{print "0;"$1";"$2";"$NF}' last_week.txt >> dev_1.txt
-awk -F';' '{print "1;"$1";"$2";"$(NF-1)}' last_week.txt >> dev_2.txt
-awk -F';' '{print "2;"$1";"$2";"$(NF-2)}' last_week.txt >> dev_3.txt
+mockdatadir="../services/web/mock_data"
+echo "device_id;date;time;energy_used" | tee $mockdatadir/dev_1.txt $mockdatadir/dev_2.txt $mockdatadir/dev_3.txt >/dev/null
+awk -F';' '{print "0;"$1";"$2";"$NF}' last_week.txt >> $mockdatadir/dev_1.txt
+awk -F';' '{print "1;"$1";"$2";"$(NF-1)}' last_week.txt >> $mockdatadir/dev_2.txt
+awk -F';' '{print "2;"$1";"$2";"$(NF-2)}' last_week.txt >> $mockdatadir/dev_3.txt
 
-rm last_week.txt
+rm last_week.txt household_power_consumption.txt
