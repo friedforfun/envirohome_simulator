@@ -14,16 +14,14 @@ RUN apk update \
 
 # install dependencies
 RUN pip install --upgrade pip
-COPY ./requirements.txt /usr/src/app/requirements.txt
+COPY ./requirements.txt ./requirements.txt
 RUN pip install -r requirements.txt
-# COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
-
-RUN /bin/sh
 
 # copy project
-COPY . /usr/src/app/
-RUN apk add dos2unix && dos2unix /usr/src/app/entrypoint.sh
+COPY . ./
+RUN apk add dos2unix && dos2unix ./entrypoint.sh
 
 # run entrypoint.sh
-RUN chmod 755 entrypoint.sh
-ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
+RUN chmod a+x ./data/get_data.sh ; chmod 755 entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]
