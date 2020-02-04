@@ -34,11 +34,13 @@ def seed_db():
                         password_hash='totally a real hash'))
     db.session.add(Devices(device_id=0, device_name='Living Room TV',
                            rated_power=700, device_type='tv', fault=False,
-                           room='living_room'))
+                           room='living_room', on=True))
     db.session.add(Devices(device_name='Outside Lights', rated_power=40,
-                           device_type='lights', fault=False, room='outside'))
+                           device_type='lights', fault=False, room='outside',
+                           on=True))
     db.session.add(Devices(device_name='Kitchen Plug', rated_power=500,
-                           device_type='plug', fault=True, room='kitchen'))
+                           device_type='plug', fault=True, room='kitchen',
+                           on=True))
     db.session.commit()
 
     with open(os.getcwd() + '/mock_data/dev_1.txt', 'r') as f:

@@ -46,6 +46,7 @@ class Devices(db.Model, FlaskSerializeMixin):
     device_type = db.Column(db.Enum('tv', 'plug', 'lights',
                                     name='device_type'), nullable=False)
     fault = db.Column(db.Boolean, default=False, nullable=False)
+    on = db.Column(db.Boolean, default=False, nullable=False)
     room = db.Column(db.Enum('living_room', 'kitchen', 'outside', name='room'),
                      nullable=False)
     tv = db.relationship('TV', backref='device', uselist=False)

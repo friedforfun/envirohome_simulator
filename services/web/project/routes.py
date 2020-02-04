@@ -10,9 +10,20 @@
 #
 
 # from flask import Flask, jsonify
-from project import app
-from project.models import User, Devices
+from project import app, db
+from project.models import User, Devices, Usage
 from flask import jsonify
+from flask_marshmallow import Marshmallow
+
+ma = Marshmallow(app)
+
+
+class UsageSchema(ma.Schema):
+    class Meta:
+        fields = ('device_id', 'date', 'time', 'energy_usage')
+
+
+usage_schema = UsageSchema(many=True)
 
 # Configure basic route for testing
 @app.route("/")
@@ -71,3 +82,16 @@ def get_device(device_pk):
 # @auth.login_required
 def get_floorplan():
     return jsonify(image="floorplan.png")
+
+
+@app.route("/api/usage/<int:device_pk>/<string:date_pk>/<string:time_pk>",
+           methods=["GET"])
+def get_usage(device_pk, date_pk, time_pk):
+    # convert UK date to OSI
+    date_pk = date_pk[4:] + '-' + date_pk[2:4] + '-' + date_pk[0:2]
+    usages = db.session.query(Usage).filter_by(device_id=device_pk,
+                                               date=date_pk,
+                                               time=time_pk).all()
+#    usages = db.session.query(Usage).filter_by(device_id=device_pk).all()
+    result = usage_schema.dump(usages)
+    return jsonify(result)
