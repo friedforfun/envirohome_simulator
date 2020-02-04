@@ -17,7 +17,8 @@ from flask_marshmallow import Marshmallow
 
 ma = Marshmallow(app)
 
-
+##
+#
 class UsageSchema(ma.Schema):
     class Meta:
         fields = ('device_id', 'date', 'time', 'energy_usage')
@@ -25,18 +26,21 @@ class UsageSchema(ma.Schema):
 
 usage_schema = UsageSchema(many=True)
 
-# Configure basic route for testing
+## Configure basic route for testing
+#
 @app.route("/")
 def hello_world():
     return User.get_delete_put_post(1)
 
-
+##
+#
 @app.route("/login", methods=["POST"])
 def login():
     return jsonify(user="password")
 
 
-# Register new user method
+## Register new user method
+#
 @app.route("/register", methods=["POST"])
 def new_user():
     # Username and password are generated from a JSON via POST
@@ -72,18 +76,21 @@ def new_user():
 def get_devices():
     return Devices.get_delete_put_post(None)
 
-
+##
+#
 @app.route("/api/device/<device_pk>", methods=["GET"])
 def get_device(device_pk):
     return Devices.get_delete_put_post(device_pk)
 
-
+##
+#
 @app.route("/api/floorplan", methods=["GET"])
 # @auth.login_required
 def get_floorplan():
     return jsonify(image="floorplan.png")
 
-
+##
+#
 @app.route("/api/usage/<int:device_pk>/<string:date_pk>/<string:time_pk>",
            methods=["GET"])
 def get_usage(device_pk, date_pk, time_pk):

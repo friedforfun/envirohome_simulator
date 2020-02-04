@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['frequently_20asked_20questions_20and_20troubleshooting_4',['Frequently Asked Questions and Troubleshooting',['../md__troubleshooting.html',1,'']]]
+  ['envirohome_5fsimulator_4',['envirohome_simulator',['../index.html',1,'']]]
 ];

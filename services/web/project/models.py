@@ -15,7 +15,8 @@ from flask_serialize import FlaskSerializeMixin
 from project import app, db
 
 
-# Create user table in database, with id, email, and active columns
+## Create user table in database, with id, email, and active columns
+#
 class User(db.Model, FlaskSerializeMixin):
     __tablename__ = "users"
 
@@ -36,7 +37,8 @@ class User(db.Model, FlaskSerializeMixin):
     # def verify_password(self, password):
     #     return pwd_context.verify(password, self.password_hash)
 
-
+## Create devices table in database, with id, name and type columns
+#
 class Devices(db.Model, FlaskSerializeMixin):
     __tablename__ = 'devices'
     device_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -55,7 +57,8 @@ class Devices(db.Model, FlaskSerializeMixin):
     light = db.relationship('Lights', backref='device', uselist=False)
     usage = db.relationship('Usage', backref='device', uselist=False)
 
-
+## Create TV table in database, with id, channel, output and volume columns
+#
 class TV(db.Model, FlaskSerializeMixin):
     tv_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))
@@ -64,25 +67,29 @@ class TV(db.Model, FlaskSerializeMixin):
                        name='channel'), default='HDMI1')
     volume = db.Column(db.Integer, default=100)
 
-
+## Create thermostat table in database, with id and temperature columns
+#
 class Thermostat(db.Model, FlaskSerializeMixin):
     therm_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))
     temp = db.Column(db.Integer, default=23)
 
-
+## Create plug table in database, with id columns
+#
 class Plug(db.Model, FlaskSerializeMixin):
     plug_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))
 
-
+## Create lights table in database, with id, intensity, and colour columns
+#
 class Lights(db.Model, FlaskSerializeMixin):
     light_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))
     intensity = db.Column(db.Integer, default=1)  # 0-100%, dimmer
     colour = db.Column(db.Integer, default=0)  # RGB values
 
-
+## Create usage table in database, with id, date, time and energy usage columns
+#
 class Usage(db.Model, FlaskSerializeMixin):
     device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'),
                           primary_key=True, nullable=False)

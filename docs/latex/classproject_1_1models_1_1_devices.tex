@@ -1,0 +1,94 @@
+\hypertarget{classproject_1_1models_1_1_devices}{}\doxysection{project.\+models.\+Devices Class Reference}
+\label{classproject_1_1models_1_1_devices}\index{project.models.Devices@{project.models.Devices}}
+
+
+Create devices table in database, with id, name and type columns.  
+
+
+Inheritance diagram for project.\+models.\+Devices\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classproject_1_1models_1_1_devices}
+\end{center}
+\end{figure}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a35d4087f342ff001ee4264f6d67a5535}\label{classproject_1_1models_1_1_devices_a35d4087f342ff001ee4264f6d67a5535}} 
+{\bfseries device\+\_\+id} = db.\+Column(db.\+Integer, primary\+\_\+key=True, autoincrement=True)
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a0ac05799397f0596aba0b0d3048c1251}\label{classproject_1_1models_1_1_devices_a0ac05799397f0596aba0b0d3048c1251}} 
+{\bfseries mac\+\_\+addr} = db.\+Column(db.\+String(17), nullable=True)
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a0cdf3bc64c6501df504f906222c9aaa8}\label{classproject_1_1models_1_1_devices_a0cdf3bc64c6501df504f906222c9aaa8}} 
+{\bfseries device\+\_\+name} = db.\+Column(db.\+String(64), nullable=False)
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a7e354fdc1f91f3e24ca924d90a34809d}\label{classproject_1_1models_1_1_devices_a7e354fdc1f91f3e24ca924d90a34809d}} 
+{\bfseries rated\+\_\+power} = db.\+Column(db.\+Integer, nullable=False)
+\item 
+{\bfseries device\+\_\+type}
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a09735a0989d4c99757162e9b9946d038}\label{classproject_1_1models_1_1_devices_a09735a0989d4c99757162e9b9946d038}} 
+{\bfseries fault} = db.\+Column(db.\+Boolean, default=False, nullable=False)
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_devices_aae94632ea195414260843095d651f625}\label{classproject_1_1models_1_1_devices_aae94632ea195414260843095d651f625}} 
+{\bfseries on} = db.\+Column(db.\+Boolean, default=False, nullable=False)
+\item 
+{\bfseries room}
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a2814658a035f04a786c59a8c92ee519e}\label{classproject_1_1models_1_1_devices_a2814658a035f04a786c59a8c92ee519e}} 
+{\bfseries tv} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_devices_ae21ca9d5d07a5c880c6632f7dbe0026f}\label{classproject_1_1models_1_1_devices_ae21ca9d5d07a5c880c6632f7dbe0026f}} 
+{\bfseries therm} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_thermostat}{Thermostat}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a47c490174866cd657dc1eccca6bc74e4}\label{classproject_1_1models_1_1_devices_a47c490174866cd657dc1eccca6bc74e4}} 
+{\bfseries plug} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_plug}{Plug}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a3d360a087d8cc0d7663ef307aa05ac26}\label{classproject_1_1models_1_1_devices_a3d360a087d8cc0d7663ef307aa05ac26}} 
+{\bfseries light} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_lights}{Lights}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_devices_ac4cb2e965b50d651bf16a1d8f3b9fd33}\label{classproject_1_1models_1_1_devices_ac4cb2e965b50d651bf16a1d8f3b9fd33}} 
+{\bfseries usage} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_usage}{Usage}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_devices_ae1fe832b808ff27879a09b7f5f560f31}\label{classproject_1_1models_1_1_devices_ae1fe832b808ff27879a09b7f5f560f31}} 
+string {\bfseries \+\_\+\+\_\+tablename\+\_\+\+\_\+} = \textquotesingle{}devices\textquotesingle{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Create devices table in database, with id, name and type columns. 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classproject_1_1models_1_1_devices_aa287412ecf3edfac957ebb39143e0c89}\label{classproject_1_1models_1_1_devices_aa287412ecf3edfac957ebb39143e0c89}} 
+\index{project.models.Devices@{project.models.Devices}!device\_type@{device\_type}}
+\index{device\_type@{device\_type}!project.models.Devices@{project.models.Devices}}
+\doxysubsubsection{\texorpdfstring{device\_type}{device\_type}}
+{\footnotesize\ttfamily project.\+models.\+Devices.\+device\+\_\+type\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  db.Column(db.Enum(\textcolor{stringliteral}{'tv'}, \textcolor{stringliteral}{'plug'}, \textcolor{stringliteral}{'lights'},}
+\DoxyCodeLine{                                    name=\textcolor{stringliteral}{'device\_type'}), nullable=\textcolor{keyword}{False})}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a5e0b926cfe554446a76f3d86593c08cd}\label{classproject_1_1models_1_1_devices_a5e0b926cfe554446a76f3d86593c08cd}} 
+\index{project.models.Devices@{project.models.Devices}!room@{room}}
+\index{room@{room}!project.models.Devices@{project.models.Devices}}
+\doxysubsubsection{\texorpdfstring{room}{room}}
+{\footnotesize\ttfamily project.\+models.\+Devices.\+room\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  db.Column(db.Enum(\textcolor{stringliteral}{'living\_room'}, \textcolor{stringliteral}{'kitchen'}, \textcolor{stringliteral}{'outside'}, name=\textcolor{stringliteral}{'room'}),}
+\DoxyCodeLine{                     nullable=\textcolor{keyword}{False})}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/ryanbrown/\+Downloads/envirohome\+\_\+simulator/services/web/project/models.\+py\end{DoxyCompactItemize}

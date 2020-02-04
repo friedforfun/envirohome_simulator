@@ -1,0 +1,36 @@
+\hypertarget{classproject_1_1models_1_1_lights}{}\doxysection{project.\+models.\+Lights Class Reference}
+\label{classproject_1_1models_1_1_lights}\index{project.models.Lights@{project.models.Lights}}
+
+
+Create lights table in database, with id, intensity, and colour columns.  
+
+
+Inheritance diagram for project.\+models.\+Lights\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classproject_1_1models_1_1_lights}
+\end{center}
+\end{figure}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_lights_a433924d5a463079e8aab976ccd2707b0}\label{classproject_1_1models_1_1_lights_a433924d5a463079e8aab976ccd2707b0}} 
+{\bfseries light\+\_\+id} = db.\+Column(db.\+Integer, primary\+\_\+key=True, autoincrement=True)
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_lights_a2e132487feab668ecce390cade530144}\label{classproject_1_1models_1_1_lights_a2e132487feab668ecce390cade530144}} 
+{\bfseries device\+\_\+id} = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}devices.\+device\+\_\+id\textquotesingle{}))
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_lights_a2866817412e0a3bc4b056a06b329fe78}\label{classproject_1_1models_1_1_lights_a2866817412e0a3bc4b056a06b329fe78}} 
+{\bfseries intensity} = db.\+Column(db.\+Integer, default=1)
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_lights_a644273ef7ee2cb5944f108457b51e763}\label{classproject_1_1models_1_1_lights_a644273ef7ee2cb5944f108457b51e763}} 
+{\bfseries colour} = db.\+Column(db.\+Integer, default=0)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Create lights table in database, with id, intensity, and colour columns. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/ryanbrown/\+Downloads/envirohome\+\_\+simulator/services/web/project/models.\+py\end{DoxyCompactItemize}

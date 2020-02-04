@@ -1,0 +1,53 @@
+\hypertarget{classproject_1_1models_1_1_t_v}{}\doxysection{project.\+models.\+TV Class Reference}
+\label{classproject_1_1models_1_1_t_v}\index{project.models.TV@{project.models.TV}}
+
+
+Create \mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}} table in database, with id, channel, output and volume columns.  
+
+
+Inheritance diagram for project.\+models.\+TV\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classproject_1_1models_1_1_t_v}
+\end{center}
+\end{figure}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_t_v_a6f8b5a63652fb2ffc232527fe459a547}\label{classproject_1_1models_1_1_t_v_a6f8b5a63652fb2ffc232527fe459a547}} 
+{\bfseries tv\+\_\+id} = db.\+Column(db.\+Integer, primary\+\_\+key=True, autoincrement=True)
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_t_v_a2ee648878916bf516e5f0353090e613b}\label{classproject_1_1models_1_1_t_v_a2ee648878916bf516e5f0353090e613b}} 
+{\bfseries device\+\_\+id} = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}devices.\+device\+\_\+id\textquotesingle{}))
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_t_v_a0ead348f233f6a4ae3abb3aac62bae22}\label{classproject_1_1models_1_1_t_v_a0ead348f233f6a4ae3abb3aac62bae22}} 
+{\bfseries channel} = db.\+Column(db.\+Integer, default=1)
+\item 
+{\bfseries output}
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_t_v_a0a25cdc81a35c5dad9ab36369a1eb702}\label{classproject_1_1models_1_1_t_v_a0a25cdc81a35c5dad9ab36369a1eb702}} 
+{\bfseries volume} = db.\+Column(db.\+Integer, default=100)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Create \mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}} table in database, with id, channel, output and volume columns. 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classproject_1_1models_1_1_t_v_a4e3d003e31dac0512a8f311fd09e7581}\label{classproject_1_1models_1_1_t_v_a4e3d003e31dac0512a8f311fd09e7581}} 
+\index{project.models.TV@{project.models.TV}!output@{output}}
+\index{output@{output}!project.models.TV@{project.models.TV}}
+\doxysubsubsection{\texorpdfstring{output}{output}}
+{\footnotesize\ttfamily project.\+models.\+T\+V.\+output\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  db.Column(db.Enum(\textcolor{stringliteral}{'HDMI1'}, \textcolor{stringliteral}{'HDMI2'}, \textcolor{stringliteral}{'ANT'}, \textcolor{stringliteral}{'DVD'}, \textcolor{stringliteral}{'VIDEO'},}
+\DoxyCodeLine{                       name=\textcolor{stringliteral}{'channel'}), default=\textcolor{stringliteral}{'HDMI1'})}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/ryanbrown/\+Downloads/envirohome\+\_\+simulator/services/web/project/models.\+py\end{DoxyCompactItemize}
