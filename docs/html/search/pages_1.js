@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['envirohome_5fsimulator_32',['envirohome_simulator',['../index.html',1,'']]]
+  ['frequently_20asked_20questions_20and_20troubleshooting_47',['Frequently Asked Questions and Troubleshooting',['../md__troubleshooting.html',1,'']]]
 ];

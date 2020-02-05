@@ -102,22 +102,51 @@ Inheritance diagram for project.models.Lights:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a433924d5a463079e8aab976ccd2707b0"><td class="memItemLeft" align="right" valign="top"><a id="a433924d5a463079e8aab976ccd2707b0"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>light_id</b> = db.Column(db.Integer, primary_key=True, autoincrement=True)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_lights.html#a433924d5a463079e8aab976ccd2707b0">light_id</a> = db.Column(db.Integer, primary_key=True, autoincrement=True)</td></tr>
+<tr class="memdesc:a433924d5a463079e8aab976ccd2707b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">stores the id of the light <br /></td></tr>
 <tr class="separator:a433924d5a463079e8aab976ccd2707b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e132487feab668ecce390cade530144"><td class="memItemLeft" align="right" valign="top"><a id="a2e132487feab668ecce390cade530144"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>device_id</b> = db.Column(db.Integer, db.ForeignKey('devices.device_id'))</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_lights.html#a2e132487feab668ecce390cade530144">device_id</a> = db.Column(db.Integer, db.ForeignKey('devices.device_id'))</td></tr>
+<tr class="memdesc:a2e132487feab668ecce390cade530144"><td class="mdescLeft">&#160;</td><td class="mdescRight">stores the id of the device <br /></td></tr>
 <tr class="separator:a2e132487feab668ecce390cade530144"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2866817412e0a3bc4b056a06b329fe78"><td class="memItemLeft" align="right" valign="top"><a id="a2866817412e0a3bc4b056a06b329fe78"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>intensity</b> = db.Column(db.Integer, default=1)</td></tr>
+<tr class="memitem:a2866817412e0a3bc4b056a06b329fe78"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_lights.html#a2866817412e0a3bc4b056a06b329fe78">intensity</a> = db.Column(db.Integer, default=1)</td></tr>
+<tr class="memdesc:a2866817412e0a3bc4b056a06b329fe78"><td class="mdescLeft">&#160;</td><td class="mdescRight">stores the intensity of the light.  <a href="classproject_1_1models_1_1_lights.html#a2866817412e0a3bc4b056a06b329fe78">More...</a><br /></td></tr>
 <tr class="separator:a2866817412e0a3bc4b056a06b329fe78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a644273ef7ee2cb5944f108457b51e763"><td class="memItemLeft" align="right" valign="top"><a id="a644273ef7ee2cb5944f108457b51e763"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>colour</b> = db.Column(db.Integer, default=0)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_lights.html#a644273ef7ee2cb5944f108457b51e763">colour</a> = db.Column(db.Integer, default=0)</td></tr>
+<tr class="memdesc:a644273ef7ee2cb5944f108457b51e763"><td class="mdescLeft">&#160;</td><td class="mdescRight">stores the colour of the light RGB values <br /></td></tr>
 <tr class="separator:a644273ef7ee2cb5944f108457b51e763"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Create lights table in database, with id, intensity, and colour columns. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/ryanbrown/Downloads/envirohome_simulator/services/web/project/models.py</li>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a2866817412e0a3bc4b056a06b329fe78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2866817412e0a3bc4b056a06b329fe78">&#9670;&nbsp;</a></span>intensity</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">project.models.Lights.intensity = db.Column(db.Integer, default=1)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>stores the intensity of the light. </p>
+<p>the settings are 0-100%, dimmer </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>services/web/project/models.py</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

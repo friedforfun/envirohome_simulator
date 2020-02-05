@@ -15,22 +15,34 @@ Inheritance diagram for project.\+models.\+Lights\+:\begin{figure}[H]
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{classproject_1_1models_1_1_lights_a433924d5a463079e8aab976ccd2707b0}\label{classproject_1_1models_1_1_lights_a433924d5a463079e8aab976ccd2707b0}} 
-{\bfseries light\+\_\+id} = db.\+Column(db.\+Integer, primary\+\_\+key=True, autoincrement=True)
-\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_lights_a433924d5a463079e8aab976ccd2707b0}{light\+\_\+id}} = db.\+Column(db.\+Integer, primary\+\_\+key=True, autoincrement=True)
+\begin{DoxyCompactList}\small\item\em stores the id of the light \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classproject_1_1models_1_1_lights_a2e132487feab668ecce390cade530144}\label{classproject_1_1models_1_1_lights_a2e132487feab668ecce390cade530144}} 
-{\bfseries device\+\_\+id} = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}devices.\+device\+\_\+id\textquotesingle{}))
-\item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_lights_a2866817412e0a3bc4b056a06b329fe78}\label{classproject_1_1models_1_1_lights_a2866817412e0a3bc4b056a06b329fe78}} 
-{\bfseries intensity} = db.\+Column(db.\+Integer, default=1)
-\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_lights_a2e132487feab668ecce390cade530144}{device\+\_\+id}} = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}devices.\+device\+\_\+id\textquotesingle{}))
+\begin{DoxyCompactList}\small\item\em stores the id of the device \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_lights_a2866817412e0a3bc4b056a06b329fe78}{intensity}} = db.\+Column(db.\+Integer, default=1)
+\begin{DoxyCompactList}\small\item\em stores the intensity of the light. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classproject_1_1models_1_1_lights_a644273ef7ee2cb5944f108457b51e763}\label{classproject_1_1models_1_1_lights_a644273ef7ee2cb5944f108457b51e763}} 
-{\bfseries colour} = db.\+Column(db.\+Integer, default=0)
-\end{DoxyCompactItemize}
+\mbox{\hyperlink{classproject_1_1models_1_1_lights_a644273ef7ee2cb5944f108457b51e763}{colour}} = db.\+Column(db.\+Integer, default=0)
+\begin{DoxyCompactList}\small\item\em stores the colour of the light R\+GB values \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
 Create lights table in database, with id, intensity, and colour columns. 
 
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classproject_1_1models_1_1_lights_a2866817412e0a3bc4b056a06b329fe78}\label{classproject_1_1models_1_1_lights_a2866817412e0a3bc4b056a06b329fe78}} 
+\index{project.models.Lights@{project.models.Lights}!intensity@{intensity}}
+\index{intensity@{intensity}!project.models.Lights@{project.models.Lights}}
+\doxysubsubsection{\texorpdfstring{intensity}{intensity}}
+{\footnotesize\ttfamily project.\+models.\+Lights.\+intensity = db.\+Column(db.\+Integer, default=1)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+stores the intensity of the light. 
+
+the settings are 0-\/100\%, dimmer 
+
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-/\+Users/ryanbrown/\+Downloads/envirohome\+\_\+simulator/services/web/project/models.\+py\end{DoxyCompactItemize}
+services/web/project/models.\+py\end{DoxyCompactItemize}

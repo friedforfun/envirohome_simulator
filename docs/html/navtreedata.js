@@ -24,15 +24,18 @@ var NAVTREE =
 [
   [ "Envirohome", "index.html", [
     [ "envirohome_simulator", "index.html", null ],
-    [ "Frequently Asked Questions and Troubleshooting", "md___users_ryanbrown__downloads_envirohome_simulator__troubleshooting.html", null ],
-    [ "Bug List", "bug.html", null ],
+    [ "Frequently Asked Questions and Troubleshooting", "md__troubleshooting.html", null ],
     [ "Packages", "namespaces.html", [
       [ "Packages", "namespaces.html", "namespaces_dup" ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
-      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ]
+      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
+      [ "Class Members", "functions.html", [
+        [ "All", "functions.html", null ],
+        [ "Variables", "functions_vars.html", null ]
+      ] ]
     ] ]
   ] ]
 ];

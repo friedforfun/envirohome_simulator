@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['meta_8',['Meta',['../classproject_1_1routes_1_1_usage_schema_1_1_meta.html',1,'project::routes::UsageSchema']]],
-  ['py_9',['py',['../namespacemanage_1_1py.html',1,'manage.py'],['../namespacemodels_1_1py.html',1,'models.py']]]
+  ['plug_15',['Plug',['../classproject_1_1models_1_1_plug.html',1,'project::models']]],
+  ['plug_5fid_16',['plug_id',['../classproject_1_1models_1_1_plug.html#a8974e9299ea1270523d93f27b2e461d1',1,'project::models::Plug']]]
 ];
