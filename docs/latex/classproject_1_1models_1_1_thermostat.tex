@@ -1,0 +1,33 @@
+\hypertarget{classproject_1_1models_1_1_thermostat}{}\doxysection{project.\+models.\+Thermostat Class Reference}
+\label{classproject_1_1models_1_1_thermostat}\index{project.models.Thermostat@{project.models.Thermostat}}
+
+
+Create thermostat table in database, with id and temperature columns.  
+
+
+Inheritance diagram for project.\+models.\+Thermostat\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classproject_1_1models_1_1_thermostat}
+\end{center}
+\end{figure}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_thermostat_acf6bc0fe58b92852f58ab5b08d9acd13}\label{classproject_1_1models_1_1_thermostat_acf6bc0fe58b92852f58ab5b08d9acd13}} 
+{\bfseries therm\+\_\+id} = db.\+Column(db.\+Integer, primary\+\_\+key=True, autoincrement=True)
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_thermostat_a7a7f450d6ca38a5492f09acf2879fa58}\label{classproject_1_1models_1_1_thermostat_a7a7f450d6ca38a5492f09acf2879fa58}} 
+{\bfseries device\+\_\+id} = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}devices.\+device\+\_\+id\textquotesingle{}))
+\item 
+\mbox{\Hypertarget{classproject_1_1models_1_1_thermostat_ad5d4d25a8992a383725550044d7a852a}\label{classproject_1_1models_1_1_thermostat_ad5d4d25a8992a383725550044d7a852a}} 
+{\bfseries temp} = db.\+Column(db.\+Integer, default=23)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Create thermostat table in database, with id and temperature columns. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/ryanbrown/\+Downloads/envirohome\+\_\+simulator/services/web/project/models.\+py\end{DoxyCompactItemize}

@@ -20,25 +20,29 @@ import os
 
 cli = FlaskGroup(app)
 
-# Create command at CLI to create and apply new database model
+## Create command at CLI to create and apply new database model
+#
 @cli.command('create_db')
 def create_db():
     db.drop_all()
     db.create_all()
     db.session.commit()
 
-
+##
+#
 @cli.command('seed_db')
 def seed_db():
     db.session.add(User(username='admin', email='nobody@nowhere.address',
                         password_hash='totally a real hash'))
     db.session.add(Devices(device_id=0, device_name='Living Room TV',
                            rated_power=700, device_type='tv', fault=False,
-                           room='living_room'))
+                           room='living_room', on=True))
     db.session.add(Devices(device_name='Outside Lights', rated_power=40,
-                           device_type='lights', fault=False, room='outside'))
+                           device_type='lights', fault=False, room='outside',
+                           on=True))
     db.session.add(Devices(device_name='Kitchen Plug', rated_power=500,
-                           device_type='plug', fault=True, room='kitchen'))
+                           device_type='plug', fault=True, room='kitchen',
+                           on=True))
     db.session.commit()
 
     with open(os.getcwd() + '/mock_data/dev_1.txt', 'r') as f:
@@ -64,6 +68,7 @@ def seed_db():
     db.session.commit()
 
 
-# flaskgroup instance to exend the normal cli with flask commands
+## flaskgroup instance to exend the normal cli with flask commands
+#
 if __name__ == '__main__':
     cli()

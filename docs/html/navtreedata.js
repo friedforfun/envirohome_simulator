@@ -24,7 +24,7 @@ var NAVTREE =
 [
   [ "Envirohome", "index.html", [
     [ "envirohome_simulator", "index.html", null ],
-    [ "Frequently Asked Questions and Troubleshooting", "md__troubleshooting.html", null ],
+    [ "Frequently Asked Questions and Troubleshooting", "md___users_ryanbrown__downloads_envirohome_simulator__troubleshooting.html", null ],
     [ "Bug List", "bug.html", null ],
     [ "Packages", "namespaces.html", [
       [ "Packages", "namespaces.html", "namespaces_dup" ]
