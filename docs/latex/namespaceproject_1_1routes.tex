@@ -1,0 +1,115 @@
+\hypertarget{namespaceproject_1_1routes}{}\doxysection{project.\+routes Namespace Reference}
+\label{namespaceproject_1_1routes}\index{project.routes@{project.routes}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classproject_1_1routes_1_1_usage_schema}{Usage\+Schema}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespaceproject_1_1routes_a258af4b830d15aad66c352dd634b31d0}{hello\+\_\+world}} ()
+\begin{DoxyCompactList}\small\item\em Configure basic route for testing. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespaceproject_1_1routes_a90e001fd5b17a207c2f9a755cd774e30}{login}} ()
+\item 
+def \mbox{\hyperlink{namespaceproject_1_1routes_a7e0f6ae0af1e82e69d6344f74480ae5c}{new\+\_\+user}} ()
+\item 
+def \mbox{\hyperlink{namespaceproject_1_1routes_a249ee5918ca903ca5efb27df23351e5b}{get\+\_\+devices}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{namespaceproject_1_1routes_a249ee5918ca903ca5efb27df23351e5b}{get\+\_\+devices()}} instatiates a session to the database and parses everything in the devices table formats it into J\+S\+ON Returns all devices in J\+S\+ON format \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespaceproject_1_1routes_ae97c1c7f72d9de0f720941eef67656d1}{get\+\_\+device}} (device\+\_\+pk)
+\item 
+def \mbox{\hyperlink{namespaceproject_1_1routes_a02fa353dd28f33b10560a15486b6df18}{get\+\_\+floorplan}} ()
+\item 
+def \mbox{\hyperlink{namespaceproject_1_1routes_aceff101579ab63253c18989d7fd906d9}{get\+\_\+usage}} (device\+\_\+pk, date\+\_\+pk, time\+\_\+pk)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceproject_1_1routes_a61b27fc23230a8fabe70b2d7f5c91434}{ma}} = Marshmallow(\mbox{\hyperlink{namespaceproject_ab11918f1ac1b7b4507b1bec9ca132cde}{app}})
+\item 
+\mbox{\hyperlink{namespaceproject_1_1routes_a5059417bb0d9e75433a4a49bede1b76c}{usage\+\_\+schema}} = \mbox{\hyperlink{classproject_1_1routes_1_1_usage_schema}{Usage\+Schema}}(many=True)
+\item 
+\mbox{\hyperlink{namespaceproject_1_1routes_afc48658f53942bba025368c939b2f8d8}{methods}}
+\begin{DoxyCompactList}\small\item\em Register new user method. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceproject_1_1routes_ae97c1c7f72d9de0f720941eef67656d1}\label{namespaceproject_1_1routes_ae97c1c7f72d9de0f720941eef67656d1}} 
+\index{project.routes@{project.routes}!get\_device@{get\_device}}
+\index{get\_device@{get\_device}!project.routes@{project.routes}}
+\doxysubsubsection{\texorpdfstring{get\_device()}{get\_device()}}
+{\footnotesize\ttfamily def project.\+routes.\+get\+\_\+device (\begin{DoxyParamCaption}\item[{}]{device\+\_\+pk }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{namespaceproject_1_1routes_a249ee5918ca903ca5efb27df23351e5b}\label{namespaceproject_1_1routes_a249ee5918ca903ca5efb27df23351e5b}} 
+\index{project.routes@{project.routes}!get\_devices@{get\_devices}}
+\index{get\_devices@{get\_devices}!project.routes@{project.routes}}
+\doxysubsubsection{\texorpdfstring{get\_devices()}{get\_devices()}}
+{\footnotesize\ttfamily def project.\+routes.\+get\+\_\+devices (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{namespaceproject_1_1routes_a249ee5918ca903ca5efb27df23351e5b}{get\+\_\+devices()}} instatiates a session to the database and parses everything in the devices table formats it into J\+S\+ON Returns all devices in J\+S\+ON format 
+
+\mbox{\Hypertarget{namespaceproject_1_1routes_a02fa353dd28f33b10560a15486b6df18}\label{namespaceproject_1_1routes_a02fa353dd28f33b10560a15486b6df18}} 
+\index{project.routes@{project.routes}!get\_floorplan@{get\_floorplan}}
+\index{get\_floorplan@{get\_floorplan}!project.routes@{project.routes}}
+\doxysubsubsection{\texorpdfstring{get\_floorplan()}{get\_floorplan()}}
+{\footnotesize\ttfamily def project.\+routes.\+get\+\_\+floorplan (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{namespaceproject_1_1routes_aceff101579ab63253c18989d7fd906d9}\label{namespaceproject_1_1routes_aceff101579ab63253c18989d7fd906d9}} 
+\index{project.routes@{project.routes}!get\_usage@{get\_usage}}
+\index{get\_usage@{get\_usage}!project.routes@{project.routes}}
+\doxysubsubsection{\texorpdfstring{get\_usage()}{get\_usage()}}
+{\footnotesize\ttfamily def project.\+routes.\+get\+\_\+usage (\begin{DoxyParamCaption}\item[{}]{device\+\_\+pk,  }\item[{}]{date\+\_\+pk,  }\item[{}]{time\+\_\+pk }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{namespaceproject_1_1routes_a258af4b830d15aad66c352dd634b31d0}\label{namespaceproject_1_1routes_a258af4b830d15aad66c352dd634b31d0}} 
+\index{project.routes@{project.routes}!hello\_world@{hello\_world}}
+\index{hello\_world@{hello\_world}!project.routes@{project.routes}}
+\doxysubsubsection{\texorpdfstring{hello\_world()}{hello\_world()}}
+{\footnotesize\ttfamily def project.\+routes.\+hello\+\_\+world (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Configure basic route for testing. 
+
+\mbox{\Hypertarget{namespaceproject_1_1routes_a90e001fd5b17a207c2f9a755cd774e30}\label{namespaceproject_1_1routes_a90e001fd5b17a207c2f9a755cd774e30}} 
+\index{project.routes@{project.routes}!login@{login}}
+\index{login@{login}!project.routes@{project.routes}}
+\doxysubsubsection{\texorpdfstring{login()}{login()}}
+{\footnotesize\ttfamily def project.\+routes.\+login (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{namespaceproject_1_1routes_a7e0f6ae0af1e82e69d6344f74480ae5c}\label{namespaceproject_1_1routes_a7e0f6ae0af1e82e69d6344f74480ae5c}} 
+\index{project.routes@{project.routes}!new\_user@{new\_user}}
+\index{new\_user@{new\_user}!project.routes@{project.routes}}
+\doxysubsubsection{\texorpdfstring{new\_user()}{new\_user()}}
+{\footnotesize\ttfamily def project.\+routes.\+new\+\_\+user (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespaceproject_1_1routes_a61b27fc23230a8fabe70b2d7f5c91434}\label{namespaceproject_1_1routes_a61b27fc23230a8fabe70b2d7f5c91434}} 
+\index{project.routes@{project.routes}!ma@{ma}}
+\index{ma@{ma}!project.routes@{project.routes}}
+\doxysubsubsection{\texorpdfstring{ma}{ma}}
+{\footnotesize\ttfamily project.\+routes.\+ma = Marshmallow(\mbox{\hyperlink{namespaceproject_ab11918f1ac1b7b4507b1bec9ca132cde}{app}})}
+
+\mbox{\Hypertarget{namespaceproject_1_1routes_afc48658f53942bba025368c939b2f8d8}\label{namespaceproject_1_1routes_afc48658f53942bba025368c939b2f8d8}} 
+\index{project.routes@{project.routes}!methods@{methods}}
+\index{methods@{methods}!project.routes@{project.routes}}
+\doxysubsubsection{\texorpdfstring{methods}{methods}}
+{\footnotesize\ttfamily project.\+routes.\+methods}
+
+
+
+Register new user method. 
+
+\mbox{\hyperlink{namespaceproject_1_1routes_aceff101579ab63253c18989d7fd906d9}{get\+\_\+usage()}}
+
+\mbox{\hyperlink{namespaceproject_1_1routes_a02fa353dd28f33b10560a15486b6df18}{get\+\_\+floorplan()}}
+
+\mbox{\hyperlink{namespaceproject_1_1routes_ae97c1c7f72d9de0f720941eef67656d1}{get\+\_\+device()}} \mbox{\Hypertarget{namespaceproject_1_1routes_a5059417bb0d9e75433a4a49bede1b76c}\label{namespaceproject_1_1routes_a5059417bb0d9e75433a4a49bede1b76c}} 
+\index{project.routes@{project.routes}!usage\_schema@{usage\_schema}}
+\index{usage\_schema@{usage\_schema}!project.routes@{project.routes}}
+\doxysubsubsection{\texorpdfstring{usage\_schema}{usage\_schema}}
+{\footnotesize\ttfamily project.\+routes.\+usage\+\_\+schema = \mbox{\hyperlink{classproject_1_1routes_1_1_usage_schema}{Usage\+Schema}}(many=True)}
+
