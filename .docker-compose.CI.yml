@@ -5,7 +5,7 @@ services:
     # Build directory relative to compose file
     build: 
       context: ./services/web
-      dockerfile: /opt/Dockerfile
+      dockerfile: opt/Dockerfile
 
     # Python command to run service
     command: python manage.py run -h 0.0.0.0
