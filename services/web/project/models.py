@@ -14,25 +14,34 @@ from flask_serialize import FlaskSerializeMixin
 from project import app, db
 
 
-## Create user table in database, with id, email, and active columns
+## \brief Create user table
 #
+# Create user table in database, with id, email, and active columns
 class User(db.Model, FlaskSerializeMixin):
+    ## \brief Table of users
+    #
+    #
     __tablename__ = "users"
 
-    ## \brief 
+    ## \brief Stores id
     #
+    # Stores id of user 
     id = db.Column(db.Integer, primary_key=True)
-    ## \brief 
+    ## \brief Stores username
     #
+    # Stores username of the user
     username = db.Column(db.String(128), unique=True, nullable=False)
-    ## \brief 
+    ## \brief Stores email
     #
+    # Stores the email of the user
     email = db.Column(db.String(128), unique=True, nullable=True)
-    ## \brief 
+    ## \brief Stores password hash
     #
+    # Stores the password hash of the user
     password_hash = db.Column(db.String(128), index=True, nullable=False)
-    ## \brief 
+    ## \brief Stores active status
     #
+    # 
     active = db.Column(db.Boolean(), default=True, nullable=False)
 
     # def __init__(self, username, email, password_hash):
@@ -46,125 +55,163 @@ class User(db.Model, FlaskSerializeMixin):
     # def verify_password(self, password):
     #     return pwd_context.verify(password, self.password_hash)
 
-## Create devices table in database, with id, name and type columns
+## \brief Create devices table
 #
+# Create devices table in database, with id, name and type columns
 class Devices(db.Model, FlaskSerializeMixin):
+    ## \brief Table of devices
+    #
+    #
     __tablename__ = 'devices'
 
-    ## \brief 
+    ## \brief Stores id
     #
+    # Stores id of the device
     device_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    ## \brief 
+    ## \brief Stores mac address
     #
+    # Stores the mac address of the device
     mac_addr = db.Column(db.String(17), nullable=True)
-    ## \brief 
+    ## \brief Stores name
     #
+    # Stores name of the device
     device_name = db.Column(db.String(64), nullable=False)
-    ## \brief 
+    ## \brief Stores power rating
     #
+    # Stores the power rating of the device
     rated_power = db.Column(db.Integer, nullable=False)
-    ## \brief 
+    ## \brief Stores device type
     #
+    # Stores the type of the device
     device_type = db.Column(db.Enum('tv', 'plug', 'lights',
                                     name='device_type'), nullable=False)
-    ## \brief 
+    ## \brief Stores faults
     #
+    # Stores whether there are any faults with the devicde
     fault = db.Column(db.Boolean, default=False, nullable=False)
-    ## \brief 
+    ## \brief Stores on state
     #
+    # Stores whether the device is on or not
     on = db.Column(db.Boolean, default=False, nullable=False)
-    ## \brief 
+    ## \brief Stores room
     #
+    # Stores the room where the device is located
     room = db.Column(db.Enum('living_room', 'kitchen', 'outside', name='room'),
                      nullable=False)
-    ## \brief 
+    ## \brief Stores TV
     #
+    # Stores the TV device
     tv = db.relationship('TV', backref='device', uselist=False)
-    ## \brief 
+    ## \brief Stores thermometer 
     #
+    # Stores the thermometer device
     therm = db.relationship('Thermostat', backref='device', uselist=False)
-    ## \brief 
+    ## \brief Stores plug
     #
+    # Stores the plug device 
     plug = db.relationship('Plug', backref='device', uselist=False)
-    ## \brief 
+    ## \brief Stores light
     #
+    # Stores the light device
     light = db.relationship('Lights', backref='device', uselist=False)
-    ## \brief 
-    #
+    ## \brief Stores usage
+    # 
+    # Stores the energy usage of the devicde
     usage = db.relationship('Usage', backref='device', uselist=False)
 
-## Create TV table in database, with id, channel, output and volume columns
+## \brief create TV table
 #
+# Create TV table in database, with id, channel, output and volume columns
 class TV(db.Model, FlaskSerializeMixin):
-    ## \brief 
+    ## \brief Stores id
     #
+    # Stores the id of the TV
     tv_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    ## \brief 
+    ## \brief Stores device id
     #
+    # Stores the id of the device
     device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))
-    ## \brief 
+    ## \brief Stores channel
     #
+    # Stores the channel of the TV
     channel = db.Column(db.Integer, default=1)
-    ## \brief 
+    ## \brief Stores output
     #
+    # Stores the selected output of the TV
     output = db.Column(db.Enum('HDMI1', 'HDMI2', 'ANT', 'DVD', 'VIDEO',
                        name='channel'), default='HDMI1')
-    ## \brief 
+    ## \brief Stores volume
     #
+    # Stores the current volume of the TV
     volume = db.Column(db.Integer, default=100)
 
-## Create thermostat table in database, with id and temperature columns
+## \brief Create thermostat table
 #
+# Create thermostat table in database, with id and temperature columns
 class Thermostat(db.Model, FlaskSerializeMixin):
-    ## \brief 
+    ## \brief Stores id
     #
+    # Stores the id of the thermometer 
     therm_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    ## \brief 
+    ## \brief Stores device id
     #
+    # Stores the id of the device
     device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))
-    ## \brief 
+    ## \brief Stores temperature
     #
+    # Stores the temperature of the thermometer
     temp = db.Column(db.Integer, default=23)
 
-## Create plug table in database, with id columns
+## \brief Create plug table
 #
+# Create plug table in database, with id columns
 class Plug(db.Model, FlaskSerializeMixin):
     ## \brief stores the id of the plug
+    #
     #
     plug_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     ## \brief stores the id of the device
     #
+    #
     device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))
 
-## Create lights table in database, with id, intensity, and colour columns
+## \brief Create lights table
 #
+# Create lights table in database, with id, intensity, and colour columns
 class Lights(db.Model, FlaskSerializeMixin):
-    ## \brief stores the id of the light
+    ## \brief Stores the id of the light
+    #
     #
     light_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    ## \brief stores the id of the device
+    ## \brief Stores the id of the device
+    #
     #
     device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))
-    ## \brief stores the intensity of the light.
+    ## \brief Stores the intensity of the light.
     # the settings are 0-100%, dimmer
     intensity = db.Column(db.Integer, default=1) 
-    ## \brief stores the colour of the light
+    ## \brief Stores the colour of the light
     # RGB values
     colour = db.Column(db.Integer, default=0)
 
-## Create usage table in database, with id, date, time and energy usage columns
+## \brief Create usage table
 #
+# Create usage table in database, with id, date, time and energy usage columns
 class Usage(db.Model, FlaskSerializeMixin):
     ## \brief stores id of the device
+    #
     #
     device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'),
                           primary_key=True, nullable=False)
     ## \brief stores the date
     #
+    #
     date = db.Column(db.Date, nullable=False, primary_key=True)
     ## \brief stores the time
     #
+    #
     time = db.Column(db.Time, nullable=False, primary_key=True)
     ## \brief  stores the energy usage
+    #
     #
     energy_usage = db.Column(db.Float)

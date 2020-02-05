@@ -1,0 +1,83 @@
+\hypertarget{classproject_1_1models_1_1_usage}{}\doxysection{project.\+models.\+Usage Class Reference}
+\label{classproject_1_1models_1_1_usage}\index{project.models.Usage@{project.models.Usage}}
+
+
+Create usage table.  
+
+
+Inheritance diagram for project.\+models.\+Usage\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classproject_1_1models_1_1_usage}
+\end{center}
+\end{figure}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_usage_a01cc212a186cb6ab076cf31e76cb3f11}{device\+\_\+id}}
+\begin{DoxyCompactList}\small\item\em stores id of the device \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_usage_aa3ae36e07acc01279d95aecfa1e368e3}{date}} = db.\+Column(db.\+Date, nullable=False, primary\+\_\+key=True)
+\begin{DoxyCompactList}\small\item\em stores the date \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_usage_a325945468744287f8b4ca24289cce09c}{time}} = db.\+Column(db.\+Time, nullable=False, primary\+\_\+key=True)
+\begin{DoxyCompactList}\small\item\em stores the time \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_usage_a27f65fc54ab3519e0ddbf82349dd047b}{energy\+\_\+usage}} = db.\+Column(db.\+Float)
+\begin{DoxyCompactList}\small\item\em stores the energy usage \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Create usage table. 
+
+Create usage table in database, with id, date, time and energy usage columns 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classproject_1_1models_1_1_usage_aa3ae36e07acc01279d95aecfa1e368e3}\label{classproject_1_1models_1_1_usage_aa3ae36e07acc01279d95aecfa1e368e3}} 
+\index{project.models.Usage@{project.models.Usage}!date@{date}}
+\index{date@{date}!project.models.Usage@{project.models.Usage}}
+\doxysubsubsection{\texorpdfstring{date}{date}}
+{\footnotesize\ttfamily project.\+models.\+Usage.\+date = db.\+Column(db.\+Date, nullable=False, primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+stores the date 
+
+\mbox{\Hypertarget{classproject_1_1models_1_1_usage_a01cc212a186cb6ab076cf31e76cb3f11}\label{classproject_1_1models_1_1_usage_a01cc212a186cb6ab076cf31e76cb3f11}} 
+\index{project.models.Usage@{project.models.Usage}!device\_id@{device\_id}}
+\index{device\_id@{device\_id}!project.models.Usage@{project.models.Usage}}
+\doxysubsubsection{\texorpdfstring{device\_id}{device\_id}}
+{\footnotesize\ttfamily project.\+models.\+Usage.\+device\+\_\+id\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  db.Column(db.Integer, db.ForeignKey(\textcolor{stringliteral}{'devices.device\_id'}),}
+\DoxyCodeLine{                          primary\_key=\textcolor{keyword}{True}, nullable=\textcolor{keyword}{False})}
+
+\end{DoxyCode}
+
+
+stores id of the device 
+
+\mbox{\Hypertarget{classproject_1_1models_1_1_usage_a27f65fc54ab3519e0ddbf82349dd047b}\label{classproject_1_1models_1_1_usage_a27f65fc54ab3519e0ddbf82349dd047b}} 
+\index{project.models.Usage@{project.models.Usage}!energy\_usage@{energy\_usage}}
+\index{energy\_usage@{energy\_usage}!project.models.Usage@{project.models.Usage}}
+\doxysubsubsection{\texorpdfstring{energy\_usage}{energy\_usage}}
+{\footnotesize\ttfamily project.\+models.\+Usage.\+energy\+\_\+usage = db.\+Column(db.\+Float)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+stores the energy usage 
+
+\mbox{\Hypertarget{classproject_1_1models_1_1_usage_a325945468744287f8b4ca24289cce09c}\label{classproject_1_1models_1_1_usage_a325945468744287f8b4ca24289cce09c}} 
+\index{project.models.Usage@{project.models.Usage}!time@{time}}
+\index{time@{time}!project.models.Usage@{project.models.Usage}}
+\doxysubsubsection{\texorpdfstring{time}{time}}
+{\footnotesize\ttfamily project.\+models.\+Usage.\+time = db.\+Column(db.\+Time, nullable=False, primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+stores the time 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+services/web/project/models.\+py\end{DoxyCompactItemize}
