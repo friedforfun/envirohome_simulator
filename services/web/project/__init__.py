@@ -11,6 +11,7 @@
 
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 ## from passlib.apps import custom_app_context as pwd_context
 #
@@ -20,6 +21,7 @@ app = Flask(__name__)
 #
 app.config.from_object("project.config.Config")
 db = SQLAlchemy(app)
+CORS(app)
 
 from project import routes, models
 

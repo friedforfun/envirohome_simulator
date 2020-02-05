@@ -67,8 +67,6 @@ def new_user():
 
 @app.route("/api/devices", methods=["GET"])
 # @auth.login_required
-
-
 ## get_devices()
 # instatiates a session to the database and parses everything in the devices table
 # formats it into JSON
@@ -80,7 +78,9 @@ def get_devices():
 #
 @app.route("/api/device/<device_pk>", methods=["GET"])
 def get_device(device_pk):
+
     return Devices.get_delete_put_post(device_pk)
+
 
 ##
 #
