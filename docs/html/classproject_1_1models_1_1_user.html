@@ -91,7 +91,7 @@ $(document).ready(function(){initNavTree('classproject_1_1models_1_1_user.html',
 </div><!--header-->
 <div class="contents">
 
-<p>Create user table in database, with id, email, and active columns.  
+<p>Create user table.  
  <a href="classproject_1_1models_1_1_user.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for project.models.User:</div>
@@ -102,31 +102,181 @@ Inheritance diagram for project.models.User:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a9835b317224bc05541093164a1d67893"><td class="memItemLeft" align="right" valign="top"><a id="a9835b317224bc05541093164a1d67893"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> = db.Column(db.Integer, primary_key=True)</td></tr>
+<tr class="memitem:a9835b317224bc05541093164a1d67893"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_user.html#a9835b317224bc05541093164a1d67893">id</a> = db.Column(db.Integer, primary_key=True)</td></tr>
+<tr class="memdesc:a9835b317224bc05541093164a1d67893"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores id.  <a href="classproject_1_1models_1_1_user.html#a9835b317224bc05541093164a1d67893">More...</a><br /></td></tr>
 <tr class="separator:a9835b317224bc05541093164a1d67893"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4953b9fefde160b1bec0344f2d021de"><td class="memItemLeft" align="right" valign="top"><a id="ad4953b9fefde160b1bec0344f2d021de"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>username</b> = db.Column(db.String(128), unique=True, nullable=False)</td></tr>
+<tr class="memitem:ad4953b9fefde160b1bec0344f2d021de"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_user.html#ad4953b9fefde160b1bec0344f2d021de">username</a> = db.Column(db.String(128), unique=True, nullable=False)</td></tr>
+<tr class="memdesc:ad4953b9fefde160b1bec0344f2d021de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores username.  <a href="classproject_1_1models_1_1_user.html#ad4953b9fefde160b1bec0344f2d021de">More...</a><br /></td></tr>
 <tr class="separator:ad4953b9fefde160b1bec0344f2d021de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c64cbcb09de18625b5bf279cfa4a1c7"><td class="memItemLeft" align="right" valign="top"><a id="a2c64cbcb09de18625b5bf279cfa4a1c7"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>email</b> = db.Column(db.String(128), unique=True, nullable=True)</td></tr>
+<tr class="memitem:a2c64cbcb09de18625b5bf279cfa4a1c7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_user.html#a2c64cbcb09de18625b5bf279cfa4a1c7">email</a> = db.Column(db.String(128), unique=True, nullable=True)</td></tr>
+<tr class="memdesc:a2c64cbcb09de18625b5bf279cfa4a1c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores email.  <a href="classproject_1_1models_1_1_user.html#a2c64cbcb09de18625b5bf279cfa4a1c7">More...</a><br /></td></tr>
 <tr class="separator:a2c64cbcb09de18625b5bf279cfa4a1c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a613cf8cf8937e325c72d600da985b382"><td class="memItemLeft" align="right" valign="top"><a id="a613cf8cf8937e325c72d600da985b382"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>password_hash</b> = db.Column(db.String(128), index=True, nullable=False)</td></tr>
+<tr class="memitem:a613cf8cf8937e325c72d600da985b382"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_user.html#a613cf8cf8937e325c72d600da985b382">password_hash</a> = db.Column(db.String(128), index=True, nullable=False)</td></tr>
+<tr class="memdesc:a613cf8cf8937e325c72d600da985b382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores password hash.  <a href="classproject_1_1models_1_1_user.html#a613cf8cf8937e325c72d600da985b382">More...</a><br /></td></tr>
 <tr class="separator:a613cf8cf8937e325c72d600da985b382"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31cee06e302c1704bc5441bf8069d34d"><td class="memItemLeft" align="right" valign="top"><a id="a31cee06e302c1704bc5441bf8069d34d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>active</b> = db.Column(db.Boolean(), default=True, nullable=False)</td></tr>
+<tr class="memitem:a31cee06e302c1704bc5441bf8069d34d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_user.html#a31cee06e302c1704bc5441bf8069d34d">active</a> = db.Column(db.Boolean(), default=True, nullable=False)</td></tr>
+<tr class="memdesc:a31cee06e302c1704bc5441bf8069d34d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores active status.  <a href="classproject_1_1models_1_1_user.html#a31cee06e302c1704bc5441bf8069d34d">More...</a><br /></td></tr>
 <tr class="separator:a31cee06e302c1704bc5441bf8069d34d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
-<tr class="memitem:a8c04b2ee5010523e2cba0bb79807bba0"><td class="memItemLeft" align="right" valign="top"><a id="a8c04b2ee5010523e2cba0bb79807bba0"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><b>__tablename__</b> = &quot;users&quot;</td></tr>
+<tr class="memitem:a8c04b2ee5010523e2cba0bb79807bba0"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_user.html#a8c04b2ee5010523e2cba0bb79807bba0">__tablename__</a> = &quot;users&quot;</td></tr>
+<tr class="memdesc:a8c04b2ee5010523e2cba0bb79807bba0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Table of users.  <a href="classproject_1_1models_1_1_user.html#a8c04b2ee5010523e2cba0bb79807bba0">More...</a><br /></td></tr>
 <tr class="separator:a8c04b2ee5010523e2cba0bb79807bba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Create user table in database, with id, email, and active columns. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>Create user table. </p>
+<p>Create user table in database, with id, email, and active columns </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a8c04b2ee5010523e2cba0bb79807bba0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c04b2ee5010523e2cba0bb79807bba0">&#9670;&nbsp;</a></span>__tablename__</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string project.models.User.__tablename__ = &quot;users&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Table of users. </p>
+
+</div>
+</div>
+<a id="a31cee06e302c1704bc5441bf8069d34d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31cee06e302c1704bc5441bf8069d34d">&#9670;&nbsp;</a></span>active</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">project.models.User.active = db.Column(db.Boolean(), default=True, nullable=False)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores active status. </p>
+
+</div>
+</div>
+<a id="a2c64cbcb09de18625b5bf279cfa4a1c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c64cbcb09de18625b5bf279cfa4a1c7">&#9670;&nbsp;</a></span>email</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">project.models.User.email = db.Column(db.String(128), unique=True, nullable=True)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores email. </p>
+<p>Stores the email of the user </p>
+
+</div>
+</div>
+<a id="a9835b317224bc05541093164a1d67893"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9835b317224bc05541093164a1d67893">&#9670;&nbsp;</a></span>id</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">project.models.User.id = db.Column(db.Integer, primary_key=True)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores id. </p>
+<p>Stores id of user </p>
+
+</div>
+</div>
+<a id="a613cf8cf8937e325c72d600da985b382"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a613cf8cf8937e325c72d600da985b382">&#9670;&nbsp;</a></span>password_hash</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">project.models.User.password_hash = db.Column(db.String(128), index=True, nullable=False)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores password hash. </p>
+<p>Stores the password hash of the user </p>
+
+</div>
+</div>
+<a id="ad4953b9fefde160b1bec0344f2d021de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4953b9fefde160b1bec0344f2d021de">&#9670;&nbsp;</a></span>username</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">project.models.User.username = db.Column(db.String(128), unique=True, nullable=False)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores username. </p>
+<p>Stores username of the user </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>services/web/project/models.py</li>
 </ul>
 </div><!-- contents -->

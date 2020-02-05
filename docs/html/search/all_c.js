@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['name_46',['name',['../scope_8txt.html#a160bc4c5fcaf842e9ff56661efb02e69',1,'scope.txt']]],
-  ['new_5fuser_47',['new_user',['../namespaceproject_1_1routes.html#a7e0f6ae0af1e82e69d6344f74480ae5c',1,'project::routes']]]
+  ['sqlalchemy_5fdatabase_5furi_34',['SQLALCHEMY_DATABASE_URI',['../classproject_1_1config_1_1_config.html#a4215807bb7fae4729946855836c3f51b',1,'project::config::Config']]],
+  ['sqlalchemy_5ftrack_5fmodifications_35',['SQLALCHEMY_TRACK_MODIFICATIONS',['../classproject_1_1config_1_1_config.html#ac46754a191eb1fe6a9ca6f3356bd29a3',1,'project::config::Config']]]
 ];

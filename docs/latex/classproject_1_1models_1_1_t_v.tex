@@ -2,7 +2,7 @@
 \label{classproject_1_1models_1_1_t_v}\index{project.models.TV@{project.models.TV}}
 
 
-Create \mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}} table in database, with id, channel, output and volume columns.  
+create \mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}} table  
 
 
 Inheritance diagram for project.\+models.\+TV\+:\begin{figure}[H]
@@ -14,27 +14,45 @@ Inheritance diagram for project.\+models.\+TV\+:\begin{figure}[H]
 \doxysubsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_t_v_a6f8b5a63652fb2ffc232527fe459a547}\label{classproject_1_1models_1_1_t_v_a6f8b5a63652fb2ffc232527fe459a547}} 
-{\bfseries tv\+\_\+id} = db.\+Column(db.\+Integer, primary\+\_\+key=True, autoincrement=True)
-\item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_t_v_a2ee648878916bf516e5f0353090e613b}\label{classproject_1_1models_1_1_t_v_a2ee648878916bf516e5f0353090e613b}} 
-{\bfseries device\+\_\+id} = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}devices.\+device\+\_\+id\textquotesingle{}))
-\item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_t_v_a0ead348f233f6a4ae3abb3aac62bae22}\label{classproject_1_1models_1_1_t_v_a0ead348f233f6a4ae3abb3aac62bae22}} 
-{\bfseries channel} = db.\+Column(db.\+Integer, default=1)
-\item 
-{\bfseries output}
-\item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_t_v_a0a25cdc81a35c5dad9ab36369a1eb702}\label{classproject_1_1models_1_1_t_v_a0a25cdc81a35c5dad9ab36369a1eb702}} 
-{\bfseries volume} = db.\+Column(db.\+Integer, default=100)
-\end{DoxyCompactItemize}
+\mbox{\hyperlink{classproject_1_1models_1_1_t_v_a6f8b5a63652fb2ffc232527fe459a547}{tv\+\_\+id}} = db.\+Column(db.\+Integer, primary\+\_\+key=True, autoincrement=True)
+\begin{DoxyCompactList}\small\item\em Stores id. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_t_v_a2ee648878916bf516e5f0353090e613b}{device\+\_\+id}} = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}devices.\+device\+\_\+id\textquotesingle{}))
+\begin{DoxyCompactList}\small\item\em Stores device id. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_t_v_a0ead348f233f6a4ae3abb3aac62bae22}{channel}} = db.\+Column(db.\+Integer, default=1)
+\begin{DoxyCompactList}\small\item\em Stores channel. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_t_v_a4e3d003e31dac0512a8f311fd09e7581}{output}}
+\begin{DoxyCompactList}\small\item\em Stores output. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_t_v_a0a25cdc81a35c5dad9ab36369a1eb702}{volume}} = db.\+Column(db.\+Integer, default=100)
+\begin{DoxyCompactList}\small\item\em Stores volume. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-Create \mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}} table in database, with id, channel, output and volume columns. 
+create \mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}} table 
+
+Create \mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}} table in database, with id, channel, output and volume columns 
 
 \doxysubsection{Member Data Documentation}
-\mbox{\Hypertarget{classproject_1_1models_1_1_t_v_a4e3d003e31dac0512a8f311fd09e7581}\label{classproject_1_1models_1_1_t_v_a4e3d003e31dac0512a8f311fd09e7581}} 
+\mbox{\Hypertarget{classproject_1_1models_1_1_t_v_a0ead348f233f6a4ae3abb3aac62bae22}\label{classproject_1_1models_1_1_t_v_a0ead348f233f6a4ae3abb3aac62bae22}} 
+\index{project.models.TV@{project.models.TV}!channel@{channel}}
+\index{channel@{channel}!project.models.TV@{project.models.TV}}
+\doxysubsubsection{\texorpdfstring{channel}{channel}}
+{\footnotesize\ttfamily project.\+models.\+T\+V.\+channel = db.\+Column(db.\+Integer, default=1)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores channel. 
+
+Stores the channel of the \mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}} \mbox{\Hypertarget{classproject_1_1models_1_1_t_v_a2ee648878916bf516e5f0353090e613b}\label{classproject_1_1models_1_1_t_v_a2ee648878916bf516e5f0353090e613b}} 
+\index{project.models.TV@{project.models.TV}!device\_id@{device\_id}}
+\index{device\_id@{device\_id}!project.models.TV@{project.models.TV}}
+\doxysubsubsection{\texorpdfstring{device\_id}{device\_id}}
+{\footnotesize\ttfamily project.\+models.\+T\+V.\+device\+\_\+id = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}devices.\+device\+\_\+id\textquotesingle{}))\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores device id. 
+
+Stores the id of the device \mbox{\Hypertarget{classproject_1_1models_1_1_t_v_a4e3d003e31dac0512a8f311fd09e7581}\label{classproject_1_1models_1_1_t_v_a4e3d003e31dac0512a8f311fd09e7581}} 
 \index{project.models.TV@{project.models.TV}!output@{output}}
 \index{output@{output}!project.models.TV@{project.models.TV}}
 \doxysubsubsection{\texorpdfstring{output}{output}}
@@ -47,6 +65,30 @@ Create \mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}} table in database, 
 
 \end{DoxyCode}
 
+
+Stores output. 
+
+Stores the selected output of the \mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}} \mbox{\Hypertarget{classproject_1_1models_1_1_t_v_a6f8b5a63652fb2ffc232527fe459a547}\label{classproject_1_1models_1_1_t_v_a6f8b5a63652fb2ffc232527fe459a547}} 
+\index{project.models.TV@{project.models.TV}!tv\_id@{tv\_id}}
+\index{tv\_id@{tv\_id}!project.models.TV@{project.models.TV}}
+\doxysubsubsection{\texorpdfstring{tv\_id}{tv\_id}}
+{\footnotesize\ttfamily project.\+models.\+T\+V.\+tv\+\_\+id = db.\+Column(db.\+Integer, primary\+\_\+key=True, autoincrement=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores id. 
+
+Stores the id of the \mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}} \mbox{\Hypertarget{classproject_1_1models_1_1_t_v_a0a25cdc81a35c5dad9ab36369a1eb702}\label{classproject_1_1models_1_1_t_v_a0a25cdc81a35c5dad9ab36369a1eb702}} 
+\index{project.models.TV@{project.models.TV}!volume@{volume}}
+\index{volume@{volume}!project.models.TV@{project.models.TV}}
+\doxysubsubsection{\texorpdfstring{volume}{volume}}
+{\footnotesize\ttfamily project.\+models.\+T\+V.\+volume = db.\+Column(db.\+Integer, default=100)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores volume. 
+
+Stores the current volume of the \mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}} 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

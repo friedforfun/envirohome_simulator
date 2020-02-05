@@ -90,7 +90,7 @@ $(document).ready(function(){initNavTree('classproject_1_1models_1_1_thermostat.
 </div><!--header-->
 <div class="contents">
 
-<p>Create thermostat table in database, with id and temperature columns.  
+<p>Create thermostat table.  
  <a href="classproject_1_1models_1_1_thermostat.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for project.models.Thermostat:</div>
@@ -101,19 +101,96 @@ Inheritance diagram for project.models.Thermostat:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:acf6bc0fe58b92852f58ab5b08d9acd13"><td class="memItemLeft" align="right" valign="top"><a id="acf6bc0fe58b92852f58ab5b08d9acd13"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>therm_id</b> = db.Column(db.Integer, primary_key=True, autoincrement=True)</td></tr>
+<tr class="memitem:acf6bc0fe58b92852f58ab5b08d9acd13"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_thermostat.html#acf6bc0fe58b92852f58ab5b08d9acd13">therm_id</a> = db.Column(db.Integer, primary_key=True, autoincrement=True)</td></tr>
+<tr class="memdesc:acf6bc0fe58b92852f58ab5b08d9acd13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores id.  <a href="classproject_1_1models_1_1_thermostat.html#acf6bc0fe58b92852f58ab5b08d9acd13">More...</a><br /></td></tr>
 <tr class="separator:acf6bc0fe58b92852f58ab5b08d9acd13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a7f450d6ca38a5492f09acf2879fa58"><td class="memItemLeft" align="right" valign="top"><a id="a7a7f450d6ca38a5492f09acf2879fa58"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>device_id</b> = db.Column(db.Integer, db.ForeignKey('devices.device_id'))</td></tr>
+<tr class="memitem:a7a7f450d6ca38a5492f09acf2879fa58"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_thermostat.html#a7a7f450d6ca38a5492f09acf2879fa58">device_id</a> = db.Column(db.Integer, db.ForeignKey('devices.device_id'))</td></tr>
+<tr class="memdesc:a7a7f450d6ca38a5492f09acf2879fa58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores device id.  <a href="classproject_1_1models_1_1_thermostat.html#a7a7f450d6ca38a5492f09acf2879fa58">More...</a><br /></td></tr>
 <tr class="separator:a7a7f450d6ca38a5492f09acf2879fa58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5d4d25a8992a383725550044d7a852a"><td class="memItemLeft" align="right" valign="top"><a id="ad5d4d25a8992a383725550044d7a852a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>temp</b> = db.Column(db.Integer, default=23)</td></tr>
+<tr class="memitem:ad5d4d25a8992a383725550044d7a852a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_thermostat.html#ad5d4d25a8992a383725550044d7a852a">temp</a> = db.Column(db.Integer, default=23)</td></tr>
+<tr class="memdesc:ad5d4d25a8992a383725550044d7a852a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores temperature.  <a href="classproject_1_1models_1_1_thermostat.html#ad5d4d25a8992a383725550044d7a852a">More...</a><br /></td></tr>
 <tr class="separator:ad5d4d25a8992a383725550044d7a852a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Create thermostat table in database, with id and temperature columns. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>Create thermostat table. </p>
+<p>Create thermostat table in database, with id and temperature columns </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a7a7f450d6ca38a5492f09acf2879fa58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a7f450d6ca38a5492f09acf2879fa58">&#9670;&nbsp;</a></span>device_id</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">project.models.Thermostat.device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores device id. </p>
+<p>Stores the id of the device </p>
+
+</div>
+</div>
+<a id="ad5d4d25a8992a383725550044d7a852a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5d4d25a8992a383725550044d7a852a">&#9670;&nbsp;</a></span>temp</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">project.models.Thermostat.temp = db.Column(db.Integer, default=23)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores temperature. </p>
+<p>Stores the temperature of the thermometer </p>
+
+</div>
+</div>
+<a id="acf6bc0fe58b92852f58ab5b08d9acd13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf6bc0fe58b92852f58ab5b08d9acd13">&#9670;&nbsp;</a></span>therm_id</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">project.models.Thermostat.therm_id = db.Column(db.Integer, primary_key=True, autoincrement=True)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores id. </p>
+<p>Stores the id of the thermometer </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>services/web/project/models.py</li>
 </ul>
 </div><!-- contents -->

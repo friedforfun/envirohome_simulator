@@ -90,7 +90,7 @@ $(document).ready(function(){initNavTree('classproject_1_1models_1_1_plug.html',
 </div><!--header-->
 <div class="contents">
 
-<p>Create plug table in database, with id columns.  
+<p>Create plug table.  
  <a href="classproject_1_1models_1_1_plug.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for project.models.Plug:</div>
@@ -101,18 +101,66 @@ Inheritance diagram for project.models.Plug:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a8974e9299ea1270523d93f27b2e461d1"><td class="memItemLeft" align="right" valign="top"><a id="a8974e9299ea1270523d93f27b2e461d1"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_plug.html#a8974e9299ea1270523d93f27b2e461d1">plug_id</a> = db.Column(db.Integer, primary_key=True, autoincrement=True)</td></tr>
-<tr class="memdesc:a8974e9299ea1270523d93f27b2e461d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">stores the id of the plug <br /></td></tr>
+<tr class="memitem:a8974e9299ea1270523d93f27b2e461d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_plug.html#a8974e9299ea1270523d93f27b2e461d1">plug_id</a> = db.Column(db.Integer, primary_key=True, autoincrement=True)</td></tr>
+<tr class="memdesc:a8974e9299ea1270523d93f27b2e461d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">stores the id of the plug  <a href="classproject_1_1models_1_1_plug.html#a8974e9299ea1270523d93f27b2e461d1">More...</a><br /></td></tr>
 <tr class="separator:a8974e9299ea1270523d93f27b2e461d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf5fa8f30d4641fc95b7fd63273991ff"><td class="memItemLeft" align="right" valign="top"><a id="adf5fa8f30d4641fc95b7fd63273991ff"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_plug.html#adf5fa8f30d4641fc95b7fd63273991ff">device_id</a> = db.Column(db.Integer, db.ForeignKey('devices.device_id'))</td></tr>
-<tr class="memdesc:adf5fa8f30d4641fc95b7fd63273991ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">stores the id of the device <br /></td></tr>
+<tr class="memitem:adf5fa8f30d4641fc95b7fd63273991ff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_plug.html#adf5fa8f30d4641fc95b7fd63273991ff">device_id</a> = db.Column(db.Integer, db.ForeignKey('devices.device_id'))</td></tr>
+<tr class="memdesc:adf5fa8f30d4641fc95b7fd63273991ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">stores the id of the device  <a href="classproject_1_1models_1_1_plug.html#adf5fa8f30d4641fc95b7fd63273991ff">More...</a><br /></td></tr>
 <tr class="separator:adf5fa8f30d4641fc95b7fd63273991ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Create plug table in database, with id columns. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>Create plug table. </p>
+<p>Create plug table in database, with id columns </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="adf5fa8f30d4641fc95b7fd63273991ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf5fa8f30d4641fc95b7fd63273991ff">&#9670;&nbsp;</a></span>device_id</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">project.models.Plug.device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>stores the id of the device </p>
+
+</div>
+</div>
+<a id="a8974e9299ea1270523d93f27b2e461d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8974e9299ea1270523d93f27b2e461d1">&#9670;&nbsp;</a></span>plug_id</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">project.models.Plug.plug_id = db.Column(db.Integer, primary_key=True, autoincrement=True)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>stores the id of the plug </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>services/web/project/models.py</li>
 </ul>
 </div><!-- contents -->

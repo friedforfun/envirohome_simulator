@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['colour_38',['colour',['../classproject_1_1models_1_1_lights.html#a644273ef7ee2cb5944f108457b51e763',1,'project::models::Lights']]]
+  ['_5f_5ftablename_5f_5f_62',['__tablename__',['../classproject_1_1models_1_1_user.html#a8c04b2ee5010523e2cba0bb79807bba0',1,'project.models.User.__tablename__()'],['../classproject_1_1models_1_1_devices.html#ae1fe832b808ff27879a09b7f5f560f31',1,'project.models.Devices.__tablename__()']]]
 ];

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['light_144',['light',['../classproject_1_1models_1_1_devices.html#a3d360a087d8cc0d7663ef307aa05ac26',1,'project::models::Devices']]],
-  ['light_5fid_145',['light_id',['../classproject_1_1models_1_1_lights.html#a433924d5a463079e8aab976ccd2707b0',1,'project::models::Lights']]]
+  ['mac_5faddr_78',['mac_addr',['../classproject_1_1models_1_1_devices.html#a0ac05799397f0596aba0b0d3048c1251',1,'project::models::Devices']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['thermostat_18',['Thermostat',['../classproject_1_1models_1_1_thermostat.html',1,'project::models']]],
-  ['time_19',['time',['../classproject_1_1models_1_1_usage.html#a325945468744287f8b4ca24289cce09c',1,'project::models::Usage']]],
-  ['tv_20',['TV',['../classproject_1_1models_1_1_t_v.html',1,'project::models']]]
+  ['on_26',['on',['../classproject_1_1models_1_1_devices.html#aae94632ea195414260843095d651f625',1,'project::models::Devices']]],
+  ['output_27',['output',['../classproject_1_1models_1_1_t_v.html#a4e3d003e31dac0512a8f311fd09e7581',1,'project::models::TV']]]
 ];

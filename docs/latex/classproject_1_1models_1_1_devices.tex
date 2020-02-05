@@ -2,7 +2,7 @@
 \label{classproject_1_1models_1_1_devices}\index{project.models.Devices@{project.models.Devices}}
 
 
-Create devices table in database, with id, name and type columns.  
+Create devices table.  
 
 
 Inheritance diagram for project.\+models.\+Devices\+:\begin{figure}[H]
@@ -14,56 +14,76 @@ Inheritance diagram for project.\+models.\+Devices\+:\begin{figure}[H]
 \doxysubsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a35d4087f342ff001ee4264f6d67a5535}\label{classproject_1_1models_1_1_devices_a35d4087f342ff001ee4264f6d67a5535}} 
-{\bfseries device\+\_\+id} = db.\+Column(db.\+Integer, primary\+\_\+key=True, autoincrement=True)
-\item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a0ac05799397f0596aba0b0d3048c1251}\label{classproject_1_1models_1_1_devices_a0ac05799397f0596aba0b0d3048c1251}} 
-{\bfseries mac\+\_\+addr} = db.\+Column(db.\+String(17), nullable=True)
-\item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a0cdf3bc64c6501df504f906222c9aaa8}\label{classproject_1_1models_1_1_devices_a0cdf3bc64c6501df504f906222c9aaa8}} 
-{\bfseries device\+\_\+name} = db.\+Column(db.\+String(64), nullable=False)
-\item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a7e354fdc1f91f3e24ca924d90a34809d}\label{classproject_1_1models_1_1_devices_a7e354fdc1f91f3e24ca924d90a34809d}} 
-{\bfseries rated\+\_\+power} = db.\+Column(db.\+Integer, nullable=False)
-\item 
-{\bfseries device\+\_\+type}
-\item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a09735a0989d4c99757162e9b9946d038}\label{classproject_1_1models_1_1_devices_a09735a0989d4c99757162e9b9946d038}} 
-{\bfseries fault} = db.\+Column(db.\+Boolean, default=False, nullable=False)
-\item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_devices_aae94632ea195414260843095d651f625}\label{classproject_1_1models_1_1_devices_aae94632ea195414260843095d651f625}} 
-{\bfseries on} = db.\+Column(db.\+Boolean, default=False, nullable=False)
-\item 
-{\bfseries room}
-\item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a2814658a035f04a786c59a8c92ee519e}\label{classproject_1_1models_1_1_devices_a2814658a035f04a786c59a8c92ee519e}} 
-{\bfseries tv} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)
-\item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_devices_ae21ca9d5d07a5c880c6632f7dbe0026f}\label{classproject_1_1models_1_1_devices_ae21ca9d5d07a5c880c6632f7dbe0026f}} 
-{\bfseries therm} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_thermostat}{Thermostat}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)
-\item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a47c490174866cd657dc1eccca6bc74e4}\label{classproject_1_1models_1_1_devices_a47c490174866cd657dc1eccca6bc74e4}} 
-{\bfseries plug} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_plug}{Plug}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)
-\item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a3d360a087d8cc0d7663ef307aa05ac26}\label{classproject_1_1models_1_1_devices_a3d360a087d8cc0d7663ef307aa05ac26}} 
-{\bfseries light} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_lights}{Lights}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)
-\item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_devices_ac4cb2e965b50d651bf16a1d8f3b9fd33}\label{classproject_1_1models_1_1_devices_ac4cb2e965b50d651bf16a1d8f3b9fd33}} 
-{\bfseries usage} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_usage}{Usage}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)
-\end{DoxyCompactItemize}
+\mbox{\hyperlink{classproject_1_1models_1_1_devices_a35d4087f342ff001ee4264f6d67a5535}{device\+\_\+id}} = db.\+Column(db.\+Integer, primary\+\_\+key=True, autoincrement=True)
+\begin{DoxyCompactList}\small\item\em Stores id. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_devices_a0ac05799397f0596aba0b0d3048c1251}{mac\+\_\+addr}} = db.\+Column(db.\+String(17), nullable=True)
+\begin{DoxyCompactList}\small\item\em Stores mac address. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_devices_a0cdf3bc64c6501df504f906222c9aaa8}{device\+\_\+name}} = db.\+Column(db.\+String(64), nullable=False)
+\begin{DoxyCompactList}\small\item\em Stores name. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_devices_a7e354fdc1f91f3e24ca924d90a34809d}{rated\+\_\+power}} = db.\+Column(db.\+Integer, nullable=False)
+\begin{DoxyCompactList}\small\item\em Stores power rating. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_devices_aa287412ecf3edfac957ebb39143e0c89}{device\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Stores device type. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_devices_a09735a0989d4c99757162e9b9946d038}{fault}} = db.\+Column(db.\+Boolean, default=False, nullable=False)
+\begin{DoxyCompactList}\small\item\em Stores faults. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_devices_aae94632ea195414260843095d651f625}{on}} = db.\+Column(db.\+Boolean, default=False, nullable=False)
+\begin{DoxyCompactList}\small\item\em Stores on state. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_devices_a5e0b926cfe554446a76f3d86593c08cd}{room}}
+\begin{DoxyCompactList}\small\item\em Stores room. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_devices_a2814658a035f04a786c59a8c92ee519e}{tv}} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)
+\begin{DoxyCompactList}\small\item\em Stores \mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_devices_ae21ca9d5d07a5c880c6632f7dbe0026f}{therm}} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_thermostat}{Thermostat}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)
+\begin{DoxyCompactList}\small\item\em Stores thermometer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_devices_a47c490174866cd657dc1eccca6bc74e4}{plug}} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_plug}{Plug}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)
+\begin{DoxyCompactList}\small\item\em Stores plug. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_devices_a3d360a087d8cc0d7663ef307aa05ac26}{light}} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_lights}{Lights}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)
+\begin{DoxyCompactList}\small\item\em Stores light. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classproject_1_1models_1_1_devices_ac4cb2e965b50d651bf16a1d8f3b9fd33}{usage}} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_usage}{Usage}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)
+\begin{DoxyCompactList}\small\item\em Stores usage. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Static Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classproject_1_1models_1_1_devices_ae1fe832b808ff27879a09b7f5f560f31}\label{classproject_1_1models_1_1_devices_ae1fe832b808ff27879a09b7f5f560f31}} 
-string {\bfseries \+\_\+\+\_\+tablename\+\_\+\+\_\+} = \textquotesingle{}devices\textquotesingle{}
-\end{DoxyCompactItemize}
+string \mbox{\hyperlink{classproject_1_1models_1_1_devices_ae1fe832b808ff27879a09b7f5f560f31}{\+\_\+\+\_\+tablename\+\_\+\+\_\+}} = \textquotesingle{}devices\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em Table of devices. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-Create devices table in database, with id, name and type columns. 
+Create devices table. 
+
+Create devices table in database, with id, name and type columns 
 
 \doxysubsection{Member Data Documentation}
-\mbox{\Hypertarget{classproject_1_1models_1_1_devices_aa287412ecf3edfac957ebb39143e0c89}\label{classproject_1_1models_1_1_devices_aa287412ecf3edfac957ebb39143e0c89}} 
+\mbox{\Hypertarget{classproject_1_1models_1_1_devices_ae1fe832b808ff27879a09b7f5f560f31}\label{classproject_1_1models_1_1_devices_ae1fe832b808ff27879a09b7f5f560f31}} 
+\index{project.models.Devices@{project.models.Devices}!\_\_tablename\_\_@{\_\_tablename\_\_}}
+\index{\_\_tablename\_\_@{\_\_tablename\_\_}!project.models.Devices@{project.models.Devices}}
+\doxysubsubsection{\texorpdfstring{\_\_tablename\_\_}{\_\_tablename\_\_}}
+{\footnotesize\ttfamily string project.\+models.\+Devices.\+\_\+\+\_\+tablename\+\_\+\+\_\+ = \textquotesingle{}devices\textquotesingle{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Table of devices. 
+
+\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a35d4087f342ff001ee4264f6d67a5535}\label{classproject_1_1models_1_1_devices_a35d4087f342ff001ee4264f6d67a5535}} 
+\index{project.models.Devices@{project.models.Devices}!device\_id@{device\_id}}
+\index{device\_id@{device\_id}!project.models.Devices@{project.models.Devices}}
+\doxysubsubsection{\texorpdfstring{device\_id}{device\_id}}
+{\footnotesize\ttfamily project.\+models.\+Devices.\+device\+\_\+id = db.\+Column(db.\+Integer, primary\+\_\+key=True, autoincrement=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores id. 
+
+Stores id of the device \mbox{\Hypertarget{classproject_1_1models_1_1_devices_a0cdf3bc64c6501df504f906222c9aaa8}\label{classproject_1_1models_1_1_devices_a0cdf3bc64c6501df504f906222c9aaa8}} 
+\index{project.models.Devices@{project.models.Devices}!device\_name@{device\_name}}
+\index{device\_name@{device\_name}!project.models.Devices@{project.models.Devices}}
+\doxysubsubsection{\texorpdfstring{device\_name}{device\_name}}
+{\footnotesize\ttfamily project.\+models.\+Devices.\+device\+\_\+name = db.\+Column(db.\+String(64), nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores name. 
+
+Stores name of the device \mbox{\Hypertarget{classproject_1_1models_1_1_devices_aa287412ecf3edfac957ebb39143e0c89}\label{classproject_1_1models_1_1_devices_aa287412ecf3edfac957ebb39143e0c89}} 
 \index{project.models.Devices@{project.models.Devices}!device\_type@{device\_type}}
 \index{device\_type@{device\_type}!project.models.Devices@{project.models.Devices}}
 \doxysubsubsection{\texorpdfstring{device\_type}{device\_type}}
@@ -75,7 +95,71 @@ Create devices table in database, with id, name and type columns.
 \DoxyCodeLine{                                    name=\textcolor{stringliteral}{'device\_type'}), nullable=\textcolor{keyword}{False})}
 
 \end{DoxyCode}
-\mbox{\Hypertarget{classproject_1_1models_1_1_devices_a5e0b926cfe554446a76f3d86593c08cd}\label{classproject_1_1models_1_1_devices_a5e0b926cfe554446a76f3d86593c08cd}} 
+
+
+Stores device type. 
+
+Stores the type of the device \mbox{\Hypertarget{classproject_1_1models_1_1_devices_a09735a0989d4c99757162e9b9946d038}\label{classproject_1_1models_1_1_devices_a09735a0989d4c99757162e9b9946d038}} 
+\index{project.models.Devices@{project.models.Devices}!fault@{fault}}
+\index{fault@{fault}!project.models.Devices@{project.models.Devices}}
+\doxysubsubsection{\texorpdfstring{fault}{fault}}
+{\footnotesize\ttfamily project.\+models.\+Devices.\+fault = db.\+Column(db.\+Boolean, default=False, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores faults. 
+
+Stores whether there are any faults with the devicde \mbox{\Hypertarget{classproject_1_1models_1_1_devices_a3d360a087d8cc0d7663ef307aa05ac26}\label{classproject_1_1models_1_1_devices_a3d360a087d8cc0d7663ef307aa05ac26}} 
+\index{project.models.Devices@{project.models.Devices}!light@{light}}
+\index{light@{light}!project.models.Devices@{project.models.Devices}}
+\doxysubsubsection{\texorpdfstring{light}{light}}
+{\footnotesize\ttfamily project.\+models.\+Devices.\+light = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_lights}{Lights}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores light. 
+
+Stores the light device \mbox{\Hypertarget{classproject_1_1models_1_1_devices_a0ac05799397f0596aba0b0d3048c1251}\label{classproject_1_1models_1_1_devices_a0ac05799397f0596aba0b0d3048c1251}} 
+\index{project.models.Devices@{project.models.Devices}!mac\_addr@{mac\_addr}}
+\index{mac\_addr@{mac\_addr}!project.models.Devices@{project.models.Devices}}
+\doxysubsubsection{\texorpdfstring{mac\_addr}{mac\_addr}}
+{\footnotesize\ttfamily project.\+models.\+Devices.\+mac\+\_\+addr = db.\+Column(db.\+String(17), nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores mac address. 
+
+Stores the mac address of the device \mbox{\Hypertarget{classproject_1_1models_1_1_devices_aae94632ea195414260843095d651f625}\label{classproject_1_1models_1_1_devices_aae94632ea195414260843095d651f625}} 
+\index{project.models.Devices@{project.models.Devices}!on@{on}}
+\index{on@{on}!project.models.Devices@{project.models.Devices}}
+\doxysubsubsection{\texorpdfstring{on}{on}}
+{\footnotesize\ttfamily project.\+models.\+Devices.\+on = db.\+Column(db.\+Boolean, default=False, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores on state. 
+
+Stores whether the device is on or not \mbox{\Hypertarget{classproject_1_1models_1_1_devices_a47c490174866cd657dc1eccca6bc74e4}\label{classproject_1_1models_1_1_devices_a47c490174866cd657dc1eccca6bc74e4}} 
+\index{project.models.Devices@{project.models.Devices}!plug@{plug}}
+\index{plug@{plug}!project.models.Devices@{project.models.Devices}}
+\doxysubsubsection{\texorpdfstring{plug}{plug}}
+{\footnotesize\ttfamily project.\+models.\+Devices.\+plug = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_plug}{Plug}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores plug. 
+
+Stores the plug device \mbox{\Hypertarget{classproject_1_1models_1_1_devices_a7e354fdc1f91f3e24ca924d90a34809d}\label{classproject_1_1models_1_1_devices_a7e354fdc1f91f3e24ca924d90a34809d}} 
+\index{project.models.Devices@{project.models.Devices}!rated\_power@{rated\_power}}
+\index{rated\_power@{rated\_power}!project.models.Devices@{project.models.Devices}}
+\doxysubsubsection{\texorpdfstring{rated\_power}{rated\_power}}
+{\footnotesize\ttfamily project.\+models.\+Devices.\+rated\+\_\+power = db.\+Column(db.\+Integer, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores power rating. 
+
+Stores the power rating of the device \mbox{\Hypertarget{classproject_1_1models_1_1_devices_a5e0b926cfe554446a76f3d86593c08cd}\label{classproject_1_1models_1_1_devices_a5e0b926cfe554446a76f3d86593c08cd}} 
 \index{project.models.Devices@{project.models.Devices}!room@{room}}
 \index{room@{room}!project.models.Devices@{project.models.Devices}}
 \doxysubsubsection{\texorpdfstring{room}{room}}
@@ -88,6 +172,40 @@ Create devices table in database, with id, name and type columns.
 
 \end{DoxyCode}
 
+
+Stores room. 
+
+Stores the room where the device is located \mbox{\Hypertarget{classproject_1_1models_1_1_devices_ae21ca9d5d07a5c880c6632f7dbe0026f}\label{classproject_1_1models_1_1_devices_ae21ca9d5d07a5c880c6632f7dbe0026f}} 
+\index{project.models.Devices@{project.models.Devices}!therm@{therm}}
+\index{therm@{therm}!project.models.Devices@{project.models.Devices}}
+\doxysubsubsection{\texorpdfstring{therm}{therm}}
+{\footnotesize\ttfamily project.\+models.\+Devices.\+therm = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_thermostat}{Thermostat}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores thermometer. 
+
+Stores the thermometer device \mbox{\Hypertarget{classproject_1_1models_1_1_devices_a2814658a035f04a786c59a8c92ee519e}\label{classproject_1_1models_1_1_devices_a2814658a035f04a786c59a8c92ee519e}} 
+\index{project.models.Devices@{project.models.Devices}!tv@{tv}}
+\index{tv@{tv}!project.models.Devices@{project.models.Devices}}
+\doxysubsubsection{\texorpdfstring{tv}{tv}}
+{\footnotesize\ttfamily project.\+models.\+Devices.\+tv = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores \mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}}. 
+
+Stores the \mbox{\hyperlink{classproject_1_1models_1_1_t_v}{TV}} device \mbox{\Hypertarget{classproject_1_1models_1_1_devices_ac4cb2e965b50d651bf16a1d8f3b9fd33}\label{classproject_1_1models_1_1_devices_ac4cb2e965b50d651bf16a1d8f3b9fd33}} 
+\index{project.models.Devices@{project.models.Devices}!usage@{usage}}
+\index{usage@{usage}!project.models.Devices@{project.models.Devices}}
+\doxysubsubsection{\texorpdfstring{usage}{usage}}
+{\footnotesize\ttfamily project.\+models.\+Devices.\+usage = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classproject_1_1models_1_1_usage}{Usage}}\textquotesingle{}, backref=\textquotesingle{}device\textquotesingle{}, uselist=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores usage. 
+
+Stores the energy usage of the devicde 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
