@@ -135,7 +135,11 @@ For example:
 				#
 
 
-To contribute to this project, clone the repo locally and commit  your  code to a separate branch before opening a pull request.
+To contribute to this project:
+
+1. Clone the repo locally
+2. Commit  your  code to a separate branch 
+3. Open a pull request.
 
 ### Frequently Asked Questions and Troubleshooting
 See our __[troubleshooting guide](Troubleshooting.md)__ to find answers to some common questions about the project, as well as some ideas to troubleshoot any problems.

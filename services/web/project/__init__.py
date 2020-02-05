@@ -4,8 +4,7 @@
 # \details   
 # \author    Tannick Rose
 # \version   1.0
-# \date      2020
-# \bug       
+# \date      2020 
 # \copyright MIT License.
 #
 
