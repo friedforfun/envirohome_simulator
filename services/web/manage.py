@@ -35,12 +35,32 @@ def create_db():
 def seed_db():
     db.session.add(User(username='admin', email='nobody@nowhere.address',
                         password_hash='totally a real hash'))
-    db.session.add(Devices(device_id=0, device_name='Living Room TV',
-                           rated_power=700, device_type='tv', fault=False,
-                           room='living_room', on=True))
+
     db.session.add(Devices(device_name='Outside Lights', rated_power=40,
                            device_type='lights', fault=False, room='outside',
                            on=True))
+    db.session.add(Devices(device_name='Bedroom 1 Lights', rated_power=40,
+                           device_type='lights', fault=False, room='bedroom_1',
+                           on=True))
+    db.session.add(Devices(device_name='Bedroom 2 Lights', rated_power=40,
+                           device_type='lights', fault=False, room='bedroom_2',
+                           on=True))
+    db.session.add(Devices(device_name='Kitchen Lights', rated_power=40,
+                           device_type='lights', fault=False, room='kitchen',
+                           on=True))
+    db.session.add(Devices(device_name='Living Room Lights 1', rated_power=40,
+                           device_type='lights', fault=False, room='living_room',
+                           on=True))
+    db.session.add(Devices(device_name='Living Room Lights 2', rated_power=40,
+                           device_type='lights', fault=False, room='living_room',
+                           on=True))
+    db.session.add(Devices(device_name='Bathroom 1 Lights', rated_power=40,
+                           device_type='lights', fault=False, room='bathroom_1',
+                           on=True))
+
+    db.session.add(Devices(device_id=0, device_name='Living Room TV',
+                           rated_power=700, device_type='tv', fault=False,
+                           room='living_room', on=True))
     db.session.add(Devices(device_name='Kitchen Plug', rated_power=500,
                            device_type='plug', fault=True, room='kitchen',
                            on=True))
