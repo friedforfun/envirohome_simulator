@@ -107,6 +107,15 @@ def toggle_power(device_pk):
 def get_floorplan():
     return jsonify(image="floorplan.png")
 
+@app.route("/api/device/add/<name_pk>/<rated_power_pk>/<device_type_pk>/<room_pk>", methods=["GET"])
+def add_device(name_pk, rated_power_pk, device_type_pk, room_pk):
+    db.session.add(Devices(device_name=name_pk, rated_power=rated_power_pk,
+                           device_type=device_type_pk, fault=False,
+                           room=room_pk, on=True))
+    db.session.commit()
+    return Devices.get_delete_put_post(None)
+
+
 ## \brief get_usage()
 #
 # Gets the energy usage 
