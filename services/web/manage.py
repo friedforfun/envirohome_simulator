@@ -33,9 +33,13 @@ def create_db():
 #
 @cli.command('seed_db')
 def seed_db():
+
     db.session.add(User(username='admin', email='nobody@nowhere.address',
                         password_hash='totally a real hash'))
 
+    db.session.add(Devices(device_id=0, device_name='Living Room TV',
+                           rated_power=700, device_type='tv', fault=False,
+                           room='living_room', on=True))
     db.session.add(Devices(device_name='Outside Lights', rated_power=40,
                            device_type='lights', fault=False, room='outside',
                            on=True))
@@ -58,9 +62,6 @@ def seed_db():
                            device_type='lights', fault=False, room='bathroom_1',
                            on=True))
 
-    db.session.add(Devices(device_id=0, device_name='Living Room TV',
-                           rated_power=700, device_type='tv', fault=False,
-                           room='living_room', on=True))
     db.session.add(Devices(device_name='Kitchen Plug', rated_power=500,
                            device_type='plug', fault=True, room='kitchen',
                            on=True))
