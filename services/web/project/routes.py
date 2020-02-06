@@ -91,6 +91,13 @@ def get_devices():
 def get_device(device_pk):
     return Devices.get_delete_put_post(device_pk)
 
+@app.route("/api/device/power/<device_pk>", methods=["GET"])
+def toggle_power(device_pk):
+    device = db.session.query(Devices).filter_by(device_id=device_pk).first()
+    power_state = device.on
+    device.on = not power_state
+    db.session.commit()
+    return Devices.get_delete_put_post(device_pk)
 
 ## \brief Get floorplan method
 #
