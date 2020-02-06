@@ -1,9 +1,9 @@
 var indexSectionsWithContent =
 {
-  0: "cdefilmprtu",
+  0: "_acdefilmoprstuv",
   1: "cdlmptu",
   2: "cimr",
-  3: "cdeilpt",
+  3: "_acdefilmoprstuv",
   4: "ef"
 };
 

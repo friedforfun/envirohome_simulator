@@ -16,11 +16,16 @@ from flask_marshmallow import Marshmallow
 
 ma = Marshmallow(app)
 
-
-##
+## \brief Stores schema
 #
 class UsageSchema(ma.Schema):
+    ## \brief energy usage fields
+    #
+    #
     class Meta:
+        ## \brief Stores energy usage fields
+        #
+        # The fields of the id of the device, date, time and the energy usage
         fields = ('device_id', 'date', 'time', 'energy_usage')
 
 
@@ -28,12 +33,12 @@ usage_schema = UsageSchema(many=True)
 
 ## \brief Configure basic route for testing
 #
+#
 @app.route("/")
 def hello_world():
     return User.get_delete_put_post(1)
 
-
-## \brief
+## \brief Login method
 #
 @app.route("/login", methods=["POST"])
 def login():
@@ -42,6 +47,7 @@ def login():
 
 
 ## \brief Register new user method
+#
 #
 @app.route("/register", methods=["POST"])
 def new_user():
@@ -80,12 +86,14 @@ def get_devices():
 
 ## \brief get_device()
 #
+#
 @app.route("/api/device/<device_pk>", methods=["GET"])
 def get_device(device_pk):
-
     return Devices.get_delete_put_post(device_pk)
 
 
+## \brief Get floorplan method
+#
 #
 @app.route("/api/floorplan", methods=["GET"])
 # @auth.login_required
@@ -94,6 +102,7 @@ def get_floorplan():
 
 ## \brief get_usage()
 #
+# Gets the energy usage 
 @app.route("/api/usage/<int:device_pk>/<string:date_pk>/<string:time_pk>",
            methods=["GET"])
 def get_usage(device_pk, date_pk, time_pk):

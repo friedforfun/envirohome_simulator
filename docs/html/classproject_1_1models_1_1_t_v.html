@@ -90,7 +90,7 @@ $(document).ready(function(){initNavTree('classproject_1_1models_1_1_t_v.html','
 </div><!--header-->
 <div class="contents">
 
-<p>Create <a class="el" href="classproject_1_1models_1_1_t_v.html" title="Create TV table in database, with id, channel, output and volume columns.">TV</a> table in database, with id, channel, output and volume columns.  
+<p>create <a class="el" href="classproject_1_1models_1_1_t_v.html" title="create TV table">TV</a> table  
  <a href="classproject_1_1models_1_1_t_v.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for project.models.TV:</div>
@@ -101,24 +101,76 @@ Inheritance diagram for project.models.TV:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a6f8b5a63652fb2ffc232527fe459a547"><td class="memItemLeft" align="right" valign="top"><a id="a6f8b5a63652fb2ffc232527fe459a547"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>tv_id</b> = db.Column(db.Integer, primary_key=True, autoincrement=True)</td></tr>
+<tr class="memitem:a6f8b5a63652fb2ffc232527fe459a547"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_t_v.html#a6f8b5a63652fb2ffc232527fe459a547">tv_id</a> = db.Column(db.Integer, primary_key=True, autoincrement=True)</td></tr>
+<tr class="memdesc:a6f8b5a63652fb2ffc232527fe459a547"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores id.  <a href="classproject_1_1models_1_1_t_v.html#a6f8b5a63652fb2ffc232527fe459a547">More...</a><br /></td></tr>
 <tr class="separator:a6f8b5a63652fb2ffc232527fe459a547"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ee648878916bf516e5f0353090e613b"><td class="memItemLeft" align="right" valign="top"><a id="a2ee648878916bf516e5f0353090e613b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>device_id</b> = db.Column(db.Integer, db.ForeignKey('devices.device_id'))</td></tr>
+<tr class="memitem:a2ee648878916bf516e5f0353090e613b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_t_v.html#a2ee648878916bf516e5f0353090e613b">device_id</a> = db.Column(db.Integer, db.ForeignKey('devices.device_id'))</td></tr>
+<tr class="memdesc:a2ee648878916bf516e5f0353090e613b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores device id.  <a href="classproject_1_1models_1_1_t_v.html#a2ee648878916bf516e5f0353090e613b">More...</a><br /></td></tr>
 <tr class="separator:a2ee648878916bf516e5f0353090e613b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ead348f233f6a4ae3abb3aac62bae22"><td class="memItemLeft" align="right" valign="top"><a id="a0ead348f233f6a4ae3abb3aac62bae22"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>channel</b> = db.Column(db.Integer, default=1)</td></tr>
+<tr class="memitem:a0ead348f233f6a4ae3abb3aac62bae22"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_t_v.html#a0ead348f233f6a4ae3abb3aac62bae22">channel</a> = db.Column(db.Integer, default=1)</td></tr>
+<tr class="memdesc:a0ead348f233f6a4ae3abb3aac62bae22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores channel.  <a href="classproject_1_1models_1_1_t_v.html#a0ead348f233f6a4ae3abb3aac62bae22">More...</a><br /></td></tr>
 <tr class="separator:a0ead348f233f6a4ae3abb3aac62bae22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e3d003e31dac0512a8f311fd09e7581"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><b>output</b></td></tr>
+<tr class="memitem:a4e3d003e31dac0512a8f311fd09e7581"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_t_v.html#a4e3d003e31dac0512a8f311fd09e7581">output</a></td></tr>
+<tr class="memdesc:a4e3d003e31dac0512a8f311fd09e7581"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores output.  <a href="classproject_1_1models_1_1_t_v.html#a4e3d003e31dac0512a8f311fd09e7581">More...</a><br /></td></tr>
 <tr class="separator:a4e3d003e31dac0512a8f311fd09e7581"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a25cdc81a35c5dad9ab36369a1eb702"><td class="memItemLeft" align="right" valign="top"><a id="a0a25cdc81a35c5dad9ab36369a1eb702"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>volume</b> = db.Column(db.Integer, default=100)</td></tr>
+<tr class="memitem:a0a25cdc81a35c5dad9ab36369a1eb702"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classproject_1_1models_1_1_t_v.html#a0a25cdc81a35c5dad9ab36369a1eb702">volume</a> = db.Column(db.Integer, default=100)</td></tr>
+<tr class="memdesc:a0a25cdc81a35c5dad9ab36369a1eb702"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores volume.  <a href="classproject_1_1models_1_1_t_v.html#a0a25cdc81a35c5dad9ab36369a1eb702">More...</a><br /></td></tr>
 <tr class="separator:a0a25cdc81a35c5dad9ab36369a1eb702"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Create <a class="el" href="classproject_1_1models_1_1_t_v.html" title="Create TV table in database, with id, channel, output and volume columns.">TV</a> table in database, with id, channel, output and volume columns. </p>
+<div class="textblock"><p>create <a class="el" href="classproject_1_1models_1_1_t_v.html" title="create TV table">TV</a> table </p>
+<p>Create <a class="el" href="classproject_1_1models_1_1_t_v.html" title="create TV table">TV</a> table in database, with id, channel, output and volume columns </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a0ead348f233f6a4ae3abb3aac62bae22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ead348f233f6a4ae3abb3aac62bae22">&#9670;&nbsp;</a></span>channel</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">project.models.TV.channel = db.Column(db.Integer, default=1)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores channel. </p>
+<p>Stores the channel of the <a class="el" href="classproject_1_1models_1_1_t_v.html" title="create TV table">TV</a> </p>
+
+</div>
+</div>
+<a id="a2ee648878916bf516e5f0353090e613b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ee648878916bf516e5f0353090e613b">&#9670;&nbsp;</a></span>device_id</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">project.models.TV.device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'))</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores device id. </p>
+<p>Stores the id of the device </p>
+
+</div>
+</div>
 <a id="a4e3d003e31dac0512a8f311fd09e7581"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4e3d003e31dac0512a8f311fd09e7581">&#9670;&nbsp;</a></span>output</h2>
 
@@ -141,6 +193,59 @@ Static Public Attributes</h2></td></tr>
 <b>Initial value:</b><div class="fragment"><div class="line">=  db.Column(db.Enum(<span class="stringliteral">&#39;HDMI1&#39;</span>, <span class="stringliteral">&#39;HDMI2&#39;</span>, <span class="stringliteral">&#39;ANT&#39;</span>, <span class="stringliteral">&#39;DVD&#39;</span>, <span class="stringliteral">&#39;VIDEO&#39;</span>,</div>
 <div class="line">                       name=<span class="stringliteral">&#39;channel&#39;</span>), default=<span class="stringliteral">&#39;HDMI1&#39;</span>)</div>
 </div><!-- fragment -->
+<p>Stores output. </p>
+<p>Stores the selected output of the <a class="el" href="classproject_1_1models_1_1_t_v.html" title="create TV table">TV</a> </p>
+
+</div>
+</div>
+<a id="a6f8b5a63652fb2ffc232527fe459a547"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f8b5a63652fb2ffc232527fe459a547">&#9670;&nbsp;</a></span>tv_id</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">project.models.TV.tv_id = db.Column(db.Integer, primary_key=True, autoincrement=True)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores id. </p>
+<p>Stores the id of the <a class="el" href="classproject_1_1models_1_1_t_v.html" title="create TV table">TV</a> </p>
+
+</div>
+</div>
+<a id="a0a25cdc81a35c5dad9ab36369a1eb702"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a25cdc81a35c5dad9ab36369a1eb702">&#9670;&nbsp;</a></span>volume</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">project.models.TV.volume = db.Column(db.Integer, default=100)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores volume. </p>
+<p>Stores the current volume of the <a class="el" href="classproject_1_1models_1_1_t_v.html" title="create TV table">TV</a> </p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

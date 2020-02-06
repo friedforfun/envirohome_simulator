@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['password_5fhash_152',['password_hash',['../classproject_1_1models_1_1_user.html#a613cf8cf8937e325c72d600da985b382',1,'project::models::User']]],
-  ['plug_153',['plug',['../classproject_1_1models_1_1_devices.html#a47c490174866cd657dc1eccca6bc74e4',1,'project::models::Devices']]],
-  ['plug_5fid_154',['plug_id',['../classproject_1_1models_1_1_plug.html#a8974e9299ea1270523d93f27b2e461d1',1,'project::models::Plug']]]
+  ['sqlalchemy_5fdatabase_5furi_86',['SQLALCHEMY_DATABASE_URI',['../classproject_1_1config_1_1_config.html#a4215807bb7fae4729946855836c3f51b',1,'project::config::Config']]],
+  ['sqlalchemy_5ftrack_5fmodifications_87',['SQLALCHEMY_TRACK_MODIFICATIONS',['../classproject_1_1config_1_1_config.html#ac46754a191eb1fe6a9ca6f3356bd29a3',1,'project::config::Config']]]
 ];
