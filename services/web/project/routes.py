@@ -16,6 +16,7 @@ from flask_marshmallow import Marshmallow
 
 ma = Marshmallow(app)
 
+
 ##
 #
 class UsageSchema(ma.Schema):
@@ -31,11 +32,13 @@ usage_schema = UsageSchema(many=True)
 def hello_world():
     return User.get_delete_put_post(1)
 
+
 ## \brief
 #
 @app.route("/login", methods=["POST"])
 def login():
     return jsonify(user="password")
+
 
 
 ## \brief Register new user method

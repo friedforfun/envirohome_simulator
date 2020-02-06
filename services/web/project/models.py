@@ -46,6 +46,7 @@ class User(db.Model, FlaskSerializeMixin):
     # def verify_password(self, password):
     #     return pwd_context.verify(password, self.password_hash)
 
+
 ## Create devices table in database, with id, name and type columns
 #
 class Devices(db.Model, FlaskSerializeMixin):
@@ -75,8 +76,9 @@ class Devices(db.Model, FlaskSerializeMixin):
     on = db.Column(db.Boolean, default=False, nullable=False)
     ## \brief 
     #
-    room = db.Column(db.Enum('living_room', 'kitchen', 'outside', name='room'),
-                     nullable=False)
+    room = db.Column(db.Enum('living_room', 'kitchen', 'outside',
+                             'bedroom_1', 'bedroom_2', 'bathroom_1',
+                             name='room'), nullable=False)
     ## \brief 
     #
     tv = db.relationship('TV', backref='device', uselist=False)
@@ -92,6 +94,7 @@ class Devices(db.Model, FlaskSerializeMixin):
     ## \brief 
     #
     usage = db.relationship('Usage', backref='device', uselist=False)
+
 
 ## Create TV table in database, with id, channel, output and volume columns
 #
