@@ -2,7 +2,7 @@
 FROM python:3.8.0-alpine
 
 # set work directory
-WORKDIR /usr/src/app
+WORKDIR /usr/src/misc
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -15,13 +15,15 @@ RUN apk update \
 # install dependencies
 RUN pip install --upgrade pip
 COPY ./requirements.txt ./requirements.txt
-RUN pip install -r requirements.txt
+
 
 # copy project
-COPY . ./
+COPY ./entrypoint.sh ./entrypoint.sh
 RUN apk add dos2unix && dos2unix ./entrypoint.sh
 
-# run entrypoint.sh
-RUN chmod a+x ./data/get_data.sh ; chmod 755 entrypoint.sh
+WORKDIR /usr/src/app
+COPY . .
+RUN pip install -r ../misc/requirements.txt
+RUN chmod a+x ./data/get_data.sh ; chmod 755 ../misc/entrypoint.sh
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/usr/src/misc/entrypoint.sh"]
