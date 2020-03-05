@@ -8,12 +8,15 @@ To build this project:
 `$ docker-compose build`
 
 To run this project:
-1. From project root directory run -
+1. From project root directory run (Full app) -
 `$ docker-compose up -d`
+
+Optional (Only db and web): `$ docker-compose up -d --no-deps db && docker-compose up -d --no-deps web`
+
 2. In browser navigate to:
 __[http://localhost:5000/](http://localhost:5000/)__ or __[http://127.0.0.1:5000/](http://127.0.0.1:5000/)__
 
-### Requirements:
+### Backend Requirements:
 Docker and docker-compose must be installed
 
 1. __[Install docker](https://docs.docker.com/install/)__ - navigate to your Operating System and follow instructions

@@ -133,3 +133,9 @@ dev_1.txt
 dev_2.txt
 dev_3.txt
 last_week.txt
+
+# Node stuff
+*/node_modules
+npm-debug.log
+.env
+.DS_Store

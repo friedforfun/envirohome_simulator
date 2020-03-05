@@ -1,6 +1,21 @@
 version: '3.7'
 
 services:
+  mobile:
+    build: ./services/frontend/mobile
+
+    command: yarn run web
+    volumes:
+      - ./services/frontend/mobile/:/usr/src/app/
+
+    ports:
+      - 19000:19000
+      - 19001:19001
+      - 19006:19006
+      
+    depends_on:
+      - web
+
   web:
     # Build directory relative to compose file
     build: ./services/web
