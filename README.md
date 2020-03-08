@@ -13,6 +13,9 @@ To run this project:
 
 Optional (Only db and web): `$ docker-compose up -d --no-deps db && docker-compose up -d --no-deps web`
 
+For testing the mobile app standalone, navigate to __[services/frontend/mobile/](https://github.com/friedforfun/envirohome_simulator/tree/dev/services/frontend/mobile)__ and run: `$ yarn start` (This may be easier depending on your comfort with docker)
+Otherwise acces the docker-compose logs (`$ docker-compose logs -f`) and scan the expo QR code from your device
+
 2. In browser navigate to:
 __[http://localhost:5000/](http://localhost:5000/)__ or __[http://127.0.0.1:5000/](http://127.0.0.1:5000/)__
 
@@ -21,6 +24,14 @@ Docker and docker-compose must be installed
 
 1. __[Install docker](https://docs.docker.com/install/)__ - navigate to your Operating System and follow instructions
 2. __[Install docker-compose](https://docs.docker.com/compose/install/)__ - Same as above, find OS and follow instructions
+
+### Frontend Requirements:
+Either run docker-compose as in backend, or to run the frontend mobile app standalone:
+1. __[Install node](https://nodejs.org/en/)__ - 
+2. __[Install expo CLI](https://docs.expo.io/versions/latest/get-started/installation/)__ - `$ npm install -g expo-cli`
+3. __[Install yarn](https://yarnpkg.com/getting-started)__ - `$ npm install yarn`
+
+Once you have yarn installed use "`yarn add <package name>`" for all new package isntallations.
 
 ### API routes:
 
