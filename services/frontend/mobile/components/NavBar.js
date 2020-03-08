@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text } from 'react-native';
+import { StyleSheet, View, Image, Text, ShadowPropTypesIOS } from 'react-native';
 import { ThemeProvider, Avatar, Icon } from 'react-native-elements';
 
 
-export default function NavBar() {
+const NavBar = props => {
     //# see: https://react-native-elements.github.io/react-native-elements/docs/avatar.html
     return (
         <View style={styles.content}>
@@ -15,13 +15,13 @@ export default function NavBar() {
             />
             <View style={styles.energyHUD}>
                 <Text>Energy Utility:</Text>
-                <Text>50%</Text>
+                <Text>{ props.usage }</Text>
             </View>
             <Icon 
                 //# source: https://github.com/primer/octicons#libraries
                 name="gear"
                 type="octicon"
-                onPress={() => console.log("Open Settings Menu")}
+                onPress={ props.settings }
                 size={ 50 }
             />
         </View>
@@ -37,3 +37,5 @@ export default function NavBar() {
         alignContent: "center"
       }
   });
+
+export default NavBar;

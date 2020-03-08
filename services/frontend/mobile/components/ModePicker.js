@@ -1,16 +1,16 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ThemeProvider, Divider, Icon } from 'react-native-elements';
 
 
-export default function ModePicker() {
+const ModePicker = props => {
     return (
         <View style={styles.content}>
              <Icon 
                 //# source: https://github.com/primer/octicons#libraries
                 name="home"
                 type="octicon"
-                onPress={() => console.log("Open Map view")}
+                onPress={ props.mapView }
                 size={ 50 }
             />
             <Divider style={{ backgroundColor: 'blue' }}/>
@@ -18,7 +18,7 @@ export default function ModePicker() {
                 //# source: https://github.com/primer/octicons#libraries
                 name="three-bars"
                 type="octicon"
-                onPress={() => console.log("Open List view")}
+                onPress={ props.listView }
                 size={ 50 }
             />
         </View>
@@ -31,3 +31,5 @@ export default function ModePicker() {
           justifyContent: 'space-between',
       },
   });
+
+export default ModePicker;

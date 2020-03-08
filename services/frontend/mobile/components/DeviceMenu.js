@@ -2,44 +2,27 @@ import React from 'react';
 import { View } from 'react-native';
 import { ThemeProvider, ListItem } from 'react-native-elements';
 
-const list = [
-    {
-      title: 'Light',
-      power: true,
-  },
-  {
-      title: 'TV',
-      power: false,
-  },
-  {
-      title: 'Speakers',
-      power: false,
-  },
-  {
-      title: 'Plug',
-      power: true,
-  }
-]
-
-export default function DeviceMenu() {
-
+const DeviceMenu = props => {
+    // Create a list of devices using list.map. see: `https://react-native-elements.github.io/react-native-elements/docs/listitem.html`
     return (
         <View>
             {
-            list.map((item, i) => (
-                <ListItem
-                key={i}
-                title={item.title}
-                switch={{
-		            value: item.power,
-		            onValueChange: console.log(item.power),
-		          }}
-                bottomDivider
-                chevron
-                
-                />
-            ))
+                props.devices.map((item, i) => (
+                    <ListItem
+                        key={i}
+                        title={item.title}
+                        switch={{
+                            value: item.power,
+                            onValueChange: console.log("switched "+item.title),
+                        }}
+                        bottomDivider
+                        chevron
+
+                    />
+                ))
             }
         </View>
-    );
-  }
+    )
+}
+
+export default DeviceMenu;

@@ -1,23 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import  RoomMenu from './components/RoomMenu';
+
 import NavBar from './components/NavBar';
+import  ContentRenderer from './components/ContentRenderer';
 import ModePicker from './components/ModePicker';
-import DeviceMenu from './components/DeviceMenu';
 
 export default function App() {
+  const [currentContent, nextContent] = useState('list');
+  const pageToRender = page => {
+    console.log('Render '+page)
+    nextContent(page)
+  };
 
   //! TODO - implement as a screen for navigation.
   return (
     <View style={styles.container}>
       <View style={styles.topNav}>
-        <NavBar />
+        <NavBar 
+          usage={ <Text>50%</Text> } 
+          settings={() => pageToRender('settings')} 
+        />
       </View>
-      <View style={styles.content}>
-        <RoomMenu />
-      </View>
+      <ContentRenderer page={ currentContent } />
       <View style={styles.modePicker}>
-        <ModePicker />
+        <ModePicker 
+          mapView={() => pageToRender('map')} 
+          listView={() => pageToRender('list')}
+        />
       </View>
     </View>
   );
@@ -33,9 +42,6 @@ const styles = StyleSheet.create({
     padding: 4,
     borderColor: 'black',
     borderWidth: 1,
-  },
-  content:{
-    flex: 20
   },
   modePicker:{
     padding: 4,
