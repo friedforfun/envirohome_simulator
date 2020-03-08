@@ -8,7 +8,7 @@ services:
       dockerfile: opt/Dockerfile
 
     # Python command to run service
-    command: python manage.py run -h 0.0.0.0
+    # command: python manage.py run -h 0.0.0.0
     volumes:
       # Bind web directory to usr/src/app/ inside container
       - ./services/web/:/usr/src/app/

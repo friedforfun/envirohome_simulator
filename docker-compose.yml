@@ -4,7 +4,7 @@ services:
   mobile:
     build: ./services/frontend/mobile
 
-    command: yarn run web
+    command: yarn start
     volumes:
       - ./services/frontend/mobile/:/usr/src/app/
 
