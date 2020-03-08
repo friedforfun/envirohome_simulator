@@ -147,5 +147,8 @@ npm-debug.*
 web-build/
 web-report/
 
+# VS code
+*.code-workspace
+
 # macOS
 .DS_Store

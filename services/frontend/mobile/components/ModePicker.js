@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Image, Text } from 'react-native';
-import { ThemeProvider, Avatar, Icon } from 'react-native-elements';
+import { ThemeProvider, Divider, Icon } from 'react-native-elements';
 
 
 export default function ModePicker() {
@@ -13,6 +13,7 @@ export default function ModePicker() {
                 onPress={() => console.log("Open Map view")}
                 size={ 50 }
             />
+            <Divider style={{ backgroundColor: 'blue' }}/>
             <Icon 
                 //# source: https://github.com/primer/octicons#libraries
                 name="three-bars"
