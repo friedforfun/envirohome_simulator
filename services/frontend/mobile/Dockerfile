@@ -1,5 +1,4 @@
 # source of base image - https://github.com/mhart/alpine-node
-# This stage installs our modules
 FROM mhart/alpine-node:13 AS builder
 
 # install build deps
