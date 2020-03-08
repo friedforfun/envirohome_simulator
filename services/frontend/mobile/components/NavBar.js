@@ -4,6 +4,7 @@ import { ThemeProvider, Avatar, Icon } from 'react-native-elements';
 
 
 export default function NavBar() {
+    //# see: https://react-native-elements.github.io/react-native-elements/docs/avatar.html
     return (
         <View style={styles.content}>
             <Avatar

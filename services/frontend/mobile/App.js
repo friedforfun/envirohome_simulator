@@ -3,8 +3,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import  RoomMenu from './components/RoomMenu';
 import NavBar from './components/NavBar';
 import ModePicker from './components/ModePicker';
+import DeviceMenu from './components/DeviceMenu';
 
 export default function App() {
+
+  //! TODO - implement as a screen for navigation.
   return (
     <View style={styles.container}>
       <View style={styles.topNav}>

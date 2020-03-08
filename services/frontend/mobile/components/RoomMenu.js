@@ -18,6 +18,7 @@ const list = [{
 
 export default function RoomMenu() {
 
+  // Create a list of devices using list.map. see: `https://react-native-elements.github.io/react-native-elements/docs/listitem.html`
     return (
         <View>
             {
