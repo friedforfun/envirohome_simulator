@@ -1,54 +1,42 @@
-import { createStackNavigator} from 'react-navigation-stack';
-import { createAppContainer} from 'react-navigation';
-import React, {Component} from 'react';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import  RoomMenu from './components/RoomMenu';
+import NavBar from './components/NavBar';
+import ModePicker from './components/ModePicker';
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  StatusBar,
-  KeyboardAvoidingView,
-} from 'react-native';
-
-
-
-
-
-
-import Login from './src/screens/login';
-import Signup from './src/screens/signup';
-import Home from './src/screens/home';
-import Livingroom from './src/screens/livingroom';
-import Kitchen from './src/screens/kitchen';
-
-
-export default class App extends Component{
-
-  render() {
-    return ( 
-      <View>
-       <AppContainer />
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <View style={styles.topNav}>
+        <NavBar />
       </View>
-    );
-  }
+      <View style={styles.content}>
+        <RoomMenu />
+      </View>
+      <View style={styles.modePicker}>
+        <ModePicker />
+      </View>
+    </View>
+  );
 }
 
-const navigator = createStackNavigator(
-    {
-      Login: Login,
-      Signup:Signup,
-      Home:Home,
-      Livingroom:Livingroom, 
-      Kitchen:Kitchen
-    },
-    {
-      initialRouteName: 'Login',
-      navigationOptions: {
-          header:null,
-        //title: 'App'
-      }
-    }
-  );
-
-
-  const AppContainer = createAppContainer(navigator);
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 45,
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  topNav:{
+    padding: 4,
+    borderColor: 'black',
+    borderWidth: 1,
+  },
+  content:{
+    flex: 20
+  },
+  modePicker:{
+    padding: 4,
+    borderColor: 'black',
+    borderWidth: 1,
+  }
+});
