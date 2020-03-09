@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Overlay, Avatar } from 'react-native-elements';
 
@@ -14,25 +14,47 @@ const UserProfile = props => {
             animationType="fade"
             borderRadius={ 15 }
             isVisible={props.visible}
-            onBackdropPress={() => props.handler(false) /* call handler function from parent */}
+            onBackdropPress={() => props.handler(false) }
         >
-            <Avatar
-                size="large"
-                rounded
-                title="A"
-                onPress={() => console.log("Change user Avatar")}
-                showEditButton
-            />
-            <View style={styles.controls}>
-                /* render a row of buttons ect here (logout, ...) */
+            <View style={styles.content}>
+                <View style={styles.avatarMover}>
+                    <Avatar
+                        size="xlarge"
+                        containerStyle={{
+                            
+                        }}
+                        rounded
+                        title="A"
+                        onPress={() => console.log("Change user Avatar")}
+                        showEditButton
+                    />
+                </View>
+                
+                <View style={styles.controls}>
+                    <Text>
+                        User profile settings buttons here.
+                    </Text>
+                </View>
             </View>
         </Overlay>
     );
 }
 
 const styles = StyleSheet.create({
+    avatarMover:{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        margin: 25,
+    },
+    content:{
+        flex: 1,
+        justifyContent: 'center',
+        alignContent: 'center'
+    },
     controls: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'center'
+
     }
 });
 

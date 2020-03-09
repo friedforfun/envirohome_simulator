@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { ThemeProvider, Avatar, Icon } from 'react-native-elements';
 import UserProfile from './UserProfile';
