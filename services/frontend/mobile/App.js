@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import NavBar from './components/NavBar';
-import  ContentRenderer from './components/ContentRenderer';
-import ModePicker from './components/ModePicker';
+import NavBar from './components/render/NavBar';
+import  ContentRenderer from './components/render/ContentRenderer';
+import ModePicker from './components/render/ModePicker';
 
 export default function App() {
   const [currentContent, nextContent] = useState('list');
