@@ -7,7 +7,7 @@ import ModePicker from './components/render/ModePicker';
 
 export default function App() {
   const [currentContent, nextContent] = useState('list');
-  const [profileVis, setProfileVis] = useState(false);
+ 
   
   const pageToRender = page => {
     console.log('Render '+page)
