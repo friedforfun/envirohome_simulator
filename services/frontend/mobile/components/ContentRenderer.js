@@ -22,23 +22,24 @@ const deviceList = [
     }
 ]
 
-const roomList = [{
-    title: 'Living Room',
-},
-{
-    title: 'Kitchen',
-},
-{
-    title: 'Bedroom',
-},
-{
-    title: 'Bathroom',
-}
+const roomList = [
+    {
+        title: 'Living Room',
+    },
+    {
+        title: 'Kitchen',
+    },
+    {
+        title: 'Bedroom',
+    },
+    {
+        title: 'Bathroom',
+    }
 ]
 
 const chooseContent = page => {
     switch (page) {
-        case 'list':
+        case 'roomList':
             return (
                 <View>
                     <RoomMenu rooms={roomList} />

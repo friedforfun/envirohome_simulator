@@ -7,12 +7,13 @@ import ModePicker from './components/ModePicker';
 
 export default function App() {
   const [currentContent, nextContent] = useState('list');
+  const [profileVis, setProfileVis] = useState(false);
+  
   const pageToRender = page => {
     console.log('Render '+page)
     nextContent(page)
   };
 
-  //! TODO - implement as a screen for navigation.
   return (
     <View style={styles.container}>
       <View style={styles.topNav}>
@@ -25,7 +26,7 @@ export default function App() {
       <View style={styles.modePicker}>
         <ModePicker 
           mapView={() => pageToRender('map')} 
-          listView={() => pageToRender('list')}
+          listView={() => pageToRender('roomList')}
         />
       </View>
     </View>
