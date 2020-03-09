@@ -4,6 +4,11 @@ import { ThemeProvider, Divider, Icon } from 'react-native-elements';
 
 
 const ModePicker = props => {
+    /*
+        props:
+            mapView -> calls function to render map view
+            listView -> calls function to render list view
+    */
     return (
         <View style={styles.content}>
              <Icon 

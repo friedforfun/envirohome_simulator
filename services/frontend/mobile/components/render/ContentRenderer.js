@@ -64,6 +64,10 @@ const chooseContent = page => {
 };
 
 const ContentRenderer = props => {
+    /*
+        props:
+            page -> identifies content to render
+    */
     return(
         <ScrollView style={styles.content}>
             { chooseContent(props.page) }

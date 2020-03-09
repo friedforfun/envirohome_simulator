@@ -3,6 +3,10 @@ import { View } from 'react-native';
 import { ThemeProvider, ListItem } from 'react-native-elements';
 
 const DeviceMenu = props => {
+    /*
+        props:
+            devices -> list of devices
+    */
     // Create a list of devices using list.map. see: `https://react-native-elements.github.io/react-native-elements/docs/listitem.html`
     return (
         <View>

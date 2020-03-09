@@ -5,7 +5,10 @@ import { ThemeProvider, ListItem } from 'react-native-elements';
 
 
 const RoomMenu = props => {
-
+  /*
+        props:
+            rooms -> list of rooms
+    */
   // Create a list of devices using list.map. see: `https://react-native-elements.github.io/react-native-elements/docs/listitem.html`
     return (
         <View>

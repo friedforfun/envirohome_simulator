@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Modal } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Overlay, Avatar } from 'react-native-elements';
 
 const UserProfile = props => {
-    
+    /*
+        Props:
+            handler -> function(boolean)
+            visible -> returns: visibility state of this component
+    */
 
     return (
         <Overlay 
             animationType="fade"
             borderRadius={ 15 }
             isVisible={props.visible}
-            onBackdropPress={() => setVis(false) /* Pass visible state up to parent component */}
+            onBackdropPress={() => props.handler(false) /* call handler function from parent */}
         >
             <Avatar
                 size="large"
