@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { useSelector } from 'react-redux';
+
 import RoomMenu from './RoomMenu';
 import DeviceMenu from './DeviceMenu';
 
@@ -22,22 +24,12 @@ const deviceList = [
     }
 ]
 
-const roomList = [
-    {
-        title: 'Living Room',
-    },
-    {
-        title: 'Kitchen',
-    },
-    {
-        title: 'Bedroom',
-    },
-    {
-        title: 'Bathroom',
-    }
-]
+
 
 const chooseContent = page => {
+    // access redux store to get list of rooms
+    const roomList = useSelector(state => state.roomStore.rooms)
+
     switch (page) {
         case 'roomList':
             return (
