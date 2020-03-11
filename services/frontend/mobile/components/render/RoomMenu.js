@@ -10,17 +10,18 @@ const RoomMenu = props => {
             rooms -> list of rooms
     */
   // Create a list of devices using list.map. see: `https://react-native-elements.github.io/react-native-elements/docs/listitem.html`
-    return (
+  //! TODO: access rooms from redux room store 
+  return (
         <View>
             {
             props.rooms.map((item, i) => (
                 <ListItem
                 key={i}
-                title={item.title}
+                title={item.name}
                 badge={{ value: 3, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
                 bottomDivider
                 chevron
-                onPress={() => console.log("Open "+item.title+" Devices")}
+                onPress={() => console.log("Open "+item.name+" Devices")}
                 />
             ))
             }
