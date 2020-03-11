@@ -9,6 +9,18 @@ import  ContentRenderer from './components/render/ContentRenderer';
 import ModePicker from './components/render/ModePicker';
 import AllDevices from './components/logic/CallAllDevices';
 
+//! TODO finish these functions
+/*
+const uniqueRooms = apiState => {
+  if (apiState.isLoading === false) {
+    return [...new Set(apiState.dataSource.map(item => item.room))]
+  }
+};
+*/
+//! dispatch add room action on these devices
+//const initRooms = uniqueRooms(AllDevices).map();
+
+
 export default function App() {
   const [currentContent, nextContent] = useState('list');
 
