@@ -1,4 +1,5 @@
 import Device from '../models/device';
+import Room from '../../models/rooms';
 
 const rawData = [
     {
@@ -93,9 +94,20 @@ const rawData = [
     }
 ]
 
+//! --- functions to parse the temp dummy data into classes ---
+const uniqueRooms = [...new Set(DEVICEDATA.map(item => item.room))];
+const toRoom = (element, index) => { return new Room(index, element) };
+const tempRoomArr = uniqueRooms.map(toRoom);
 
 const toDevice = obj => {
     return new Device(obj.device_id, obj.device_name, obj.device_type, obj.fault, obj.mac_addr, obj.on, obj.rated_power, obj.room)
 };
 
-export const DATA = rawData.map(toDevice)
+const findRoom = device => tempRoomArr.find(room => room.name === device.room)
+
+for (i = 0; i < DEVICEDATA.length; i++){
+	findRoom(DEVICEDATA[i]).addDevice(DEVICEDATA[i]);
+}
+
+export const ROOMDATA = tempRoomArr;
+export const DEVICEDATA = rawData.map(toDevice);
