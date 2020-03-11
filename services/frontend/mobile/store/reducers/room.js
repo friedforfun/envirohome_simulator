@@ -1,5 +1,5 @@
 import { ROOMDATA } from '../dummyData';
-import { ADD_ROOM, REMOVE_ROOM } from '../actions/rooms';
+import { ADD_ROOM, REMOVE_ROOM, ADD_DEVICE_TO_ROOM } from '../actions/rooms';
 import Room from '../../models/room';
 
 
@@ -27,10 +27,26 @@ const RoomReducer = (state = initialState, action) => {
             if (getIndex >= 0){
                 const tempRooms = [...state.rooms];
                 tempRooms.splice(getIndex, 1);
-                return { ...state, rooms: tempRooms }
+                return { ...state, rooms: tempRooms };
+            } else {
+                return { ...state };
+            }
+
+        case ADD_DEVICE_TO_ROOM:
+            const getRoomIndex = state.rooms.findIndex(room => room.id === action.roomID);
+            const testIndex = state.rooms.findIndex(room => room.name === action.device.room);
+            if (getRoomIndex === testIndex){
+                const tempRooms = [...state.rooms];
+                const updateRoom = tempRooms[getIndex];
+                updateRoom.addDevice(action.deviceObj);
+                tempRooms.splice(getIndex, 1);
+                tempRooms.concat(updateRoom);
+                return { ...state, rooms: tempRooms}
             } else {
                 return { ...state }
             }
+
+
     }
     return state;
 }
