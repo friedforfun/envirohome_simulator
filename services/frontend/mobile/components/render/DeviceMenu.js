@@ -14,10 +14,10 @@ const DeviceMenu = props => {
                 props.devices.map((item, i) => (
                     <ListItem
                         key={i}
-                        title={item.title}
+                        title={item.name}
                         switch={{
                             value: item.power,
-                            onValueChange: console.log("switched "+item.title),
+                            onValueChange: console.log("switched "+item.name),
                         }}
                         bottomDivider
                         chevron
