@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 
 import RoomMenu from './RoomMenu';
 import DeviceMenu from './DeviceMenu';
+import SettingsMenu from './SettingsMenu';
+import { DEVICEDATA } from '../../store/dummyData';
 
 const deviceList = [
     {
@@ -35,7 +37,7 @@ const chooseContent = page => {
             return (
                 <View>
                     <RoomMenu rooms={roomList} />
-                    <DeviceMenu devices={deviceList} />
+                    <DeviceMenu devices={DEVICEDATA} />
                 </View>
             );
         case 'map':
@@ -44,7 +46,7 @@ const chooseContent = page => {
             );
         case 'settings':
             return (
-                <Text>Render settings page here.</Text>
+                <SettingsMenu />
             );
         default:
             return (
