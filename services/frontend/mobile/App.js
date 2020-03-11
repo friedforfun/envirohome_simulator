@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   modePicker:{
-    padding: 4,
     borderColor: 'black',
     borderWidth: 1,
+    
   }
 });
