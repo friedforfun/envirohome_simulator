@@ -10,7 +10,7 @@
 
 from flask_sqlalchemy import SQLAlchemy
 # https://github.com/Martlark/flask-serialize
-from flask_serialize import FlaskSerializeMixin 
+from flask_serialize import FlaskSerializeMixin
 from project import app, db
 
 
@@ -27,22 +27,33 @@ class User(db.Model, FlaskSerializeMixin):
     #
     # Stores id of user 
     id = db.Column(db.Integer, primary_key=True)
+
+    ## \brief Stores id
+    #
+    # Stores id of user 
+    public_id = db.Column(db.String(50), unique=True)
+
     ## \brief Stores username
     #
     # Stores username of the user
     username = db.Column(db.String(128), unique=True, nullable=False)
+
     ## \brief Stores email
     #
     # Stores the email of the user
     email = db.Column(db.String(128), unique=True, nullable=True)
+
     ## \brief Stores password hash
     #
     # Stores the password hash of the user
     password_hash = db.Column(db.String(128), index=True, nullable=False)
+
     ## \brief Stores active status
     #
-    # 
-    active = db.Column(db.Boolean(), default=True, nullable=False)
+    #
+    active = db.Column(db.Boolean(), default=False, nullable=False)
+
+    admin = db.Column(db.Boolean(), default=False, nullable=False)
 
     # def __init__(self, username, email, password_hash):
     #     self.username = username
@@ -214,3 +225,5 @@ class Usage(db.Model, FlaskSerializeMixin):
     #
     #
     energy_usage = db.Column(db.Float)
+
+
