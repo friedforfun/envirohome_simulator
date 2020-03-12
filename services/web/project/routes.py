@@ -115,7 +115,7 @@ def new_user():
 
     db.session.add(user)
     db.session.commit()
-    return jsonify({"success": "user {} created".format(user.public_id)})
+    return jsonify({"user_id": "{}".format(user.public_id)})
 
 
 @app.route("/user/<public_id>", methods=["GET"])
