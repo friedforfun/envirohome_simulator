@@ -32,6 +32,8 @@ const chooseContent = page => {
     // access redux store to get list of rooms
     const roomList = useSelector(state => state.roomStore.rooms)
 
+
+
     switch (page) {
         case 'roomList':
             return (

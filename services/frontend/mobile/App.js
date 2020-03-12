@@ -3,15 +3,28 @@ import { StyleSheet, Text, View } from 'react-native';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
-import RoomReducer from './store/reducers/rooms';
+import RoomReducer from './store/reducers/room';
 import NavBar from './components/render/NavBar';
 import  ContentRenderer from './components/render/ContentRenderer';
 import ModePicker from './components/render/ModePicker';
+import AllDevices from './components/logic/CallAllDevices';
+
+//! TODO finish these functions
+/*
+const uniqueRooms = apiState => {
+  if (apiState.isLoading === false) {
+    return [...new Set(apiState.dataSource.map(item => item.room))]
+  }
+};
+*/
+//! dispatch add room action on these devices
+//const initRooms = uniqueRooms(AllDevices).map();
+
 
 export default function App() {
   const [currentContent, nextContent] = useState('list');
 
-  // merge reducers into single reducer (RoomReducer, DeviceReducer...)
+  // merge reducers into single reducer (RoomReducer, UserReducer...)
   // allows us to access the 'rooms' state
   const rootReducer = combineReducers({
     roomStore: RoomReducer
@@ -20,8 +33,9 @@ export default function App() {
   // actual store
   const store = createStore(rootReducer);
  
+  // dispatch actions to populate store here using rootReducer and CallAllDevices
+
   const pageToRender = page => {
-    console.log('Render '+page)
     nextContent(page)
   };
 
