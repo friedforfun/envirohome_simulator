@@ -4,7 +4,10 @@ import axios from 'axios';
 const API = 'http://192.168.86.26:5000/api';
 const DEVICES = '/devices';
 
-const ApiCall = props => {
+//! TESTING: hardcode JWT token here
+const JWTTOKEN = 0;
+
+const AllDevices = () => {
     // state hooks
     const [result, newDevices] = useState({ isLoading: true, dataSource: [] });
     
@@ -16,6 +19,14 @@ const ApiCall = props => {
         })
     }
 
+    const loadNew = () => {
+        newDevices({
+            isLoading: true,
+            dataSource: result.dataSource
+        })
+    }
+
+    /*
     // useEffect function to fetch data from API: /devices route
     useEffect(() => {
         const fetchData = async () => {
@@ -23,13 +34,18 @@ const ApiCall = props => {
             updateDeviceList(fetch.allDevices);
         };
         fetchData();
-    }, [/* Specify dependancy to run fetch again here (change of device fields) */]);
+    }, [// Specify dependancy to run fetch again here (change of device fields) ]);*/
     
-
-    return (
-        
-        { result }
-    );
+    useEffect(() => {
+        loadNew();
+        //axios.get(API+DEVICES, jwtToken).then(response => {
+        axios.get(API + DEVICES).then(response => {
+            updateDeviceList(response.data)
+            console.log(response);
+        })
+    }, [dataSource]);
+    
+    return result;
 }
 
-export default ApiCall;
+export default AllDevices;

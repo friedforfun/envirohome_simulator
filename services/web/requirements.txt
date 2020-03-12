@@ -5,3 +5,5 @@ flask-serialize==1.1.4
 flask-cors
 flask-marshmallow
 marshmallow-sqlalchemy
+nose2
+PyJWT==1.7.1
