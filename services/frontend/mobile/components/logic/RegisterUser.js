@@ -13,7 +13,7 @@ var instance = axios.create({
 const RegisterUser = (user, pword, email) => {
     // state hooks
     const [thisState, nextState] = useState({ isPosted: false, response: { } });
-    
+
     // update function
     const endPost = (result) => {
         nextState({
@@ -23,22 +23,24 @@ const RegisterUser = (user, pword, email) => {
     }
 
     useEffect(() => {
-        axios.post('/auth/register', {
-            username: user,
-            password: pword,
-            email: email
-          })
+        axios.post('http://192.168.86.26:5000/auth/register', 
+        {
+            username: 'user',
+            password: 'pword',
+            email: 'email@someemail.com'
+          }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }})
           .then(response => {
             console.log(response);
-            //endPost(response);
+            endPost(response);
           })
-          .catch(function (error) {
-            console.log(error);
-          });
+          .catch((error) => console.log( error.response ) );
     }, []);
 
     
-    return thisState.response;
+    return thisState;
 }
 
 export default RegisterUser;
