@@ -4,43 +4,42 @@ import axios from 'axios';
 const BASE_URL = 'http://192.168.86.26:5000';
 
 
-var instance = axios.create({
-    baseURL: BASE_URL,
-    timeout: 1500,
-    //headers: {'X-Custom-Header': 'foobar'}
-  });
+const instance = axios.create({
+  baseURL: BASE_URL,
+  timeout: 5000,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
 
 const RegisterUser = (user, pword, email) => {
     // state hooks
-    const [thisState, nextState] = useState({ isPosted: false, response: { } });
+    const [thisState, nextState] = useState({ gotResponse: false, response: { } });
 
     // update function
-    const endPost = (result) => {
+    const saveResponse = (result) => {
         nextState({
-            isPosted: true,
+            gotResponse: true,
             response: result
         })
     }
 
     useEffect(() => {
-        axios.post('http://192.168.86.26:5000/auth/register', 
+        instance.post('/auth/register', 
         {
-            username: 'user',
-            password: 'pword',
-            email: 'email@someemail.com'
-          }, {
-            headers: {
-                'Content-Type': 'application/json'
-            }})
+            username: user,
+            password: pword,
+            email: email
+          })
           .then(response => {
             console.log(response);
-            endPost(response);
+            saveResponse(response);
           })
           .catch((error) => console.log( error.response ) );
     }, []);
 
     
-    return thisState;
+    return thisState.data;
 }
 
 export default RegisterUser;
