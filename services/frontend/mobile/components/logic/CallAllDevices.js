@@ -40,10 +40,10 @@ const AllDevices = () => {
         loadNew();
         //axios.get(API+DEVICES, jwtToken).then(response => {
         axios.get(API + DEVICES).then(response => {
-            updateDeviceList(response.data)
+            //updateDeviceList(response.data)
             console.log(response);
         })
-    }, [dataSource]);
+    }, []);
     
     return result;
 }

@@ -7,6 +7,8 @@ import DeviceMenu from './DeviceMenu';
 import SettingsMenu from './SettingsMenu';
 import { DEVICEDATA } from '../../store/dummyData';
 
+
+
 const deviceList = [
     {
         title: 'Light',
@@ -32,8 +34,6 @@ const chooseContent = page => {
     // access redux store to get list of rooms
     const roomList = useSelector(state => state.roomStore.rooms)
 
-
-
     switch (page) {
         case 'roomList':
             return (
@@ -54,7 +54,6 @@ const chooseContent = page => {
             return (
                 <Text>Render default here.</Text>
             );
-
     }
 
 };
@@ -64,11 +63,13 @@ const ContentRenderer = props => {
         props:
             page -> identifies content to render
     */
+
+    
+    
     return(
         <ScrollView style={styles.content}>
             { chooseContent(props.page) }
         </ScrollView>
-        
     );
 }
 const styles = StyleSheet.create({
