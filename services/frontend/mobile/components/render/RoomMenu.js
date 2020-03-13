@@ -1,7 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 import { ThemeProvider, ListItem } from 'react-native-elements';
-
+import CallAllDevices from '../logic/CallAllDevices';
+import RegisterUser from '../logic/RegisterUser';
 
 
 const RoomMenu = props => {
@@ -11,8 +12,13 @@ const RoomMenu = props => {
     */
   // Create a list of devices using list.map. see: `https://react-native-elements.github.io/react-native-elements/docs/listitem.html`
   //! TODO: access rooms from redux room store 
+  
+  //CallAllDevices();
+  RegisterUser('test', 'reallytest', 'somebody@someplace.com');
   return (
+    
         <View>
+          
             {
             props.rooms.map((item, i) => (
                 <ListItem
