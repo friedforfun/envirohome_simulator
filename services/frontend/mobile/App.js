@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 
 import RoomReducer from './store/reducers/room';
+//import DeviceReducer from './store/reducers/device'
+//import { populateDevice } from './store/actions/devices';
+//import { addRoom } from './store/actions/rooms';
 import NavBar from './components/render/NavBar';
 import  ContentRenderer from './components/render/ContentRenderer';
 import ModePicker from './components/render/ModePicker';
-import AllDevices from './components/logic/CallAllDevices';
+//import AllDevices from './components/logic/CallAllDevices';
 
 //! TODO finish these functions
 /*
@@ -16,10 +19,27 @@ const uniqueRooms = apiState => {
     return [...new Set(apiState.dataSource.map(item => item.room))]
   }
 };
-*/
-//! dispatch add room action on these devices
-//const initRooms = uniqueRooms(AllDevices).map();
 
+const getDevices = apiState => {
+  if (apiState.isLoading === false){
+    return [...apiState.dataSource]
+  }
+}
+
+*/
+// const dispatch = useDispatch();
+
+//! dispatch add room action on this array of rooms
+/*
+const collectRooms = uniqueRooms(AllDevices).map(room => useDispatch(addRoom(room)));
+
+const populateDevices = getDevices(AllDevices).map(device =>
+  useDispatch(populateDevice(device.device_id, device.device_name, device.device_type, device.fault, device.on, device.rated_power, device.room))
+  );
+*/
+// const deviceList = useSelector(state => state.deviceStore)
+
+//const fillRooms = 0;
 
 export default function App() {
   const [currentContent, nextContent] = useState('list');
