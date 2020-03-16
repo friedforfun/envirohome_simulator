@@ -35,7 +35,7 @@ const RoomMenu = props => {
                 badge={{ value: 3, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
                 bottomDivider
                 chevron
-                onPress={selectRoomHandler.bind(item)}
+                onPress={() => selectRoomHandler(item)}
                 />
             ))
             }
