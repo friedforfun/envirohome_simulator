@@ -14,7 +14,9 @@ const RoomMenu = props => {
   //! TODO: access rooms from redux room store 
   
   //CallAllDevices();
-  RegisterUser('test', 'reallytest', 'somebody@someplace.com');
+  //RegisterUser('test', 'reallytest', 'somebody@someplace.com');
+
+  //props.navigation.navigate('DevicesInRoom')
   return (
     
         <View>
@@ -27,7 +29,7 @@ const RoomMenu = props => {
                 badge={{ value: 3, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
                 bottomDivider
                 chevron
-                onPress={() => console.log("Open "+item.name+" Devices")}
+                onPress={NavigationContainer.push('DevicesInRoom')}
                 />
             ))
             }
