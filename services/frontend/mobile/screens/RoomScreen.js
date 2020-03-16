@@ -10,7 +10,7 @@ const RoomScreen = props => {
     return (
         <View style={styles.container}>
             <ScrollView style={styles.content}>
-                <RoomMenu rooms={roomList} />
+                <RoomMenu navigation={props.navigation} rooms={roomList} />
             </ScrollView>
         </View>
     );
