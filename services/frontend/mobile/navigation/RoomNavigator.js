@@ -3,7 +3,7 @@ import {useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Platform } from 'react-native';
 
-import { center, right, left } from '../constants/Colors';
+import { center, right, left } from '../constants/Colours';
 import LoginScreen from '../screens/Login';
 import RegisterScreen from '../screens/Register';
 import RoomScreen from '../screens/RoomScreen';
@@ -36,7 +36,7 @@ const RoomListStack = createStackNavigator();
 export const RoomNavigator = props => {
     
     return (
-            <RoomListStack.Navigator screenOptions={defaultNavOptions}>
+            <RoomListStack.Navigator screenOptions={defaultNavOptions} initialRouteName="ListRooms">
                 <RoomListStack.Screen name="ListRooms" component={RoomScreen} />
                 <RoomListStack.Screen name="DevicesInRoom" component={DeviceScreen} />
             </RoomListStack.Navigator>
