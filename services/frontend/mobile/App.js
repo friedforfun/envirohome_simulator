@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { createStore, combineReducers } from 'redux';
-import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
 
 import RoomReducer from './store/reducers/room';
+import Navigator from './navigation/Navigator';
+
+
 //import DeviceReducer from './store/reducers/device'
 //import { populateDevice } from './store/actions/devices';
 //import { addRoom } from './store/actions/rooms';
-import NavBar from './components/render/NavBar';
-import  ContentRenderer from './components/render/ContentRenderer';
-import ModePicker from './components/render/ModePicker';
+
 //import AllDevices from './components/logic/CallAllDevices';
 
 //! TODO finish these functions
@@ -41,9 +43,25 @@ const populateDevices = getDevices(AllDevices).map(device =>
 
 //const fillRooms = 0;
 
-export default function App() {
-  const [currentContent, nextContent] = useState('list');
+const fetchFonts = () => {
+  Font.loadAsync({
+    'open-sans' : require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
+  });
+};
 
+export default function App() {
+  const [fontLoaded, setFontLoaded] = useState(false);
+
+  if (!fontLoaded){
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setFontLoaded(true)}
+      />
+    )
+  }
+  
   // merge reducers into single reducer (RoomReducer, UserReducer...)
   // allows us to access the 'rooms' state
   const rootReducer = combineReducers({
@@ -55,45 +73,11 @@ export default function App() {
  
   // dispatch actions to populate store here using rootReducer and CallAllDevices
 
-  const pageToRender = page => {
-    nextContent(page)
-  };
 
   return (
     <Provider store={store}>
-      <View style={styles.container}>
-        <View style={styles.topNav}>
-          <NavBar 
-            usage={ <Text>50%</Text> } 
-            settings={() => pageToRender('settings')} 
-          />
-        </View>
-        <ContentRenderer page={ currentContent } />
-        <View style={styles.modePicker}>
-          <ModePicker 
-            mapView={() => pageToRender('map')} 
-            listView={() => pageToRender('roomList')}
-          />
-        </View>
-      </View>
+      <Navigator />
     </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 45,
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  topNav:{
-    padding: 4,
-    borderColor: 'black',
-    borderWidth: 1,
-  },
-  modePicker:{
-    borderColor: 'black',
-    borderWidth: 1,
-    
-  }
-});
