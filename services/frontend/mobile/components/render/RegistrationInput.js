@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
+import { Input, Icon } from 'react-native-elements';
 
 const RegistrationInput = props => {
     const [userId, setUserId] = useState('');
@@ -23,8 +24,9 @@ const RegistrationInput = props => {
         <View style={styles.container}>
             <Text>User ID*</Text>
             <Input
+                required
                 value={userId}
-                onChange={}
+                onChange={() => console.log("UserID changing")}
                 autoCapitalize='none'
                 keyboardType='default'
                 returnKeyType='next'
@@ -59,7 +61,7 @@ const RegistrationInput = props => {
             <Input
                 autoCapitalize='none'
                 keyboardType='default'
-                secureTextEntry='true'
+                secureTextEntry={true}
                 placeholder='Password'
                 returnKeyType='next'
                 onEndEditing={() => console.log('password validation')}
@@ -76,7 +78,7 @@ const RegistrationInput = props => {
             <Input
                 autoCapitalize='none'
                 keyboardType='default'
-                secureTextEntry='true'
+                secureTextEntry={true}
                 placeholder='Password'
                 returnKeyType='done'
                 onEndEditing={() => console.log('password validation')}
