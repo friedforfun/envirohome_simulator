@@ -43,9 +43,21 @@ const populateDevices = getDevices(AllDevices).map(device =>
 
 //const fillRooms = 0;
 
+
+// merge reducers into single reducer (RoomReducer, UserReducer...)
+// allows us to access the 'rooms' state
+const rootReducer = combineReducers({
+  roomStore: RoomReducer
+});
+
+// actual store
+const store = createStore(rootReducer);
+
+  // dispatch actions to populate store here using rootReducer and CallAllDevices
+
 const fetchFonts = () => {
-  Font.loadAsync({
-    'open-sans' : require('./assets/fonts/OpenSans-Regular.ttf'),
+  return Font.loadAsync({
+    'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
     'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
   });
 };
@@ -53,27 +65,15 @@ const fetchFonts = () => {
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 
-  if (!fontLoaded){
+  if (!fontLoaded) {
     return (
       <AppLoading
         startAsync={fetchFonts}
-        onFinish={() => setFontLoaded(true)}
+        onFinish={() => {setFontLoaded(true)}}
+        onError={console.warn}
       />
-    )
+    );
   }
-  
-  // merge reducers into single reducer (RoomReducer, UserReducer...)
-  // allows us to access the 'rooms' state
-  const rootReducer = combineReducers({
-    roomStore: RoomReducer
-  });
-
-  // actual store
-  const store = createStore(rootReducer);
- 
-  // dispatch actions to populate store here using rootReducer and CallAllDevices
-
-
   return (
     <Provider store={store}>
       <Navigator />
