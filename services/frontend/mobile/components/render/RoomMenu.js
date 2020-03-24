@@ -24,15 +24,13 @@ const RoomMenu = props => {
   };
 
   return (
-    
         <View>
-          
             {
             props.rooms.map((item, i) => (
                 <ListItem
                 key={i}
                 title={item.name}
-                badge={{ value: 3, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
+                badge={{ value: item.deviceArray.length, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
                 bottomDivider
                 chevron
                 onPress={() => selectRoomHandler(item)}
