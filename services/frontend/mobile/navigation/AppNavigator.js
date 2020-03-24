@@ -1,8 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Platform } from 'react-native';
+import { Icon } from 'react-native-elements'
 
-import { center, right, left } from '../constants/Colours';
+import Colours from '../constants/Colours';
 import RoomScreen from '../screens/RoomScreen';
 import DeviceScreen from '../screens/DeviceScreen';
 import AvatarButton from '../components/render/AvatarButton';
@@ -12,21 +13,23 @@ import Utilisation from '../components/render/Utilisation';
 import LoginScreen from '../screens/Login';
 import RegisterScreen from '../screens/RegisterScreen';
 import SettingsScreen from '../screens/Settings';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const defaultNavOptions = {
     headerStyle: {
-        backgroundColor: Platform.OS === 'android' ? center : ''
+        backgroundColor: Platform.OS === 'android' ? Colours.center : ''
     },
     headerTitleStyle: {
+        justifyContent: 'center',
         fontFamily: 'open-sans-bold'
     },
     headerBackTitleStyle: {
         fontFamily: 'open-sans'
     },
-    headerTintColor: Platform.OS === 'android' ? 'white' : center,
+    headerTintColor: Platform.OS === 'android' ? 'white' : Colours.center,
     headerTitle: () => (<Utilisation usage={'50%'}/>),
-    headerRight: () => (<SettingsIcon settings={() => {}}/>)
+    headerRight: props => (<TouchableOpacity><SettingsIcon settings={ () => console.log()}/></TouchableOpacity>)
 };
 
 const RoomListStack = createStackNavigator();
@@ -35,7 +38,7 @@ export const RoomNavigator = props => {
     
     return (
             <RoomListStack.Navigator screenOptions={defaultNavOptions} initialRouteName="ListRooms">
-                <RoomListStack.Screen name="ListRooms" component={RoomScreen} screenOptions={{headerLeft: () => (<AvatarButton user='A' />)}}/>
+                <RoomListStack.Screen name="ListRooms" component={RoomScreen} options={{headerLeft: () => (<AvatarButton user='A' />)}}/>
                 <RoomListStack.Screen name="DevicesInRoom" component={DeviceScreen} />
             </RoomListStack.Navigator>
     );
@@ -48,9 +51,14 @@ const SettingsNavigator = props => {
 };
 
 const LoginStack = createStackNavigator();
-const LoginNavigator = props => {
-//<ScreenStack.Screen name="Login" component={LoginScreen} />
-//<ScreenStack.Screen name="Register" component={RegisterScreen} />
+export const LoginNavigator = props => {
+    return (
+        <LoginStack.Navigator screenOptions={defaultNavOptions} initialRouteName="LoginScreen">
+            <LoginStack.Screen name="Login" component={LoginScreen} />
+            <LoginStack.Screen name="Register" component={RegisterScreen} />
+        </LoginStack.Navigator>
+    );
+    
 };
 
 //<ScreenStack.Screen name="Map" component={MapScreen} />
