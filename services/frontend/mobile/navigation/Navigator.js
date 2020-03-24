@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { NavigationContainer } from "@react-navigation/native";
 
 import { RoomNavigator, LoginNavigator } from './AppNavigator';
@@ -6,8 +7,10 @@ import { RoomNavigator, LoginNavigator } from './AppNavigator';
 
 const Navigator = props =>{
     // use selector from store to load authenticated or unauthenticated state
+    // const isAuth = useSelector(state => !!state.auth.token);
+    // const didTryAutoLogin = useSelector(state => state.auth.didTryAutoLogin);
     const isAuth = true;
-    const didTryAutoLogin = true;
+    const didTryAutoLogin = false;
 
     //! need to add loading screen for when didTryAutoLogin is false
     // {!isAuth && !didTryAutoLogin && <StartupScreen />}
