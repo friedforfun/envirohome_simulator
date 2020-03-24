@@ -10,9 +10,9 @@ import AvatarButton from '../components/render/AvatarButton';
 import SettingsIcon from '../components/render/SettingsIcon';
 import Utilisation from '../components/render/Utilisation';
 
-import LoginScreen from '../screens/Login';
+import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
-import SettingsScreen from '../screens/Settings';
+import SettingsRoot from '../screens/SettingsRoot';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
@@ -46,7 +46,10 @@ export const RoomNavigator = props => {
 
 const SettingsStack = createStackNavigator();
 const SettingsNavigator = props => {
-//<ScreenStack.Screen name="Settings" component={SettingsScreen} />
+    <SettingsStack.Navigator initialRouteName="SettingsRoot" >
+        <SettingsStack.Screen name="SettingsRoot" component={SettingsRoot} />
+    </SettingsStack.Navigator>
+//
 // all settings children
 };
 
