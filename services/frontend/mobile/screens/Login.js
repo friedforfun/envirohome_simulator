@@ -1,14 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const LoginScreen = props => {
-
+console.log(props)
 
     return (
         <View style={styles.container}>
-            <ScrollView style={styles.content}>
                 <Text> The Login Screen </Text>
-            </ScrollView>
+                <TouchableOpacity onPress={console.log(props.navigation.navigate('Register'))}>
+                    <Text> Register </Text>
+                </TouchableOpacity>
         </View>
     );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, Text } from 'react-native';
 
 import RegisterUser from '../components/logic/RegisterUser';
 import RegistrationInput from '../components/render/RegistrationInput';
@@ -16,12 +16,15 @@ const RegisterScreen = props => {
         
     }
 
-    RegisterUser(user, password, email)
-
+    //RegisterUser(user, password, email)
+//<Image source={imageLogo} />
     return (
         <View style={styles.container}>
-            <Image source={imageLogo} />
+            
             <RegistrationInput formHandler={formHandler}/>
+            <TouchableOpacity onPress={props.navigation.navigate('Login')}>
+                <Text> Login </Text>
+            </TouchableOpacity>
         </View>
     );
 }
