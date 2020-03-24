@@ -39,7 +39,7 @@ const RegisterUser = (user, pword, email) => {
     }, []);
 
     
-    return thisState.data;
+    return thisState.response;
 }
 
 export default RegisterUser;
