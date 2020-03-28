@@ -56,9 +56,9 @@ const SettingsNavigator = props => {
 const LoginStack = createStackNavigator();
 export const LoginNavigator = props => {
     return (
-        <LoginStack.Navigator screenOptions={defaultNavOptions} initialRouteName="LoginScreen">
-            <LoginStack.Screen name="Login" component={LoginScreen} />
-            <LoginStack.Screen name="Register" component={RegisterScreen} />
+        <LoginStack.Navigator screenOptions={defaultNavOptions} initialRouteName="RegisterScreen">
+            <LoginStack.Screen name="LoginScreen" component={LoginScreen} />
+            <LoginStack.Screen name="RegisterScreen" component={RegisterScreen} />
         </LoginStack.Navigator>
     );
     

@@ -9,8 +9,8 @@ const Navigator = props =>{
     // use selector from store to load authenticated or unauthenticated state
     // const isAuth = useSelector(state => !!state.auth.token);
     // const didTryAutoLogin = useSelector(state => state.auth.didTryAutoLogin);
-    const isAuth = true;
-    const didTryAutoLogin = false;
+    const isAuth = false;
+    const didTryAutoLogin = true;
 
     //! need to add loading screen for when didTryAutoLogin is false
     // {!isAuth && !didTryAutoLogin && <StartupScreen />}
