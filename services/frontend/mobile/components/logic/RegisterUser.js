@@ -1,45 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import { fetchingData, fetchError, signup } from '../../store/actions/auth'
 import axios from 'axios';
 
-const BASE_URL = 'http://192.168.86.26:5000';
-
-
-const instance = axios.create({
-  baseURL: BASE_URL,
-  timeout: 5000,
-  headers: {
-    'Content-Type': 'application/json'
-  }
-});
+import URL from '../../constants/URL';
 
 const RegisterUser = (user, pword, email) => {
-    // state hooks
-    const [thisState, nextState] = useState({ gotResponse: false, response: { } });
-
-    // update function
-    const saveResponse = (result) => {
-        nextState({
-            gotResponse: true,
-            response: result
-        })
+  
+  const register = axios.create({
+    baseURL: URL.base,
+    headers: {
+      'Content-Type': 'application/json',
+      "Connection": "close"
     }
+  });
 
-    useEffect(() => {
-        instance.post('/auth/register', 
-        {
-            username: user,
-            password: pword,
-            email: email
-          })
-          .then(response => {
-            console.log(response);
-            saveResponse(response);
-          })
-          .catch((error) => console.log( error.response ) );
-    }, []);
-
-    
-    return thisState.response;
+  return register({
+    method: 'post',
+    timeout: 8000,
+    url: URL.register,
+    data: {
+      username: user,
+      password: pword,
+      email: email
+    }
+  })
 }
 
 export default RegisterUser;
