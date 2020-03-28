@@ -7,7 +7,7 @@ const settings = [
     {title: 'Power management'}, { title: 'Rooms' }, {title: 'Statistics'}, {title:'Notification Settings'}
 ];
 const adminSettings = [
-    {title: 'Power management' }, { title: 'Rooms' }, {title: 'Statistics'}, {title:'Notification Settings'}, {title: 'Manage Users'}
+    { title: 'Power management' }, { title: 'Rooms' }, { title: 'Statistics' }, { title: 'Notification Settings' }, { title: 'Manage Users' }, { title: 'Logs' }
 ];
 
 const menuDisplay = (priv) => {
