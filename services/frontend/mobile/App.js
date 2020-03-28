@@ -1,59 +1,20 @@
 import React, { useState } from 'react';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 
 import RoomReducer from './store/reducers/room';
+import AuthReducer from './store/reducers/auth';
 import Navigator from './navigation/Navigator';
 
+// merge reducers into single reducer (RoomReducer, AuthReducer...)
+// to facilitate access to the store
+const rootReducer = combineReducers({RoomReducer, AuthReducer});
 
-//import DeviceReducer from './store/reducers/device'
-//import { populateDevice } from './store/actions/devices';
-//import { addRoom } from './store/actions/rooms';
-
-//import AllDevices from './components/logic/CallAllDevices';
-
-//! TODO finish these functions
-/*
-const uniqueRooms = apiState => {
-  if (apiState.isLoading === false) {
-    return [...new Set(apiState.dataSource.map(item => item.room))]
-  }
-};
-
-const getDevices = apiState => {
-  if (apiState.isLoading === false){
-    return [...apiState.dataSource]
-  }
-}
-
-*/
-// const dispatch = useDispatch();
-
-//! dispatch add room action on this array of rooms
-/*
-const collectRooms = uniqueRooms(AllDevices).map(room => useDispatch(addRoom(room)));
-
-const populateDevices = getDevices(AllDevices).map(device =>
-  useDispatch(populateDevice(device.device_id, device.device_name, device.device_type, device.fault, device.on, device.rated_power, device.room))
-  );
-*/
-// const deviceList = useSelector(state => state.deviceStore)
-
-//const fillRooms = 0;
-
-
-// merge reducers into single reducer (RoomReducer, UserReducer...)
-// allows us to access the 'rooms' state
-const rootReducer = combineReducers({
-  roomStore: RoomReducer
-});
-
-// actual store
-const store = createStore(rootReducer);
-
-  // dispatch actions to populate store here using rootReducer and CallAllDevices
+// actual store with thunk middleware to add data from async functions
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const fetchFonts = () => {
   return Font.loadAsync({
