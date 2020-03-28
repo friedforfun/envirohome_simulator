@@ -1,8 +1,8 @@
 import { AsyncStorage } from 'react-native';
 
-import RegisterUser from '../components/logic/RegisterUser';
-
-// export const SIGNUP = 'SIGNUP';
+export const SIGNUP = 'SIGNUP';
+export const REQUEST_PENDING = 'REQUEST_PENDING';
+export const REQUEST_ERROR = 'REQUEST_ERROR';
 // export const LOGIN = 'LOGIN';
 export const AUTHENTICATE = 'AUTHENTICATE';
 export const LOGOUT = 'LOGOUT';
@@ -11,6 +11,15 @@ export const SET_DID_TRY_AL = 'SET_DID_TRY_AL';
 
 
 let timer;
+
+export const fetchingData = () => ({
+    type: API_PENDING
+});
+
+export const fetchError = error => ({
+    type: ACTION_TYPES.API_ERROR,
+    payload: error
+});
 
 export const setDidTryAL = () => {
     return { type: SET_DID_TRY_AL };
@@ -23,10 +32,19 @@ export const authenticate = (userId, token, expiryTime) => {
     };
 };
 
-export const signup = (user, email, password) => {
-    return async dispatch => {
-        const response = RegisterUser(user, password, email);
+export const signup = payload => {
+    //console.log("Auth Token: "+payload.data.user_id);
+    //console.log("signup action dispatched to store!")
+    return {
+        type: SIGNUP,
+        payload: payload,
+    }
+}
+    
 
+        
+    
+/*
         if (!response.ok) {
             const errorResData = await response.json();
             const errorId = errorResData.error.message;
@@ -37,21 +55,21 @@ export const signup = (user, email, password) => {
             throw new Error(message);
         }
 
-        const resData = await response.json();
-        console.log(resData);
-        dispatch(
-            authenticate(
-                resData.localId,
-                resData.idToken,
-                parseInt(resData.expiresIn) * 1000
-            )
-        );
-        const expirationDate = new Date(
-            new Date().getTime() + parseInt(resData.expiresIn) * 1000
-        );
-        saveDataToStorage(resData.idToken, resData.localId, expirationDate);
-    };
-};
+    const resData = await response.json();
+    console.log(resData);
+    dispatch(
+        authenticate(
+            resData.localId,
+            resData.idToken,
+            parseInt(resData.expiresIn) * 1000
+        )
+    );
+
+    const expirationDate = new Date(
+        new Date().getTime() + parseInt(resData.expiresIn) * 1000
+    );
+    saveDataToStorage(resData.idToken, resData.localId, expirationDate);
+    */
 
 export const login = (email, password) => {
     return async dispatch => {
