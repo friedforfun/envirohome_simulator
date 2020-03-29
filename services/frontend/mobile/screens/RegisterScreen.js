@@ -1,8 +1,9 @@
-import React, { useReducer, useCallback } from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, View, Button } from 'react-native';
+import React, { useReducer, useCallback, useRef } from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Icon } from 'react-native-elements';
+import { Icon, Card } from 'react-native-elements';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import Colours from '../constants/Colours';
 import RegisterUser from '../components/logic/RegisterUser';
@@ -37,7 +38,13 @@ const formReducer = (state, action) => {
 };
 
 const RegisterScreen = props => {
+    
     const dispatch = useDispatch();
+
+    let USERNAME = useRef();
+    let EMAIL = useRef();
+    let PASSWORD = useRef();
+    let PASSWORD_CONF = useRef();
 
     const [formState, dispatchFormState] = useReducer(formReducer, {
         inputValues: {
@@ -62,6 +69,7 @@ const RegisterScreen = props => {
             // if unexpected end of stream: get user-id and dispatch in signup 
             console.log(err)
         }
+
     }
 
     const inputChangeHandler = useCallback((id, inputValue, inputValidity) => {
@@ -74,106 +82,119 @@ const RegisterScreen = props => {
     }, [dispatchFormState]);
 
     return (
-        <KeyboardAvoidingView style={styles.container}>
-            <FormInput
-                id="username"
-                label="Username"
-                required
-                errorText="Please enter a valid username"
-                autoCapitalize="none"
-                returnKeyType="next"
-                initialValue=""
-                onInputChange={inputChangeHandler}
-                onEndEditing={() => console.log('End editing')}
-                onSubmitEditing={() => console.log('Submit editing')}
-                leftIcon={
-                    <Icon
-                        name='person'
-                        type='octicon'
-                        size={24}
-                        iconStyle={styles.iconStyle}
+            <KeyboardAwareScrollView style={styles.container}>
+                <Card style={styles.authContainer}>
+                    <FormInput
+                        id="username"
+                        ref={USERNAME}
+                        label="Username"
+                        required
+                        errorText="Please enter a valid username"
+                        autoCapitalize="none"
+                        returnKeyType="next"
+                        initialValue=""
+                        onInputChange={inputChangeHandler}
+                        onEndEditing={() => console.log('End editing')}
+                        onSubmitEditing={() => EMAIL.current.focus()}
+                        textContentType="username"
+                        blurOnSubmit={false}
+                        leftIcon={
+                            <Icon
+                                name='person'
+                                type='octicon'
+                                size={24}
+                                iconStyle={styles.iconStyle}
+                            />
+                        }
                     />
-                }
-            />
-            <FormInput
-                id="email"
-                label="Email"
-                email
-                required
-                errorText="Please enter a valid email"
-                keyboardType="email-address"
-                autoCapitalize="none"
-                returnKeyType="next"
-                onInputChange={inputChangeHandler}
-                onEndEditing={() => console.log('End editing')}
-                onSubmitEditing={() => console.log('Submit editing')}
-                initialValue=""
-                leftIcon={
-                    <Icon
-                        name='mail'
-                        type='octicon'
-                        size={24}
-                        iconStyle={styles.iconStyle}
+                    <FormInput
+                        id="email"
+                        ref={EMAIL}
+                        label="Email"
+                        email
+                        required
+                        errorText="Please enter a valid email"
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        returnKeyType="next"
+                        onInputChange={inputChangeHandler}
+                        onEndEditing={() => console.log('End editing')}
+                        onSubmitEditing={() => PASSWORD.current.focus()}
+                        initialValue=""
+                        textContentType="emailAddress"
+                        blurOnSubmit={false}
+                        leftIcon={
+                            <Icon
+                                name='mail'
+                                type='octicon'
+                                size={24}
+                                iconStyle={styles.iconStyle}
+                            />
+                        }
                     />
-                }
-            />
-            <FormInput
-                id="password"
-                required
-                label="Password"
-                errorText="Please enter a valid password"
-                keyboardType="default"
-                secureTextEntry
-                autoCapitalize="none"
-                returnKeyType="next"
-                minLength={6}
-                onInputChange={inputChangeHandler}
-                onEndEditing={() => console.log('End editing')}
-                onSubmitEditing={() => console.log('Submit editing')}
-                initialValue=""
-                leftIcon={
-                    <Icon
-                        name='lock'
-                        type='octicon'
-                        size={20}
-                        iconStyle={styles.iconStyle}
+                    <FormInput
+                        id="password"
+                        ref={PASSWORD}
+                        required
+                        label="Password"
+                        errorText="Please enter a valid password"
+                        keyboardType="default"
+                        secureTextEntry
+                        autoCapitalize="none"
+                        returnKeyType="next"
+                        minLength={6}
+                        onInputChange={inputChangeHandler}
+                        onEndEditing={() => console.log('End editing')}
+                        onSubmitEditing={() => PASSWORD_CONF.current.focus()}
+                        initialValue=""
+                        textContentType="newPassword"
+                        blurOnSubmit={false}
+                        leftIcon={
+                            <Icon
+                                name='lock'
+                                type='octicon'
+                                size={20}
+                                iconStyle={styles.iconStyle}
+                            />
+                        }
                     />
-                }
-            />
-            <FormInput
-                id="password2"
-                required
-                label="Re-enter password"
-                errorText="Passwords to not match"
-                keyboardType="default"
-                secureTextEntry
-                autoCapitalize="none"
-                returnKeyType="done"
-                minLength={6}
-                onInputChange={inputChangeHandler}
-                onEndEditing={() => console.log('End editing')}
-                onSubmitEditing={() => console.log('Submit editing')}
-                initialValue=""
-                leftIcon={
-                    <Icon
-                        name='lock'
-                        type='octicon'
-                        size={24}
-                        iconStyle={styles.iconStyle}
+                    <FormInput
+                        id="password2"
+                        ref={PASSWORD_CONF}
+                        required
+                        label="Re-enter password"
+                        errorText="Passwords to not match"
+                        keyboardType="default"
+                        secureTextEntry
+                        autoCapitalize="none"
+                        returnKeyType="done"
+                        onInputChange={inputChangeHandler}
+                        onEndEditing={() => console.log('End editing')}
+                        onSubmitEditing={() => console.log('Submit editing')}
+                        initialValue=""
+                        textContentType="newPassword"
+                        blurOnSubmit={false}
+                        leftIcon={
+                            <Icon
+                                name='lock'
+                                type='octicon'
+                                size={24}
+                                iconStyle={styles.iconStyle}
+                            />
+                        }
                     />
-                }
-            />
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity>
-                    <Button title="Submit" color={Colours.center} onPress={signupHandler} />
-                </TouchableOpacity>
-            </View>
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity>
-                    <Button title="Return to login" color={Colours.left} onPress={() => { }} />
-                </TouchableOpacity>
-            </View>
-        </KeyboardAvoidingView>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity>
+                            <Button title="Submit" color={Colours.center} onPress={signupHandler} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity>
+                            <Button title="Return to login" color={Colours.left} onPress={() => { }} />
+                        </TouchableOpacity>
+                    </View>
+                </Card>
+            </KeyboardAwareScrollView>
     );
 }
 
@@ -182,7 +203,14 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
+    authContainer: {
+        width: '100%',
+        maxWidth: 450,
+        maxHeight: 450,
+        padding: 5
+    },
     buttonContainer: {
+        minWidth: 250,
         marginTop: 10
     },
     iconStyle: {
