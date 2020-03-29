@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, forwardRef } from 'react';
 import { Input } from 'react-native-elements';
 import { View, StyleSheet, Text  } from 'react-native';
 
@@ -23,7 +23,11 @@ const formInputReducer = (state, action) => {
   }
 };
 
-const FormInput = props => {
+const AdvFormInput = forwardRef((props, ref) => {
+  <FormInput ref={ref} {...props} />
+})
+
+const FormInput = forwardRef((props, ref) => {
   const [inputState, dispatch] = useReducer(formInputReducer, {
     value: props.initvalue ? props.initvalue : '',
     isValid: props.initValid,
@@ -64,6 +68,7 @@ const FormInput = props => {
     <View style={styles.formControl}>
       <Input
         {...props}
+        ref={ref}
         style={styles.input}
         value={inputState.value}
         onChangeText={textChangeHandler}
@@ -76,7 +81,7 @@ const FormInput = props => {
       )}
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   formControl: {
