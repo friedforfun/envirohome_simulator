@@ -53,10 +53,27 @@ const SettingsNavigator = props => {
 // all settings children
 };
 
+const AuthNavOptions = {
+    headerStyle: {
+        backgroundColor: Platform.OS === 'android' ? Colours.center : ''
+    },
+    title: 'Authentication',
+    headerTitleStyle: {
+        textAlign: 'center',
+        alignSelf: 'center',
+        fontFamily: 'open-sans-bold',
+        flex: 1
+    },
+    headerBackTitleStyle: {
+        fontFamily: 'open-sans'
+    },
+    headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primary
+}
+
 const LoginStack = createStackNavigator();
 export const LoginNavigator = props => {
     return (
-        <LoginStack.Navigator screenOptions={defaultNavOptions} initialRouteName="RegisterScreen">
+        <LoginStack.Navigator screenOptions={AuthNavOptions} initialRouteName="RegisterScreen">
             <LoginStack.Screen name="LoginScreen" component={LoginScreen} />
             <LoginStack.Screen name="RegisterScreen" component={RegisterScreen} />
         </LoginStack.Navigator>
