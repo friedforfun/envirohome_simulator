@@ -1,10 +1,9 @@
-import { fetchingData, fetchError, signup } from '../../store/actions/auth'
 import axios from 'axios';
 
 import URL from '../../constants/URL';
 
 const RegisterUser = (user, pword, email) => {
-  
+
   const register = axios.create({
     baseURL: URL.base,
     headers: {
@@ -13,10 +12,12 @@ const RegisterUser = (user, pword, email) => {
     }
   });
 
+  const path = URL.auth + URL.register;
+
   return register({
     method: 'post',
     timeout: 8000,
-    url: URL.register,
+    url: path,
     data: {
       username: user,
       password: pword,
