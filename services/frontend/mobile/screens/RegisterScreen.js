@@ -189,7 +189,7 @@ const RegisterScreen = props => {
                     </View>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity>
-                            <Button title="Return to login" color={Colours.left} onPress={() => { }} />
+                        <Button title="Return to login" color={Colours.left} onPress={() => props.navigation.navigate('LoginScreen')} />
                         </TouchableOpacity>
                     </View>
                 </Card>
