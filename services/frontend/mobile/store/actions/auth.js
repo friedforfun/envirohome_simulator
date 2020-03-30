@@ -33,7 +33,8 @@ export const authenticate = (userId, token, expiryTime) => {
 };
 
 export const signup = payload => {
-    //console.log("Auth Token: "+payload.data.user_id);
+    console.log(payload)
+    console.log("ACTION. Auth Token: "+payload.data.user_id);
     //console.log("signup action dispatched to store!")
     return {
         type: SIGNUP,

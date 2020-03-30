@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { NavigationContainer } from "@react-navigation/native";
 
 import { RoomNavigator, LoginNavigator } from './AppNavigator';
-
+ 
 
 const Navigator = props =>{
     // use selector from store to load authenticated or unauthenticated state

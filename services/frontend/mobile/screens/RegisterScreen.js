@@ -66,10 +66,9 @@ const RegisterScreen = props => {
                 .then(response => dispatch(authActions.signup(response)))
         } catch (err) {
             console.log("ERROR! - User registration")
-            // if unexpected end of stream: get user-id and dispatch in signup 
+            // if unexpected end of stream: get user-id and dispatch with signup 
             console.log(err)
         }
-
     }
 
     const inputChangeHandler = useCallback((id, inputValue, inputValidity) => {
