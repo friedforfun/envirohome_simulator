@@ -2,92 +2,99 @@ import React, { useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { Input, Icon } from 'react-native-elements';
 
+import FormInput from './FormInput';
+
 const RegistrationInput = props => {
-    const [userId, setUserId] = useState('');
-    const [formIsValid, setFormIsValid] = useState(false);
 
-    // check validity of userID
-    const userIdChangeHandler = text => {
-        if (text.trim().length === 0) {
-            setUserId(text);
-        } else {
-            setIdIsValid(true);
-        }
-    }
-
-    // check validity of email
-    // regex: /^([a-zA-Z0-9]|[^.!#$%&'*+/=?^_`{|}~-])+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-    
-    // check validity of password && matches password re-enter
+    // check password matches password re-enter
 
     return (
-        <View style={styles.container}>
-            <Text>User ID*</Text>
-            <Input
+        <View>
+            <FormInput
+                id="username"
+                label="Username"
                 required
-                value={userId}
-                onChange={() => console.log("UserID changing")}
-                autoCapitalize='none'
-                keyboardType='default'
-                returnKeyType='next'
-                onEndEditing={() => console.log('ID validation')}
-                onSubmitEditing={() => console.log('focus: email input')}
-                placeholder='User ID'
+                errorText="Please enter a valid username"
+                autoCapitalize="none"
+                returnKeyType="next"
+                initialValue=""
+                onInputChange={props.inputChangeHandler}
+                onEndEditing={() => console.log('End editing')}
+                onSubmitEditing={() => console.log('Submit editing')}
                 leftIcon={
                     <Icon
                         name='person'
                         type='octicon'
                         size={24}
+                        iconStyle={styles.iconStyle}
                     />
                 }
             />
-            <Text>Email*</Text>
-            <Input
-                autoCapitalize='none'
-                keyboardType='email-address'
-                placeholder='Email'
-                returnKeyType='next'
-                onEndEditing={() => console.log('email validation')}
-                onSubmitEditing={() => console.log('focus: password input')}
+            <FormInput
+                id="email"
+                label="Email"
+                email
+                required
+                errorText="Please enter a valid email"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                returnKeyType="next"
+                onInputChange={props.inputChangeHandler}
+                onEndEditing={() => console.log('End editing')}
+                onSubmitEditing={() => console.log('Submit editing')}
+                initialValue=""
                 leftIcon={
                     <Icon
                         name='mail'
                         type='octicon'
                         size={24}
+                        iconStyle={styles.iconStyle}
                     />
                 }
             />
-            <Text>Password*</Text>
-            <Input
-                autoCapitalize='none'
-                keyboardType='default'
-                secureTextEntry={true}
-                placeholder='Password'
-                returnKeyType='next'
-                onEndEditing={() => console.log('password validation')}
-                onSubmitEditing={() => console.log('focus: password confirm input')}
+            <FormInput
+                id="password"
+                required
+                label="Password"
+                errorText="Please enter a valid password"
+                keyboardType="default"
+                secureTextEntry
+                autoCapitalize="none"
+                returnKeyType="next"
+                minLength={6}
+                onInputChange={props.inputChangeHandler}
+                onEndEditing={() => console.log('End editing')}
+                onSubmitEditing={() => console.log('Submit editing')}
+                initialValue=""
+                leftIcon={
+                    <Icon
+                        name='lock'
+                        type='octicon'
+                        size={20}
+                        iconStyle={styles.iconStyle}
+                    />
+                }
+            />
+            <FormInput
+                id="password2"
+                required
+                label="Re-enter password"
+                errorText="Passwords to not match"
+                keyboardType="default"
+                secureTextEntry
+                autoCapitalize="none"
+                returnKeyType="done"
+                minLength={6}
+                onInputChange={props.inputChangeHandler}
+                onEndEditing={() => console.log('End editing')}
+                onSubmitEditing={() => console.log('Submit editing')}
+                initialValue=""
                 leftIcon={
                     <Icon
                         name='lock'
                         type='octicon'
                         size={24}
-                    />
-                }
-            />
-            <Text>Re-enter Password*</Text>
-            <Input
-                autoCapitalize='none'
-                keyboardType='default'
-                secureTextEntry={true}
-                placeholder='Password'
-                returnKeyType='done'
-                onEndEditing={() => console.log('password validation')}
-                onSubmitEditing={() => console.log('submit form')}
-                leftIcon={
-                    <Icon
-                        name='lock'
-                        type='octicon'
-                        size={24}
+                        iconStyle={styles.iconStyle}
                     />
                 }
             />
@@ -101,6 +108,9 @@ const styles = StyleSheet.create({
         flex: 1,
         
     },
+    iconStyle: {
+        margin: 5
+    }
 });
 
 export default RegistrationInput;
