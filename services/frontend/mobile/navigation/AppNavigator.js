@@ -1,7 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Platform } from 'react-native';
-import { Icon } from 'react-native-elements'
 
 import Colours from '../constants/Colours';
 import RoomScreen from '../screens/RoomScreen';
@@ -67,13 +66,13 @@ const AuthNavOptions = {
     headerBackTitleStyle: {
         fontFamily: 'open-sans'
     },
-    headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primary
+    headerTintColor: Platform.OS === 'android' ? 'white' : Colours.center
 }
 
 const LoginStack = createStackNavigator();
 export const LoginNavigator = props => {
     return (
-        <LoginStack.Navigator screenOptions={AuthNavOptions} initialRouteName="RegisterScreen">
+        <LoginStack.Navigator screenOptions={AuthNavOptions} initialRouteName="LoginScreen">
             <LoginStack.Screen name="LoginScreen" component={LoginScreen} />
             <LoginStack.Screen name="RegisterScreen" component={RegisterScreen} />
         </LoginStack.Navigator>

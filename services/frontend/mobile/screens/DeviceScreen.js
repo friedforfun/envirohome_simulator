@@ -4,7 +4,7 @@ import { Divider, ListItem } from 'react-native-elements'
 import DeviceMenu from '../components/render/DeviceMenu';
 
 const DeviceScreen = props => {
-    console.log(props)
+    //console.log(props)
 
     return (
         <View style={styles.container}>
