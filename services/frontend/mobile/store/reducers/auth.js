@@ -1,7 +1,8 @@
-import { SIGNUP, AUTHENTICATE, LOGOUT, SET_DID_TRY_AL, REQUEST_PENDING, REQUEST_ERROR } from '../actions/auth';
+import { SIGNUP, LOGIN, LOGOUT, SET_DID_TRY_AL, REQUEST_PENDING, REQUEST_ERROR } from '../actions/auth';
 
 const initialState = {
     username: null,
+    user_id: null,
     email: null,
     authToken: null,
     data: null,
@@ -10,9 +11,10 @@ const initialState = {
  
 export default AuthReducer = (state = initialState, action) => {
     switch (action.type) {
-        case AUTHENTICATE:
+        case LOGIN:
+            console.log("LOGIN: "+JSON.stringify(action.payload.data.token))
             return {
-                data: action.payload,
+                authToken: action.payload.data.token,
             };
         case SET_DID_TRY_AL:
             return {
@@ -23,12 +25,11 @@ export default AuthReducer = (state = initialState, action) => {
                 ...initialState,
             };
         case SIGNUP:
-            console.log("Token:"+action.payload.data.user_id)
-            console.log("Auth token stored.")
+            console.log("SIGNUP: "+action.payload.data.user_id)
             return {
                 username: action.payload.config.username,
                 email: action.payload.config.email,
-                authToken:action.payload.data.user_id
+                user_id: action.payload.data.user_id
             };
         case REQUEST_PENDING:
             return {
