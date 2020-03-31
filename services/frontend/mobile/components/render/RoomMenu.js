@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { ThemeProvider, ListItem } from 'react-native-elements';
-import CallAllDevices from '../logic/CallAllDevices';
-import RegisterUser from '../logic/RegisterUser';
-
-
 
 const RoomMenu = props => {
 
