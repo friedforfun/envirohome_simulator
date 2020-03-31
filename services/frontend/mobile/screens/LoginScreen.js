@@ -1,9 +1,10 @@
-import React, { useReducer, useCallback, useRef } from 'react';
+import React, { useReducer, useCallback, useRef, useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon, Card } from 'react-native-elements';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import FormInput from '../components/render/FormInput';
 import Colours from '../constants/Colours';
@@ -38,9 +39,10 @@ const formReducer = (state, action) => {
 
 
 const LoginScreen = props => {
+    const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
 
-    let USERNAME = useRef();
+    let EMAIL = useRef();
     let PASSWORD = useRef();
 
     const [formState, dispatchFormState] = useReducer(formReducer, {
@@ -57,14 +59,17 @@ const LoginScreen = props => {
         formIsValid: false
     });
 
-    const signupHandler = async () => {
+    const loginHandler = async () => {
+        setIsLoading(true)
         try {
-            await LoginUser(formState.inputValues.username, hashedPassword)
-                .then(response => dispatch(authActions.signup(response)))
+            await LoginUser(formState.inputValues.email, formState.inputValues.password)
+                .then(response => dispatch(authActions.login(response)));
         } catch (err) {
             console.log("ERROR! - User registration")
             // if unexpected end of stream: get user-id and dispatch in signup 
             console.log(err)
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -80,13 +85,18 @@ const LoginScreen = props => {
 
     return (
         <KeyboardAwareScrollView style={styles.container}>
+            <Spinner
+                visible={isLoading}
+                textContent={'Logging in...'}
+            />
             <Card style={styles.authContainer}>
                 <FormInput 
-                    id="username"
-                    ref={USERNAME}
-                    label="Username"
+                    id="email"
+                    ref={EMAIL}
+                    label="Email"
                     required
-                    errorText="Please enter a valid username"
+                    email
+                    errorText="Please enter a valid email"
                     autoCapitalize="none"
                     returnKeyType="next"
                     initialValue=""
@@ -113,6 +123,7 @@ const LoginScreen = props => {
                     returnKeyType="done"
                     minLength={6}
                     onInputChange={inputChangeHandler}
+                    onSubmitEditing={() => loginHandler}
                     initialValue=""
                     leftIcon={
                         <Icon
@@ -125,7 +136,7 @@ const LoginScreen = props => {
                 />
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity>
-                        <Button title="Login" color={Colours.center} onPress={signupHandler} />
+                        <Button title="Login" color={Colours.center} onPress={loginHandler} />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.buttonContainer}>
