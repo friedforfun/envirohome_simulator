@@ -2,13 +2,13 @@ import axios from 'axios';
 
 import URL from '../../constants/URL';
 
-const LoginUser = (user, pword) => {
+const LoginUser = (email, pword) => {
 
     const login = axios.create({
         baseURL: URL.base,
         headers: {
             'Content-Type': 'application/json',
-            "Connection": "close"
+            'Connection': 'close'
         }
     });
 
@@ -19,7 +19,7 @@ const LoginUser = (user, pword) => {
         timeout: 8000,
         url: path,
         data: {
-            username: user,
+            email: email,
             password: pword,
         }
     })
