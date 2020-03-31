@@ -11,7 +11,10 @@ import Navigator from './navigation/Navigator';
 
 // merge reducers into single reducer (RoomReducer, AuthReducer...)
 // to facilitate access to the store
-const rootReducer = combineReducers({RoomReducer, AuthReducer});
+const rootReducer = combineReducers({
+  roomStore: RoomReducer, 
+  authStore: AuthReducer
+});
 
 // actual store with thunk middleware to add data from async functions
 const store = createStore(rootReducer, applyMiddleware(thunk));
