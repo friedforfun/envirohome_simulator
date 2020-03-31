@@ -1,15 +1,17 @@
-import React, { useReducer, useCallback, useRef } from 'react';
+import React, { useReducer, useCallback, useRef, useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon, Card } from 'react-native-elements';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import Colours from '../constants/Colours';
 import RegisterUser from '../components/logic/RegisterUser';
 import RegistrationInput from '../components/render/RegistrationInput';
 import * as authActions from '../store/actions/auth';
 import FormInput from '../components/render/FormInput';
+import LoginUser from '../components/logic/LoginUser';
 
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
@@ -38,7 +40,7 @@ const formReducer = (state, action) => {
 };
 
 const RegisterScreen = props => {
-    
+    const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
 
     let USERNAME = useRef();
@@ -61,13 +63,22 @@ const RegisterScreen = props => {
     });
 
     const signupHandler = async () => {
+        setIsLoading(true);
         try {
             await RegisterUser(formState.inputValues.username, formState.inputValues.password, formState.inputValues.email)
-                .then(response => dispatch(authActions.signup(response)))
+                .then(response => dispatch(authActions.signup(response)));
+
+            await LoginUser(formState.inputValues.email, formState.inputValues.password)
+                .then(response => dispatch(authActions.login(response)));
+
         } catch (err) {
             console.log("ERROR! - User registration")
             // if unexpected end of stream: get user-id and dispatch with signup 
+
+            // if credentials alread exist display alert
             console.log(err)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -82,6 +93,10 @@ const RegisterScreen = props => {
 
     return (
             <KeyboardAwareScrollView style={styles.container}>
+            <Spinner
+                visible={isLoading}
+                textContent={'Registering...'}
+            />
                 <Card style={styles.authContainer}>
                     <FormInput
                         id="username"
