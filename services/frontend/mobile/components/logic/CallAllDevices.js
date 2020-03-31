@@ -1,51 +1,25 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API = 'http://192.168.86.26:5000/api';
-const DEVICES = '/devices';
+import URL from '../../constants/URL';
 
-//! TESTING: hardcode JWT token here
-const JWTTOKEN = 0;
+const AllDevices = token => {
+    const deviceCall = axios.create({
+        baseURL: URL.base,
+        headers: {
+            'Content-Type': 'application/json',
+            'Connection': 'close'
+        }
+    });
 
-const AllDevices = () => {
-    // state hooks
-    const [result, newDevices] = useState({ isLoading: true, dataSource: [] });
-    
-    // update function
-    const updateDeviceList = (someList) => {
-        newDevices({
-            isLoading: false,
-            dataSource: someList
-        })
-    }
+    const path = URL.api + URL.alldevices;
 
-    const loadNew = () => {
-        newDevices({
-            isLoading: true,
-            dataSource: result.dataSource
-        })
-    }
+    return deviceCall({
+        method: 'get',
+        timeout: 8000,
+        url: path
+    })
 
-    /*
-    // useEffect function to fetch data from API: /devices route
-    useEffect(() => {
-        const fetchData = async () => {
-            const fetch = await axios(API + DEVICES);
-            updateDeviceList(fetch.allDevices);
-        };
-        fetchData();
-    }, [// Specify dependancy to run fetch again here (change of device fields) ]);*/
-    
-    useEffect(() => {
-        loadNew();
-        //axios.get(API+DEVICES, jwtToken).then(response => {
-        axios.get(API + DEVICES).then(response => {
-            //updateDeviceList(response.data)
-            console.log(response);
-        })
-    }, []);
-    
-    return result;
+
 }
 
 export default AllDevices;
