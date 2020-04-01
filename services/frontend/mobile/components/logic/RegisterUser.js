@@ -1,44 +1,28 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const BASE_URL = 'http://192.168.86.26:5000';
-
-
-var instance = axios.create({
-    baseURL: BASE_URL,
-    timeout: 1500,
-    //headers: {'X-Custom-Header': 'foobar'}
-  });
+import URL from '../../constants/URL';
 
 const RegisterUser = (user, pword, email) => {
-    // state hooks
-    const [thisState, nextState] = useState({ isPosted: false, response: { } });
-    
-    // update function
-    const endPost = (result) => {
-        nextState({
-            isPosted: true,
-            response: result
-        })
+  const register = axios.create({
+    baseURL: URL.base,
+    headers: {
+      'Content-Type': 'application/json',
+      'Connection': 'close'
     }
+  });
 
-    useEffect(() => {
-        axios.post('/auth/register', {
-            username: user,
-            password: pword,
-            email: email
-          })
-          .then(response => {
-            console.log(response);
-            //endPost(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-    }, []);
+  const path = URL.auth + URL.register;
 
-    
-    return thisState.response;
+  return register({
+    method: 'post',
+    timeout: 8000,
+    url: path,
+    data: {
+      username: user,
+      password: pword,
+      email: email
+    }
+  })
 }
 
 export default RegisterUser;

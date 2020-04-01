@@ -1,99 +1,47 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createStore, combineReducers } from 'redux';
-import { Provider, useDispatch, useSelector } from 'react-redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
 
 import RoomReducer from './store/reducers/room';
-//import DeviceReducer from './store/reducers/device'
-//import { populateDevice } from './store/actions/devices';
-//import { addRoom } from './store/actions/rooms';
-import NavBar from './components/render/NavBar';
-import  ContentRenderer from './components/render/ContentRenderer';
-import ModePicker from './components/render/ModePicker';
-//import AllDevices from './components/logic/CallAllDevices';
+import AuthReducer from './store/reducers/auth';
+import Navigator from './navigation/Navigator';
 
-//! TODO finish these functions
-/*
-const uniqueRooms = apiState => {
-  if (apiState.isLoading === false) {
-    return [...new Set(apiState.dataSource.map(item => item.room))]
-  }
+// merge reducers into single reducer (RoomReducer, AuthReducer...)
+// to facilitate access to the store
+const rootReducer = combineReducers({
+  roomStore: RoomReducer, 
+  authStore: AuthReducer
+});
+
+// actual store with thunk middleware to add data from async functions
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+const fetchFonts = () => {
+  return Font.loadAsync({
+    'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
+  });
 };
 
-const getDevices = apiState => {
-  if (apiState.isLoading === false){
-    return [...apiState.dataSource]
-  }
-}
-
-*/
-// const dispatch = useDispatch();
-
-//! dispatch add room action on this array of rooms
-/*
-const collectRooms = uniqueRooms(AllDevices).map(room => useDispatch(addRoom(room)));
-
-const populateDevices = getDevices(AllDevices).map(device =>
-  useDispatch(populateDevice(device.device_id, device.device_name, device.device_type, device.fault, device.on, device.rated_power, device.room))
-  );
-*/
-// const deviceList = useSelector(state => state.deviceStore)
-
-//const fillRooms = 0;
-
 export default function App() {
-  const [currentContent, nextContent] = useState('list');
+  const [fontLoaded, setFontLoaded] = useState(false);
 
-  // merge reducers into single reducer (RoomReducer, UserReducer...)
-  // allows us to access the 'rooms' state
-  const rootReducer = combineReducers({
-    roomStore: RoomReducer
-  });
-
-  // actual store
-  const store = createStore(rootReducer);
- 
-  // dispatch actions to populate store here using rootReducer and CallAllDevices
-
-  const pageToRender = page => {
-    nextContent(page)
-  };
-
+  if (!fontLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => {setFontLoaded(true)}}
+        onError={console.warn}
+      />
+    );
+  }
   return (
     <Provider store={store}>
-      <View style={styles.container}>
-        <View style={styles.topNav}>
-          <NavBar 
-            usage={ <Text>50%</Text> } 
-            settings={() => pageToRender('settings')} 
-          />
-        </View>
-        <ContentRenderer page={ currentContent } />
-        <View style={styles.modePicker}>
-          <ModePicker 
-            mapView={() => pageToRender('map')} 
-            listView={() => pageToRender('roomList')}
-          />
-        </View>
-      </View>
+      <Navigator />
     </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 45,
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  topNav:{
-    padding: 4,
-    borderColor: 'black',
-    borderWidth: 1,
-  },
-  modePicker:{
-    borderColor: 'black',
-    borderWidth: 1,
-    
-  }
-});

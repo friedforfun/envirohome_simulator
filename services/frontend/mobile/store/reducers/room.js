@@ -12,7 +12,7 @@ const initialState = {
 const RoomReducer = (state = initialState, action) => {
     switch (action.type){
         case ADD_ROOM:
-            if (state.rooms.length >= 1){
+            if (state.rooms.length > 1){
                 const idArr = state.rooms.map(room => room.id);
                 const newID = 1 + idArr.reduce((high, next) => { high > next ? high : next });
                 const newRoom = new Room(newID, action.roomName);
