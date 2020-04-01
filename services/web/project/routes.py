@@ -108,7 +108,7 @@ def new_user():
         raise APIError('email or username taken', status_code=409)
 
     hashed_password = generate_password_hash(user_data['password'],
-                                             method="pbkdf2:sha256:80000")
+                                             method="pbkdf2:sha256:8000")
 
     user = models.User(public_id=uuid.uuid4(), username=user_data['username'],
                        email=user_data['email'], password_hash=hashed_password)
