@@ -21,5 +21,5 @@ const Navigator = props =>{
         </NavigationContainer>
     );
 };
-
+ 
 export default Navigator;

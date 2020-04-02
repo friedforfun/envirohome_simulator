@@ -33,8 +33,8 @@ export const authenticate = (userId, token, expiryTime) => {
 };
 
 export const signup = payload => {
-    console.log(payload);
-    console.log("SIGNUP. Auth Token: "+payload.data.user_id);
+    //console.log(payload);
+    //console.log("SIGNUP. user id: "+payload.data.user_id);
     //console.log("signup action dispatched to store!")
     return {
         type: SIGNUP,
@@ -43,8 +43,8 @@ export const signup = payload => {
 }
 
 export const login = payload => {
-    console.log(payload);
-    console.log("LOGIN. Auth Token: "+JSON.stringify(payload.data.token));
+    //console.log(payload);
+    //console.log("LOGIN. Auth Token: "+JSON.stringify(payload.data.token));
     return {
         type: LOGIN,
         payload: payload
