@@ -75,10 +75,11 @@ const RegisterScreen = props => {
             console.log("ERROR! - User registration")
             // if unexpected end of stream: get user-id and dispatch with signup 
 
-            // if credentials alread exist display alert
+            // if credentials already exist display alert
             console.log(err)
-        } finally {
             setIsLoading(false)
+        } finally {
+            //setIsLoading(false) // move this inside of the error catch
         }
     }
 

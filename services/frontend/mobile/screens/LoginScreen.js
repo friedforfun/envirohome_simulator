@@ -63,13 +63,20 @@ const LoginScreen = props => {
         setIsLoading(true)
         try {
             await LoginUser(formState.inputValues.email, formState.inputValues.password)
-                .then(response => dispatch(authActions.login(response)));
+                .then(response => {
+                    if (response.data.token) dispatch(authActions.login(response));
+                    else {
+                        console.log("Undefined response");
+                        setIsLoading(false);
+                    }
+                });
         } catch (err) {
             console.log("ERROR! - User registration")
             // if unexpected end of stream: get user-id and dispatch in signup 
             console.log(err)
-        } finally {
             setIsLoading(false);
+        } finally {
+            //setIsLoading(false); // move this inside of the error catch before the alert
         }
     }
 
@@ -104,7 +111,7 @@ const LoginScreen = props => {
                     onSubmitEditing={() => PASSWORD.current.focus()}
                     leftIcon={
                         <Icon
-                            name='person'
+                            name='mail'
                             type='octicon'
                             size={24}
                             iconStyle={styles.iconStyle}
