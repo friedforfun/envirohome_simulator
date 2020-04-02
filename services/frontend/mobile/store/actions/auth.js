@@ -52,8 +52,8 @@ export const login = payload => {
 };
 
 export const logout = () => {
-    clearLogoutTimer();
-    AsyncStorage.removeItem('userData');
+    //clearLogoutTimer();
+    //AsyncStorage.removeItem('userData');
     return { type: LOGOUT };
 };
 
