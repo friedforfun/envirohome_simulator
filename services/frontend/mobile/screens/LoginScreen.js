@@ -91,7 +91,7 @@ const LoginScreen = props => {
     }, [dispatchFormState]);
 
     return (
-        <KeyboardAwareScrollView style={styles.container}>
+        <KeyboardAwareScrollView style={styles.container} keyboardShouldPersistTaps={'handled'}>
             <Spinner
                 visible={isLoading}
                 textContent={'Logging in...'}
