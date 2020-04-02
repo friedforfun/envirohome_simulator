@@ -41,6 +41,7 @@ const formReducer = (state, action) => {
 
 const RegisterScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
+    const [LoggingIn, setLoggingIn] = useState(0);
     const dispatch = useDispatch();
 
     let USERNAME = useRef();
@@ -61,6 +62,12 @@ const RegisterScreen = props => {
         },
         formIsValid: false
     });
+
+    const tryLoginAgain = () => {
+        const newLogin = LoggingIn + 1;
+        console.log("login failed, trying again");
+        setLoggingIn(newLogin)
+    }
 
     const signupHandler = async () => {
         setIsLoading(true);

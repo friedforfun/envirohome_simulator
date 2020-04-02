@@ -59,19 +59,21 @@ const LoginScreen = props => {
         formIsValid: false
     });
 
-    const loginHandler = async () => {
+    // 401: error.status_code === 401 + error.detail === incorrect username or password
+    const loginHandler = () => {
         setIsLoading(true)
         try {
-            await LoginUser(formState.inputValues.email, formState.inputValues.password)
+            LoginUser(formState.inputValues.email, formState.inputValues.password)
                 .then(response => {
-                    if (response.data.token) dispatch(authActions.login(response));
+                    if (response.token) dispatch(authActions.login(response));
                     else {
                         console.log("Undefined response");
+                        console.log(response)
                         setIsLoading(false);
                     }
                 });
         } catch (err) {
-            console.log("ERROR! - User registration")
+            console.log("ERROR! - User login")
             // if unexpected end of stream: get user-id and dispatch in signup 
             console.log(err)
             setIsLoading(false);
