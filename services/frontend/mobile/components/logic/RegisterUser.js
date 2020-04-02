@@ -1,10 +1,10 @@
 import URL from '../../constants/URL';
 
 
-const RegisterUser = (user, pword, email) => {
+const RegisterUser = async (user, pword, email) => {
   const path = URL.base + URL.auth + URL.register;
 
-  return fetch(path, {
+  const response = await fetch(path, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',
@@ -15,10 +15,9 @@ const RegisterUser = (user, pword, email) => {
       password: pword,
       email: email
     })
-  }).then(response => {
-      if (!response.ok) throw Error(response.statusText);
-      return response.json();
-    })
+  })
+
+  return await response;
 } 
 
 export default RegisterUser;

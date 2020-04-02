@@ -16,7 +16,7 @@ const LoginUser = async (email, pword) => {
         })
     });
 
-    return await response.json();
+    return await response;
 } 
 
 

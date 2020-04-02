@@ -73,10 +73,16 @@ const RegisterScreen = props => {
         setIsLoading(true);
         try {
             await RegisterUser(formState.inputValues.username, formState.inputValues.password, formState.inputValues.email)
-                .then(response => dispatch(authActions.signup(response)));
+            .then(response => {
+                if (!response.ok) throw new Error("Response not ok")
+                return response.json();
+            }).then(response => dispatch(authActions.signup(response)));
 
             await LoginUser(formState.inputValues.email, formState.inputValues.password)
-                .then(response => dispatch(authActions.login(response)));
+            .then(response => {
+                if (!response.ok) throw new Error("Response not ok")
+                return response.json();
+            }).then(response => dispatch(authActions.login(response)));
 
         } catch (err) {
             console.log("ERROR! - User registration")

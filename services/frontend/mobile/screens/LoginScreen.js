@@ -64,7 +64,10 @@ const LoginScreen = props => {
         setIsLoading(true)
         try {
             LoginUser(formState.inputValues.email, formState.inputValues.password)
-                .then(response => {
+            .then(response => {
+                if (!response.ok) throw new Error("Response not ok")
+                return response.json();
+            }).then(response => {
                     if (response.token) dispatch(authActions.login(response));
                     else {
                         console.log("Undefined response");
@@ -74,11 +77,9 @@ const LoginScreen = props => {
                 });
         } catch (err) {
             console.log("ERROR! - User login")
-            // if unexpected end of stream: get user-id and dispatch in signup 
+
             console.log(err)
             setIsLoading(false);
-        } finally {
-            //setIsLoading(false); // move this inside of the error catch before the alert
         }
     }
 
