@@ -7,7 +7,7 @@ const initialState = {
     authToken: null,
     data: null,
     error: null
-};
+}; 
  
 export default AuthReducer = (state = initialState, action) => {
     switch (action.type) {

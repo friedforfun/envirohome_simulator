@@ -16,13 +16,13 @@ import { useDispatch } from 'react-redux';
 const RoomScreen = props => {
     const [isLoading, setIsLoading] = useState(true);
     let roomList = useSelector(state => state.roomStore.rooms)
-    let done =  false;
+
 
     const dispatch = useDispatch();
 
     const toggleLoading = () => {
         console.log("done")
-        setIsLoading(true ? false : true)
+        setIsLoading(false)
     }
 
     useEffect(() => {
@@ -35,7 +35,7 @@ const RoomScreen = props => {
             console.log("Error here")
             console.log(error)}
         ).finally(() => {
-            done = true
+            toggleLoading()
         });
         return () => toggleLoading();
     }, [])

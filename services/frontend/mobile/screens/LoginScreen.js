@@ -1,6 +1,6 @@
 import React, { useReducer, useCallback, useRef, useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon, Card } from 'react-native-elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
