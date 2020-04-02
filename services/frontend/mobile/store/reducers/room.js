@@ -1,12 +1,11 @@
-import { ROOMDATA } from '../dummyData';
-import { ADD_ROOM, REMOVE_ROOM, ADD_DEVICE_TO_ROOM } from '../actions/rooms';
+import { ADD_ROOM, REMOVE_ROOM, ADD_DEVICE_TO_ROOM, POPULATE_ROOMS } from '../actions/rooms';
 import Room from '../../models/room';
 
 
 
 //? Find a better initial state
 const initialState = {
-    rooms: ROOMDATA
+    rooms: null
 };
 
 const RoomReducer = (state = initialState, action) => {
@@ -43,12 +42,19 @@ const RoomReducer = (state = initialState, action) => {
                 tempRooms.concat(updateRoom);
                 return { ...state, rooms: tempRooms}
             } else {
+                console.log("Device add to room failed, room name and index mismatch")
                 return { ...state }
             }
 
+        case POPULATE_ROOMS:
+            console.log("POPULATED ROOM")
+            //console.log(action.roomArray);
+        
+            return { ...state, rooms: action.roomArray }
 
+        default:
+            return state;
     }
-    return state;
 }
 
 export default RoomReducer;
