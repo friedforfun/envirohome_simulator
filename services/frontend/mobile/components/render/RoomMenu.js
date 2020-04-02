@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { ThemeProvider, ListItem } from 'react-native-elements';
 
 const RoomMenu = props => {
@@ -21,7 +21,7 @@ const RoomMenu = props => {
 
   return (
         <View>
-            {
+            {!!props.rooms &&
             props.rooms.map((item, i) => (
                 <ListItem
                 key={i}
@@ -33,6 +33,7 @@ const RoomMenu = props => {
                 />
             ))
             }
+            {!props.rooms && <Text>No room data found</Text>}
         </View>
     );
   }
