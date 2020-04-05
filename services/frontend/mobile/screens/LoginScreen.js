@@ -1,5 +1,5 @@
 import React, { useReducer, useCallback, useRef, useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon, Card } from 'react-native-elements';
@@ -10,6 +10,8 @@ import FormInput from '../components/render/FormInput';
 import Colours from '../constants/Colours';
 import * as authActions from '../store/actions/auth';
 import LoginUser from '../components/logic/LoginUser';
+import { handleError, loginWarning } from '../components/logic/fetchFunc';
+
 
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
@@ -59,28 +61,22 @@ const LoginScreen = props => {
         formIsValid: false
     });
 
-    // 401: error.status_code === 401 + error.detail === incorrect username or password
-    const loginHandler = () => {
-        setIsLoading(true)
-        try {
-            LoginUser(formState.inputValues.email, formState.inputValues.password)
-            .then(response => {
-                if (!response.ok) throw new Error("Response not ok")
-                return response.json();
-            }).then(response => {
-                    if (response.token) dispatch(authActions.login(response));
-                    else {
-                        console.log("Undefined response");
-                        console.log(response)
-                        setIsLoading(false);
-                    }
-                });
-        } catch (err) {
-            console.log("ERROR! - User login")
+    const setIsLoadingFalse = () => {
+        setIsLoading(false)
+    }
 
-            console.log(err)
-            setIsLoading(false);
-        }
+    // 401: error.status_code === 401 + error.detail === incorrect username or password
+    const loginHandler = async () => {
+        setIsLoading(true)
+        await LoginUser(formState.inputValues.email, formState.inputValues.password)
+        .then(response => {return handleError(response)})
+        .then(response => {
+            return response.json()
+        })
+        .then(response => dispatch(authActions.login(response)))
+        .catch(error => {
+            loginWarning(error, setIsLoadingFalse)
+        });
     }
 
 
@@ -106,6 +102,7 @@ const LoginScreen = props => {
                     label="Email"
                     required
                     email
+                    keyboardType="email-address"
                     errorText="Please enter a valid email"
                     autoCapitalize="none"
                     returnKeyType="next"
@@ -145,13 +142,13 @@ const LoginScreen = props => {
                     }
                 />
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity>
-                        <Button title="Login" color={Colours.center} onPress={loginHandler} />
+                    <TouchableOpacity onPress={loginHandler}>
+                        <Button title="Login" color={Colours.center} />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity>
-                        <Button title="Register" color={Colours.left} onPress={() => props.navigation.navigate('RegisterScreen')} />
+                    <TouchableOpacity onPress={() => props.navigation.navigate('RegisterScreen')}>
+                        <Button title="Register" color={Colours.left} />
                     </TouchableOpacity>
                 </View>
             </Card>
