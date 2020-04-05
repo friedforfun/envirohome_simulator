@@ -1,5 +1,5 @@
 import React, { useReducer, useCallback, useRef, useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, View, Button, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon, Card } from 'react-native-elements';
@@ -11,7 +11,7 @@ import RegisterUser from '../components/logic/RegisterUser';
 import RegistrationInput from '../components/render/RegistrationInput';
 import * as authActions from '../store/actions/auth';
 import FormInput from '../components/render/FormInput';
-import LoginUser from '../components/logic/LoginUser';
+import { handleError, regWarning } from '../components/logic/fetchFunc';
 
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
@@ -39,9 +39,10 @@ const formReducer = (state, action) => {
     return state;
 };
 
+
+
 const RegisterScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
-    const [LoggingIn, setLoggingIn] = useState(0);
     const dispatch = useDispatch();
 
     let USERNAME = useRef();
@@ -63,37 +64,52 @@ const RegisterScreen = props => {
         formIsValid: false
     });
 
-    const tryLoginAgain = () => {
-        const newLogin = LoggingIn + 1;
-        console.log("login failed, trying again");
-        setLoggingIn(newLogin)
+    const setIsLoadingFalse = () => {
+        setIsLoading(false)
     }
 
     const signupHandler = async () => {
         setIsLoading(true);
-        try {
-            await RegisterUser(formState.inputValues.username, formState.inputValues.password, formState.inputValues.email)
+
+        await RegisterUser(formState.inputValues.username, formState.inputValues.password, formState.inputValues.email)
+            .then(response => {return handleError(response)})
+            .then(response => {return response.json()})
             .then(response => {
-                if (!response.ok) throw new Error("Response not ok")
-                return response.json();
-            }).then(response => dispatch(authActions.signup(response)));
+                dispatch(authActions.signup(response));
+            }).then(next => {
+                setIsLoadingFalse
+                Alert.alert(
+                    'Registration Success',
+                    'Success',
+                    [
+                        { text: 'OK', onPress: () => { props.navigation.navigate('LoginScreen') } },
+                    ],
+                    { cancelable: false },
+                );
+            })
+            .catch(error => {
+                switch(error.message){
+                    case "400": 
+                        regWarning("Invalid username, email, or password", setIsLoadingFalse())
+                        break;
 
-            await LoginUser(formState.inputValues.email, formState.inputValues.password)
-            .then(response => {
-                if (!response.ok) throw new Error("Response not ok")
-                return response.json();
-            }).then(response => dispatch(authActions.login(response)));
+                    case "409":
+                        regWarning("This email or username is taken", setIsLoadingFalse())
+                        break;
 
-        } catch (err) {
-            console.log("ERROR! - User registration")
-            // if unexpected end of stream: get user-id and dispatch with signup 
-
-            // if credentials already exist display alert
-            console.log(err)
-            setIsLoading(false)
-        } finally {
-            //setIsLoading(false) // move this inside of the error catch
-        }
+                    case "Network request failed":
+                        console.log(error.stack)
+                        regWarning("Network issue, check connection or try again", setIsLoadingFalse())
+                        break;
+                    default:
+                        console.log("Unexpected registration error")
+                        setIsLoadingFalse()
+                        console.log(error.message)  
+                        break;
+                }
+            })
+        
+        
     }
 
     const inputChangeHandler = useCallback((id, inputValue, inputValidity) => {
@@ -200,7 +216,7 @@ const RegisterScreen = props => {
                         onEndEditing={() => console.log('End editing')}
                         onSubmitEditing={() => console.log('Submit editing')}
                         initialValue=""
-                        textContentType="newPassword"
+                        
                         blurOnSubmit={false}
                         leftIcon={
                             <Icon
@@ -212,13 +228,13 @@ const RegisterScreen = props => {
                         }
                     />
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity>
-                            <Button title="Submit" color={Colours.center} onPress={signupHandler} />
+                    <TouchableOpacity onPress={signupHandler}>
+                            <Button title="Submit" color={Colours.center} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity>
-                        <Button title="Return to login" color={Colours.left} onPress={() => props.navigation.navigate('LoginScreen')} />
+                    <TouchableOpacity onPress={() => props.navigation.navigate('LoginScreen')}>
+                        <Button title="Return to login" color={Colours.left} />
                         </TouchableOpacity>
                     </View>
                 </Card>
