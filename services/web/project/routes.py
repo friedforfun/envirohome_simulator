@@ -86,7 +86,7 @@ def login():
     if check_password_hash(user.password_hash, user_data['password']):
         token = jwt.encode({
             'public_id': user.public_id,
-            'admin': user.admin,
+            'admin': user.is_admin,
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
         }, app.config['SECRET_KEY'])
         return jsonify({"token": token.decode('UTF-8')})
@@ -138,7 +138,7 @@ def get_all_users():
             'email': user.email,
             'password_hash': user.password_hash,
             'active': user.active,
-            'admin': user.admin
+            'admin': user.is_admin
         } for user in users]
     return jsonify(user_list)
 
