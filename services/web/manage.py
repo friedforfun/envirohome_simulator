@@ -12,18 +12,11 @@
 # services/users/manage.py
 from flask.cli import FlaskGroup
 from project import app, db
-from project.models import User, Usage, Devices, Room
+from project.models import Usage, Devices, Room, TV
 from sqlalchemy.schema import DropTable
 from sqlalchemy.ext.compiler import compiles
 import csv
 import os
-
-
-# to implement CASCADE when dropping tables
-# https://stackoverflow.com/questions/38678336/sqlalchemy-how-to-implement-drop-table-cascade
-@compiles(DropTable, "postgresql")
-def _compile_drop_table(element, compiler, **kwargs):
-    return compiler.visit_drop_table(element) + " CASCADE"
 
 
 cli = FlaskGroup(app)
@@ -31,6 +24,7 @@ cli = FlaskGroup(app)
 
 @cli.command('create_db')
 def create_db():
+    db.reflect()
     db.drop_all()
     db.create_all()
     db.session.commit()
@@ -57,33 +51,25 @@ def seed_db():
     db.session.add(bathroom_1)
     db.session.commit()
 
-    db.session.add(Devices(device_id=0, device_name='Living Room TV',
-                           rated_power=700, device_type='tv', fault=False,
-                           room=living_room, on=True))
+    db.session.add(TV(device_id=0, device_name='Living Room TV',
+                      rated_power=700, fault=False, room=living_room,
+                      on=True))
     db.session.add(Devices(device_name='Outside Lights', rated_power=40,
-                           device_type='lights', fault=False, room=outside,
-                           on=True))
+                           fault=False, room=outside, on=True))
     db.session.add(Devices(device_name='Bedroom 1 Lights', rated_power=40,
-                           device_type='lights', fault=False, room=bedroom_1,
-                           on=True))
+                           fault=False, room=bedroom_1, on=True))
     db.session.add(Devices(device_name='Bedroom 2 Lights', rated_power=40,
-                           device_type='lights', fault=False, room=bedroom_2,
-                           on=True))
+                           fault=False, room=bedroom_2, on=True))
     db.session.add(Devices(device_name='Kitchen Lights', rated_power=40,
-                           device_type='lights', fault=False, room=kitchen,
-                           on=True))
+                           fault=False, room=kitchen, on=True))
     db.session.add(Devices(device_name='Living Room Lights 1', rated_power=40,
-                           device_type='lights', fault=False, room=living_room,
-                           on=True))
+                           fault=False, room=living_room, on=True))
     db.session.add(Devices(device_name='Living Room Lights 2', rated_power=40,
-                           device_type='lights', fault=False, room=living_room,
-                           on=True))
+                           fault=False, room=living_room, on=True))
     db.session.add(Devices(device_name='Bathroom 1 Lights', rated_power=40,
-                           device_type='lights', fault=False, room=bathroom_1,
-                           on=True))
+                           fault=False, room=bathroom_1, on=True))
     db.session.add(Devices(device_name='Kitchen Plug', rated_power=500,
-                           device_type='plug', fault=True, room=kitchen,
-                           on=True))
+                           fault=True, room=kitchen, on=True))
     db.session.commit()
 
     with open(os.getcwd() + '/mock_data/dev_1.txt', 'r') as f:
