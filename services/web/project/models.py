@@ -29,7 +29,8 @@ class Room(db.Model, FlaskSerializeMixin):
     room_id = db.Column(db.Integer, primary_key=True, nullable=False,
                         autoincrement=True)
     room_name = db.Column(db.String(255), nullable=False)
-    devices = db.relationship('Devices', backref='room')  # cascade="all, delete-orphan" , lazy='dynamic')
+    devices = db.relationship('Devices', backref='room',
+                              cascade="all, delete-orphan", lazy='dynamic')
 
 
 # Create devices table in database, with id, name and type columns
