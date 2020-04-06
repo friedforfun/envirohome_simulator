@@ -2,6 +2,12 @@ version: '3.7'
 
 services:
   mobile:
+    env_file:
+      # File to configure environment variables 
+      - ./.env.dev
+    environment:
+      - "REACT_NATIVE_PACKAGER_HOSTNAME=${HOST_IP}"
+
     build: ./services/frontend/mobile
 
     command: yarn start
