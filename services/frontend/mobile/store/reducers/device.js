@@ -1,42 +1,54 @@
-import { DEVICEDATA } from '../dummyData';
-import { ADD_DEVICE, REMOVE_DEVICE, POPULATE_DEVICE } from '../actions/devices';
-import Device from '../../models/device';
+import * as lodash from 'lodash/fp';
 
-//? Find a better initial state
+import { ADD_DEVICE, REMOVE_DEVICE, POPULATE_DEVICES, CLEAR_DEVICE_STORE } from '../actions/devices';
+
 const initialState = {
-    devices: DEVICEDATA
+    devices: []
 };
 
 const DeviceReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_DEVICE:
-            if (state.devices.length >= 1){
-                const newID = 1 + state.rooms.map(room => room.id).reduce((high, next) => { high > next ? high : next });
-                const newDevice = new Device(newID, action.deviceName, action.deviceType, 'false', '', 'false', action.rPower, action.deviceRoom);
-                return { ...state, devices: state.devices.concat(newDevice) };
+            const newDevice = {
+                "device_id": action.device.device_id,
+                "device_name": action.device.device_name,
+                "device_type": action.device.device_type,
+                "fault": action.device.fault,
+                "on": action.device.on,
+                "rated_power": action.device.rated_power,
+                "room": action.device.room
+            }
+            const checkID = state.devices.findIndex(device => device.id === action.device_id);
+
+            if (checkID < 0){
+                const newState = state.devices.concat(newDevice);
+                return { ...state, devices: newState };
             } else {
-                const newDevice = new Device(0, action.deviceName, action.deviceType, 'false', '', 'false', action.rPower, action.deviceRoom);
-                return { ...state, devices: state.devices.concat(newDevice) };
+                console.log("Device with this ID already in store.");
+                console.log("Existing device: "+state.devices[checkID].json);
+                console.log("New device: "+newDevice.json);
+                return { ...state };
             }
             
         case REMOVE_DEVICE:
-            const getIndex = state.devices.findIndex(devce => device.id === action.deviceID);
+            const getIndex = state.devices.findIndex(device => device.id === action.deviceId);
             if (getIndex >= 0){
-                const tempDevices = [...state.devices]
+                var tempDevices = lodash.cloneDeep(state.devices);
                 tempDevices.splice(getIndex, 1);
                 return { ...state, devices: tempDevices }
             } else {
+                console.log("Device not found.")
+                console.log("Device ID: "+action.ID)
                 return { ...state }
             }
 
-        case POPULATE_DEVICE:
-            const newDevice = new Device(action.deviceId, action.deviceName, action.deviceType, action.deviceFault, '', action.deviceOn, action.rPower, action.deviceRoom);
-            if (state.devices.map(device => device.id).includes(newDevice.id)){
-                return { ...state };
-            } else {
-                return { ...state, devices: state.devices.concat(newDevice) };
-            }
-            
+        case CLEAR_DEVICE_STORE:
+            return { ...state, devices: [] }
+
+        case POPULATE_DEVICES:
+            console.log("POPULATED DEVICES")
+            return { ...state, devices: action.deviceArray }
+
     }
     return state;
 }
