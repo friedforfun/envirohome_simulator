@@ -1,60 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
-import Spinner from 'react-native-loading-spinner-overlay';
-
 
 import RoomMenu from '../components/render/RoomMenu';
-import GetAllRooms from '../components/logic/GetAllRooms';
-
-import { populateRooms } from '../store/actions/rooms';
-import { useDispatch } from 'react-redux';
-
-
-
+import Fetching from '../components/render/Fetching';
+import GetAllDevices from '../components/logic/GetAllDevices';
 
 const RoomScreen = props => {
-    const [isLoading, setIsLoading] = useState(true);
-    const [fetchState, setFetchState] = useState(0);
-    const roomList = useSelector(state => state.roomStore.rooms);
+    const [reduxReady, setReduxReady] = useState(false);
 
-    const dispatch = useDispatch();
-
-    const toggleLoading = () => {
-        console.log("done")
-        setIsLoading(false)
-    }
-
-    const changeFetchState = () => {
-        const newFetch = fetchState + 1;
-        console.log("Fetch failed, trying again");
-        setFetchState(newFetch)
-    }
-
-    useEffect(() => {
-        
-        GetAllRooms().then(response => {
-            console.log("dispatching...");
-            dispatch(populateRooms(response));
-            return response;
-        }).catch(error => {
-            console.log(error)
-            changeFetchState();
-        }).finally(() => {
-            toggleLoading()
-        });
-        return () => toggleLoading();
-    }, [fetchState])
     
-
+    const dispatchComplete = () => {
+        console.log("Dispatch ready")
+        setReduxReady(true)
+        console.log(reduxReady)
+    } 
+    
+    //! CHANGE <FETCHING /> TO GET ALL ROOMS
     return (
         <View style={styles.container}>
-            <Spinner
-                visible={isLoading}
-                textContent={'Loading...'}
-            />
+            {!reduxReady && <Fetching fetchFunc={GetAllDevices} fetchWhat={"devices"} ready={() => dispatchComplete} />}
             <ScrollView style={styles.content}>
-                {!isLoading && <RoomMenu navigation={props.navigation} rooms={roomList} />}
+                {reduxReady && <RoomMenu navigation={props.navigation} />}
             </ScrollView>
         </View>
     );
