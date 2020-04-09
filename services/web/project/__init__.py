@@ -25,4 +25,3 @@ db = SQLAlchemy(app)
 CORS(app)
 
 from project import routes, models
-
