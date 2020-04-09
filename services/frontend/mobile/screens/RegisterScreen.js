@@ -11,7 +11,7 @@ import RegisterUser from '../components/logic/RegisterUser';
 import RegistrationInput from '../components/render/RegistrationInput';
 import * as authActions from '../store/actions/auth';
 import FormInput from '../components/render/FormInput';
-import { handleError, regWarning } from '../components/logic/fetchFunc';
+import { authError as handleError, regWarning } from '../components/logic/fetchFunc';
 
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
@@ -138,7 +138,6 @@ const RegisterScreen = props => {
                         returnKeyType="next"
                         initialValue=""
                         onInputChange={inputChangeHandler}
-                        onEndEditing={() => console.log('End editing')}
                         onSubmitEditing={() => EMAIL.current.focus()}
                         textContentType="username"
                         blurOnSubmit={false}
@@ -162,7 +161,6 @@ const RegisterScreen = props => {
                         autoCapitalize="none"
                         returnKeyType="next"
                         onInputChange={inputChangeHandler}
-                        onEndEditing={() => console.log('End editing')}
                         onSubmitEditing={() => PASSWORD.current.focus()}
                         initialValue=""
                         textContentType="emailAddress"
@@ -188,7 +186,6 @@ const RegisterScreen = props => {
                         returnKeyType="next"
                         minLength={6}
                         onInputChange={inputChangeHandler}
-                        onEndEditing={() => console.log('End editing')}
                         onSubmitEditing={() => PASSWORD_CONF.current.focus()}
                         initialValue=""
                         textContentType="newPassword"
@@ -213,8 +210,8 @@ const RegisterScreen = props => {
                         autoCapitalize="none"
                         returnKeyType="done"
                         onInputChange={inputChangeHandler}
-                        onEndEditing={() => console.log('End editing')}
-                        onSubmitEditing={() => console.log('Submit editing')}
+                        onEndEditing={() => console.log('Compare passwords')}
+                        onSubmitEditing={signupHandler}
                         initialValue=""
                         
                         blurOnSubmit={false}
