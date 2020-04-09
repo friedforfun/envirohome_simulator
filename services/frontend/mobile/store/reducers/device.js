@@ -1,6 +1,6 @@
 import * as lodash from 'lodash/fp';
 
-import { ADD_DEVICE, REMOVE_DEVICE, POPULATE_DEVICES, CLEAR_DEVICE_STORE } from '../actions/devices';
+import { ADD_DEVICE, REMOVE_DEVICE, POPULATE_DEVICES, CLEAR_DEVICE_STORE, UPDATE_DEVICE } from '../actions/devices';
 
 const initialState = {
     devices: []
@@ -18,27 +18,40 @@ const DeviceReducer = (state = initialState, action) => {
                 "rated_power": action.device.rated_power,
                 "room": action.device.room
             }
-            const checkID = state.devices.findIndex(device => device.id === action.device_id);
+            const addIndex = state.devices.findIndex(device => device.device_id === action.device_id);
 
-            if (checkID < 0){
+            if (addIndex < 0){
                 const newState = state.devices.concat(newDevice);
                 return { ...state, devices: newState };
             } else {
                 console.log("Device with this ID already in store.");
-                console.log("Existing device: "+state.devices[checkID].json);
+                console.log("Existing device: "+state.devices[addIndex].json);
                 console.log("New device: "+newDevice.json);
                 return { ...state };
             }
             
         case REMOVE_DEVICE:
-            const getIndex = state.devices.findIndex(device => device.id === action.deviceId);
-            if (getIndex >= 0){
+            const removeIndex = state.devices.findIndex(device => device.device_id === action.deviceId);
+            if (removeIndex >= 0){
                 var tempDevices = lodash.cloneDeep(state.devices);
-                tempDevices.splice(getIndex, 1);
+                tempDevices.splice(removeIndex, 1);
                 return { ...state, devices: tempDevices }
             } else {
                 console.log("Device not found.")
                 console.log("Device ID: "+action.ID)
+                return { ...state }
+            }
+
+        case UPDATE_DEVICE:
+            
+            const updateIndex = state.devices.findIndex(device => device.device_id === action.device.device_id);
+            if (updateIndex >= 0){
+                var tempDevices = lodash.cloneDeep(state.devices);
+                tempDevices.splice(updateIndex, 1, action.device)
+                return { ...state, devices: tempDevices }
+            } else {
+                console.log("Device not found.")
+                console.log("Device ID: " + action.ID)
                 return { ...state }
             }
 
