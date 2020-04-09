@@ -1,25 +1,21 @@
 // action identifiers
 export const ADD_ROOM = 'ADD_ROOM';
 export const REMOVE_ROOM = 'REMOVE_ROOM';
-export const ADD_DEVICE_TO_ROOM = 'ADD_DEVICE_TO_ROOM';
 export const POPULATE_ROOMS = 'POPULATE_ROOMS';
-export const REMOVE_DEVICE_FROM_ROOM = 'REMOVE_DEVICE_FROM_ROOM';
+export const CLEAR_ROOM_STORE = 'CLEAR_ROOM_STORE';
 
 // action functions
-export const addRoom = (name) => {
-    return { type: ADD_ROOM, roomName: name };
+export const addRoom = room => {
+    return { type: ADD_ROOM, room: room };
 };
 
-export const removeRoom = (id) => {
-    return { type: REMOVE_ROOM, roomID: id };
+//! UNTIL ROOM IMPLEMENTED IN BACKEND USE NAME AS IDENTIFIER
+export const removeRoom = name => {
+    return { type: REMOVE_ROOM, room_name: name };
 };
 
-export const addDeviceToRoom = (roomId, device) => {
-    return { type: ADD_DEVICE_TO_ROOM, roomID: roomId, deviceObj: device};
-}
-
-export const removeDeviceFromRoom = (roomId, device) => {
-    return { type: REMOVE_DEVICE_FROM_ROOM, roomID: roomId, deviceObj: device };
+export const clearRoomStore = () => {
+    return { type: CLEAR_ROOM_STORE };
 }
 
 export const populateRooms = (roomArr) => {
