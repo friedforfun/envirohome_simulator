@@ -8,11 +8,13 @@ import { AppLoading } from 'expo';
 import RoomReducer from './store/reducers/room';
 import AuthReducer from './store/reducers/auth';
 import Navigator from './navigation/Navigator';
+import DeviceReducer from './store/reducers/device';
 
 // merge reducers into single reducer (RoomReducer, AuthReducer...)
 // to facilitate access to the store
 const rootReducer = combineReducers({
   roomStore: RoomReducer, 
+  deviceStore: DeviceReducer,
   authStore: AuthReducer
 });
 
