@@ -1,5 +1,16 @@
 import { Alert } from 'react-native';
-export const handleError = response => {
+
+export const testResponse = async response => {
+    if (!response.ok ){
+        const errorResData = await response.json();
+        console.log(errorResData)
+        throw new Error(response.status.toString())
+    } else {
+        return await response;
+    }
+}
+
+export const authError = response => {
     if (response.ok || response.status === 200){
         return response;
     } else {
@@ -40,13 +51,14 @@ export const loginError = error => {
             return ("")
 
         case "Network request failed":
+            console.log(error.stack)
             return("Network issue, check connection or try again")
 
         default:
             console.log("Unexpected login error")
             //console.log(JSON.stringify(error))
             console.log(error.message)
-            console.log(error.stack)
+            //console.log(error.stack)
             return("")
     }
 }
