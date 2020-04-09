@@ -15,14 +15,20 @@ import { useDispatch } from 'react-redux';
 
 const RoomScreen = props => {
     const [isLoading, setIsLoading] = useState(true);
-    let roomList = useSelector(state => state.roomStore.rooms)
-
+    const [fetchState, setFetchState] = useState(0);
+    const roomList = useSelector(state => state.roomStore.rooms);
 
     const dispatch = useDispatch();
 
     const toggleLoading = () => {
         console.log("done")
         setIsLoading(false)
+    }
+
+    const changeFetchState = () => {
+        const newFetch = fetchState + 1;
+        console.log("Fetch failed, trying again");
+        setFetchState(newFetch)
     }
 
     useEffect(() => {
@@ -32,13 +38,13 @@ const RoomScreen = props => {
             dispatch(populateRooms(response));
             return response;
         }).catch(error => {
-            console.log("Error here")
-            console.log(error)}
-        ).finally(() => {
+            console.log(error)
+            changeFetchState();
+        }).finally(() => {
             toggleLoading()
         });
         return () => toggleLoading();
-    }, [])
+    }, [fetchState])
     
 
     return (

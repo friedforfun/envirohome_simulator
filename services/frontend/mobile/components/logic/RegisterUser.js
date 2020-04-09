@@ -1,28 +1,23 @@
-import axios from 'axios';
-
 import URL from '../../constants/URL';
 
-const RegisterUser = (user, pword, email) => {
-  const register = axios.create({
-    baseURL: URL.base,
+
+const RegisterUser = async (user, pword, email) => {
+  const path = URL.base + URL.auth + URL.register;
+
+  const response = await fetch(path, {
+    method: "POST",
     headers: {
       'Content-Type': 'application/json',
       'Connection': 'close'
-    }
-  });
-
-  const path = URL.auth + URL.register;
-
-  return register({
-    method: 'post',
-    timeout: 8000,
-    url: path,
-    data: {
+    },
+    body: JSON.stringify({
       username: user,
       password: pword,
       email: email
-    }
+    })
   })
-}
+
+  return await response;
+} 
 
 export default RegisterUser;

@@ -12,9 +12,9 @@ const initialState = {
 export default AuthReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOGIN:
-            console.log("LOGIN: "+JSON.stringify(action.payload.data.token))
+            console.log("LOGIN: "+JSON.stringify(action.payload.token))
             return {
-                authToken: action.payload.data.token,
+                authToken: action.payload.token,
             };
         case SET_DID_TRY_AL:
             return {
@@ -25,11 +25,9 @@ export default AuthReducer = (state = initialState, action) => {
                 ...initialState,
             };
         case SIGNUP:
-            console.log("SIGNUP: "+action.payload.data.user_id)
+            console.log("SIGNUP: "+action.payload.user_id)
             return {
-                username: action.payload.config.username,
-                email: action.payload.config.email,
-                user_id: action.payload.data.user_id
+                user_id: action.payload.user_id
             };
         case REQUEST_PENDING:
             return {
