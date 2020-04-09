@@ -1,0 +1,131 @@
+users
+-----
+- get all users for home (ADMIN)
+- get information for user (ADMIN / SPECIFIC USER)
+- delete user (ADMIN / SPECIFIC USER)
+- change password (ADMIN / SPECIFIC USER) (ADMINS CAN CHANGE EACHOTHERS PASSWORD)
+- promote user to admin (ADMIN)
+- log user in
+- register new user
+- log user out
+- NOTE: NO FORGOT PASSWORD, AS NO EMAIL FUNCTIONALITY IS USED
+
+- GET '/api/user':
+-- IF ADMIN: return all users
+
+- GET '/api/user/<user_id>':
+-- IF ADMIN: return user
+-- IF USER: only return user info if authenticated as said user
+
+- POST '/api/user':
+-- {username, email, password}: if no conflict, create user
+-- return error status
+
+- DELETE '/api/user/<user_id>' {password}
+-- IF USER: must be authenticated, password used for confirmation
+-- IF ADMIN: just do it.  refuse to delete admin acct if only one admin
+-- return error status
+
+- PUT '/api/user/<user_id>/password_reset', {new_password, old_password}
+-- IF USER: if authenticated as said user
+-- IF ADMIN: only new_password mandatory
+-- return error status
+
+- PUT '/api/user/<user_id>/admin'
+-- IF ADMIN: promote user_id to admin
+-- return error status
+
+- PUT '/api/user/<user_id>/username/<username>'
+-- IF USER: change username if user is auth as user_id
+-- IF ADMIN: change username
+
+auth
+----
+- POST '/api/auth/session':
+-- {email, password}
+-- return token
+
+- DELETE '/api/auth/session':
+-- IF ADMIN: log user out
+-- IF USER: log self out if ids match
+-- return error code
+-- delete token
+
+devices
+-------
+- all routes need auth (at least user)
+- get device info (all or specific device)
+- change device info (room, on status, etc)
+- certain state changing routes (remove, add, rename) need admin
+
+- GET '/api/device'
+-- get all devices in home
+
+- GET /api/device/<device_id>
+-- get specific device information
+
+- GET /api/device/types
+-- return list of all available types: (['tv', 'lights'...])
+
+- POST /api/device/<str:dev_type>, {device info}
+-- create device of type dev_type
+
+- DELETE /api/device/<device_id>
+-- IF ADMIN: delete device
+
+- PUT /api/device/<device_id>/<field>/<value>
+-- update _field_ of _device_ to be _value
+-- EX: /api/device/4/is_on/false => turn device 4 off
+-- fields rated_power, device_name require ADMIN 
+
+rooms
+-----
+- add rooms
+- remove rooms
+- get all devices in a room
+- rename rooms
+
+- GET /api/room
+-- get all rooms in the form [{room_id, room_name, [devices]}]
+
+- GET /api/room/room_id
+- get information for room in the form {room_id, room_name, [devices]}
+
+- POST /api/room, {room_name}
+- create room, return room_id
+
+- PUT /api/room/<room_id>/room_name/<room_name>
+- change room name
+
+usage
+-----
+- get usage data for house
+- get usage data for room
+- get usage data for device
+- get producer data
+- get consumer data
+- all of the above between time stamps
+
+- GET /api/usage
+-- get usage data for entire house
+
+- GET /api/usage/device/<device_id>
+-- get usage data for device
+
+- GET /api/usage/room
+-- get usage data for room
+
+- GET /api/usage/producer
+-- get usage data for producers
+
+- GET /api/usage/consumer
+-- get usage data for consumers
+
+- GET /api/usage/producer/room/<room_id>
+-- get usage data for producers in room_id
+
+- GET /api/usage/consumer/room/<room_id>
+-- get usage data for consumers in room_id
+
+- GET <all of the above>/<timestamp_1>/<timestamp_2>
+-- get usage data in the formats between timestamps
