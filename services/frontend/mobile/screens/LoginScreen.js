@@ -1,5 +1,5 @@
 import React, { useReducer, useCallback, useRef, useState } from 'react';
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, Button, Keyboard } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon, Card } from 'react-native-elements';
@@ -10,7 +10,7 @@ import FormInput from '../components/render/FormInput';
 import Colours from '../constants/Colours';
 import * as authActions from '../store/actions/auth';
 import LoginUser from '../components/logic/LoginUser';
-import { handleError, loginWarning } from '../components/logic/fetchFunc';
+import { authError as handleError, loginWarning } from '../components/logic/fetchFunc';
 
 
 
@@ -67,6 +67,7 @@ const LoginScreen = props => {
 
     // 401: error.status_code === 401 + error.detail === incorrect username or password
     const loginHandler = async () => {
+        Keyboard.dismiss()
         setIsLoading(true)
         await LoginUser(formState.inputValues.email, formState.inputValues.password)
         .then(response => {return handleError(response)})
@@ -75,7 +76,7 @@ const LoginScreen = props => {
         })
         .then(response => dispatch(authActions.login(response)))
         .catch(error => {
-            loginWarning(error, setIsLoadingFalse)
+            loginWarning(error, setIsLoadingFalse())
         });
     }
 
@@ -130,7 +131,7 @@ const LoginScreen = props => {
                     returnKeyType="done"
                     minLength={6}
                     onInputChange={inputChangeHandler}
-                    onSubmitEditing={() => loginHandler}
+                    onSubmitEditing={loginHandler}
                     initialValue=""
                     leftIcon={
                         <Icon
