@@ -8,5 +8,5 @@ export default {
     api: '/api',
     alldevices: '/devices',
     getDevice:'/device',
-    togglePower:'/device/power'
+    togglePower:'/device/power/'
 }
