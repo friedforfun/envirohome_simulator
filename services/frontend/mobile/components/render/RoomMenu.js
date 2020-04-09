@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import { ThemeProvider, ListItem } from 'react-native-elements';
+import { useSelector } from 'react-redux';
 
 const RoomMenu = props => {
 
@@ -10,30 +11,45 @@ const RoomMenu = props => {
             navigation -> navigation stack from RoomNavigator.js
     */
 
+  const devices = useSelector(state => state.deviceStore.devices);
+  console.log("from store:")
+  
+  
+  const roomNameList = [...new Set(devices.map(item => item.room))];
+  
+ 
+  const roomList = roomNameList.map(room => {
+    const roomDevices = devices.filter(device => device.room === room);
+    const device_num = roomDevices.length;
+    const power = roomDevices.reduce((sum, next) => sum + next.rated_power, 0)
+    return { "name": room, "power": power, "device_num": device_num, "deviceArray": roomDevices }
+  })
+  console.log(roomList)
+  //const roomList = [{ "name": "test", "power": 100, "device_num": 5, "deviceArray": []}]
+
   const selectRoomHandler = (item) => {
     console.log('Nav to ' + item.name)
     props.navigation.navigate('DevicesInRoom', {
-      roomID: item.roomID,
       roomName: item.name,
-      deviceArray: item.deviceArray
+      roomPower: item.power
     });
   };
-
+ 
   return (
         <View>
-            {!!props.rooms &&
-            props.rooms.map((item, i) => (
+            {!!roomList &&
+            roomList.map((item, i) => (
                 <ListItem
                 key={i}
                 title={item.name}
-                badge={{ value: item.deviceArray.length, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
+                subtitle={item.power}
+                badge={{ value: item.device_num, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
                 bottomDivider
                 chevron
                 onPress={() => selectRoomHandler(item)}
                 />
             ))
             }
-            {!props.rooms && <Text>No room data found</Text>}
         </View>
     );
   }
