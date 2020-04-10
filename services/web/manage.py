@@ -12,7 +12,7 @@
 # services/users/manage.py
 from flask.cli import FlaskGroup
 from project import app, db
-from project.models import Usage, Devices, Room, TV
+import project.models as models
 from sqlalchemy.schema import DropTable
 from sqlalchemy.ext.compiler import compiles
 import csv
@@ -36,12 +36,12 @@ def seed_db():
 #    db.session.add(User(username='admin', email='nobody@nowhere.address',
 #                        password_hash='totally a real hash'))
 
-    living_room = Room(room_id=0, room_name='living_room')
-    outside = Room(room_name='outside')
-    bedroom_1 = Room(room_name='bedroom_1')
-    bedroom_2 = Room(room_name='bedroom_2')
-    kitchen = Room(room_name='kitchen')
-    bathroom_1 = Room(room_name='bathroom_1')
+    living_room = models.Room(room_id=0, room_name='living_room')
+    outside = models.Room(room_name='outside')
+    bedroom_1 = models.Room(room_name='bedroom_1')
+    bedroom_2 = models.Room(room_name='bedroom_2')
+    kitchen = models.Room(room_name='kitchen')
+    bathroom_1 = models.Room(room_name='bathroom_1')
 
     db.session.add(living_room)
     db.session.add(outside)
@@ -51,46 +51,46 @@ def seed_db():
     db.session.add(bathroom_1)
     db.session.commit()
 
-    db.session.add(TV(device_id=0, device_name='Living Room TV',
-                      rated_power=700, fault=False, room=living_room,
-                      on=True))
-    db.session.add(Devices(device_name='Outside Lights', rated_power=40,
-                           fault=False, room=outside, on=True))
-    db.session.add(Devices(device_name='Bedroom 1 Lights', rated_power=40,
-                           fault=False, room=bedroom_1, on=True))
-    db.session.add(Devices(device_name='Bedroom 2 Lights', rated_power=40,
-                           fault=False, room=bedroom_2, on=True))
-    db.session.add(Devices(device_name='Kitchen Lights', rated_power=40,
-                           fault=False, room=kitchen, on=True))
-    db.session.add(Devices(device_name='Living Room Lights 1', rated_power=40,
-                           fault=False, room=living_room, on=True))
-    db.session.add(Devices(device_name='Living Room Lights 2', rated_power=40,
-                           fault=False, room=living_room, on=True))
-    db.session.add(Devices(device_name='Bathroom 1 Lights', rated_power=40,
-                           fault=False, room=bathroom_1, on=True))
-    db.session.add(Devices(device_name='Kitchen Plug', rated_power=500,
-                           fault=True, room=kitchen, on=True))
+    db.session.add(models.TV(device_id=0, device_name='Living Room TV',
+                   rated_power=700, is_fault=False, room=living_room,
+                   is_on=True))
+    db.session.add(models.Lights(device_name='Outside Lights', rated_power=40,
+                                 is_fault=False, room=outside, is_on=True))
+    db.session.add(models.Lights(device_name='Bedroom 1 Lights', rated_power=40,
+                                 is_fault=False, room=bedroom_1, is_on=True))
+    db.session.add(models.Lights(device_name='Bedroom 2 Lights', rated_power=40,
+                                 is_fault=False, room=bedroom_2, is_on=True))
+    db.session.add(models.Lights(device_name='Kitchen Lights', rated_power=40,
+                                 is_fault=False, room=kitchen, is_on=True))
+    db.session.add(models.Lights(device_name='Living Room Lights 1', rated_power=40,
+                                 is_fault=False, room=living_room, is_on=True))
+    db.session.add(models.Lights(device_name='Living Room Lights 2', rated_power=40,
+                                 is_fault=False, room=living_room, is_on=True))
+    db.session.add(models.Lights(device_name='Bathroom 1 Lights', rated_power=40,
+                                 is_fault=False, room=bathroom_1, is_on=True))
+    db.session.add(models.Plug(device_name='Kitchen Plug', rated_power=500,
+                               is_fault=True, room=kitchen, is_on=True))
     db.session.commit()
 
     with open(os.getcwd() + '/mock_data/dev_1.txt', 'r') as f:
         reader = csv.reader(f, delimiter=';', quoting=csv.QUOTE_NONE)
         next(reader)  # skip csv header
         for row in reader:
-            db.session.add(Usage(device_id=row[0], date=row[1], time=row[2],
+            db.session.add(models.Usage(device_id=row[0], date=row[1], time=row[2],
                            energy_usage=row[3]))
 
     with open(os.getcwd() + '/mock_data/dev_2.txt', 'r') as f:
         reader = csv.reader(f, delimiter=';', quoting=csv.QUOTE_NONE)
         next(reader)  # skip csv header
         for row in reader:
-            db.session.add(Usage(device_id=row[0], date=row[1], time=row[2],
+            db.session.add(models.Usage(device_id=row[0], date=row[1], time=row[2],
                            energy_usage=row[3]))
 
     with open(os.getcwd() + '/mock_data/dev_3.txt', 'r') as f:
         reader = csv.reader(f, delimiter=';', quoting=csv.QUOTE_NONE)
         next(reader)  # skip csv header
         for row in reader:
-            db.session.add(Usage(device_id=row[0], date=row[1], time=row[2],
+            db.session.add(models.Usage(device_id=row[0], date=row[1], time=row[2],
                            energy_usage=row[3]))
     db.session.commit()
 

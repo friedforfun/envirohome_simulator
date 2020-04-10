@@ -12,10 +12,11 @@ from flask_sqlalchemy import SQLAlchemy
 # https://github.com/Martlark/flask-serialize
 from flask_serialize import FlaskSerializeMixin
 from project import app, db
+from flask_restx import fields
 
 
 # Create user table in database, with id, email, and active columns
-class User(db.Model, FlaskSerializeMixin):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     public_id = db.Column(db.String(50), unique=True)
     username = db.Column(db.String(128), unique=True, nullable=False)
@@ -25,7 +26,7 @@ class User(db.Model, FlaskSerializeMixin):
     is_admin = db.Column(db.Boolean(), default=False, nullable=False)
 
 
-class Room(db.Model, FlaskSerializeMixin):
+class Room(db.Model):
     room_id = db.Column(db.Integer, primary_key=True, nullable=False)
     room_name = db.Column(db.String(255), nullable=False)
     devices = db.relationship('Devices', backref='room',
@@ -33,15 +34,14 @@ class Room(db.Model, FlaskSerializeMixin):
 
 
 # Create devices table in database, with id, name and type columns
-class Devices(db.Model, FlaskSerializeMixin):
+class Devices(db.Model):
     __tablename__ = 'devices'
     device_id = db.Column(db.Integer, primary_key=True)
-    mac_addr = db.Column(db.String(17), nullable=True)
     device_name = db.Column(db.String(64), nullable=False)
     rated_power = db.Column(db.Integer, nullable=False)
     type = db.Column(db.String(50))
-    fault = db.Column(db.Boolean, default=False, nullable=False)
-    on = db.Column(db.Boolean, default=False, nullable=False)
+    is_fault = db.Column(db.Boolean, default=False, nullable=False)
+    is_on = db.Column(db.Boolean, default=False, nullable=False)
     usage = db.relationship('Usage', backref='device', uselist=False)
     room_id = db.Column(db.Integer, db.ForeignKey('room.room_id'))
 
@@ -52,7 +52,7 @@ class Devices(db.Model, FlaskSerializeMixin):
 
 
 # Create TV table in database, with id, channel, output and volume columns
-class TV(Devices, FlaskSerializeMixin):
+class TV(Devices):
     channel = db.Column(db.Integer, default=1)
     output = db.Column(db.Enum('HDMI1', 'HDMI2', 'ANT', 'DVD', 'VIDEO',
                        name='channel'), default='HDMI1')
@@ -64,7 +64,7 @@ class TV(Devices, FlaskSerializeMixin):
 
 
 # Create thermostat table in database, with id and temperature columns
-class Thermostat(Devices, FlaskSerializeMixin):
+class Thermostat(Devices):
     temp = db.Column(db.Integer, default=23)
 
     __mapper_args__ = {
@@ -73,7 +73,7 @@ class Thermostat(Devices, FlaskSerializeMixin):
 
 
 # Create plug table in database, with id columns
-class Plug(Devices, FlaskSerializeMixin):
+class Plug(Devices):
 
     __mapper_args__ = {
         'polymorphic_identity': 'plug'
@@ -81,7 +81,7 @@ class Plug(Devices, FlaskSerializeMixin):
 
 
 # Create lights table in database, with id, intensity, and colour columns
-class Lights(Devices, FlaskSerializeMixin):
+class Lights(Devices):
     intensity = db.Column(db.Integer, default=1)
     colour = db.Column(db.Integer, default=0)
 
@@ -91,7 +91,7 @@ class Lights(Devices, FlaskSerializeMixin):
 
 
 # Create usage table in database, with id, date, time and energy usage columns
-class Usage(db.Model, FlaskSerializeMixin):
+class Usage(db.Model):
     device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'),
                           primary_key=True, nullable=False)
     date = db.Column(db.Date, nullable=False, primary_key=True)
