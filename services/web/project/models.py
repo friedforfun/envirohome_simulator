@@ -8,11 +8,8 @@
 # \copyright MIT License.
 #
 
-from flask_sqlalchemy import SQLAlchemy
 # https://github.com/Martlark/flask-serialize
-from flask_serialize import FlaskSerializeMixin
-from project import app, db
-from flask_restx import fields
+from project import db
 
 
 # Create user table in database, with id, email, and active columns
@@ -30,7 +27,7 @@ class Room(db.Model):
     room_id = db.Column(db.Integer, primary_key=True, nullable=False)
     room_name = db.Column(db.String(255), nullable=False)
     devices = db.relationship('Devices', backref='room',
-                              cascade="all, delete-orphan", lazy='dynamic')
+                              cascade="all,delete")
 
 
 # Create devices table in database, with id, name and type columns
@@ -42,8 +39,10 @@ class Devices(db.Model):
     type = db.Column(db.String(50))
     is_fault = db.Column(db.Boolean, default=False, nullable=False)
     is_on = db.Column(db.Boolean, default=False, nullable=False)
-    usage = db.relationship('Usage', backref='device', uselist=False)
-    room_id = db.Column(db.Integer, db.ForeignKey('room.room_id'))
+    usage = db.relationship('Usage', backref='device',
+                            cascade="all,delete", uselist=False)
+    room_id = db.Column(db.Integer, db.ForeignKey('room.room_id',
+                                                  ondelete='cascade'))
 
     __mapper_args__ = {
         'polymorphic_identity': 'devices',
@@ -92,8 +91,10 @@ class Lights(Devices):
 
 # Create usage table in database, with id, date, time and energy usage columns
 class Usage(db.Model):
-    device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id'),
-                          primary_key=True, nullable=False)
+    usage_id = db.Column(db.Integer, primary_key=True, nullable=False,
+                         autoincrement=True)
+    device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id',
+        ondelete='cascade'))
     date = db.Column(db.Date, nullable=False, primary_key=True)
     time = db.Column(db.Time, nullable=False, primary_key=True)
     energy_usage = db.Column(db.Float)

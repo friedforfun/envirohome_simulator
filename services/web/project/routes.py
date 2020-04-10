@@ -13,9 +13,10 @@ from project import app, db
 from flask import jsonify, request
 from sqlalchemy import or_
 from werkzeug.security import check_password_hash, generate_password_hash
-from marshmallow import Schema, fields, ValidationError
+from marshmallow import ValidationError
 from functools import wraps
 import project.models as models
+import project.serialisers as serialisers
 import uuid
 import jwt
 import datetime
@@ -75,7 +76,7 @@ def hello_world(current_user):
 def login():
     user_data = request.get_json()
     try:
-        LoginSchema().load(user_data)
+        serialisers.LoginSchema().load(user_data)
     except ValidationError as err:
         raise APIError(err.messages, status_code=400)
 
@@ -98,12 +99,12 @@ def login():
 def new_user():
     user_data = request.get_json()
     try:
-        UserSchema().load(user_data)
+        serialisers.UserSchema().load(user_data)
     except ValidationError as err:
         raise APIError(err.messages, status_code=400)
 
     duplicate = models.User.query.filter(or_(user_data['email'] == models.User.email,
-                                             user_data['username'] == models.User.username)) .first()
+                                             user_data['username'] == models.User.username)).first()
     if duplicate:
         raise APIError('email or username taken', status_code=409)
 
@@ -154,14 +155,19 @@ def delete_user():
 # formats it into JSON
 # Returns all devices in JSON format
 def get_devices():
-    return models.Devices.get_delete_put_post(None)
+    devices = db.session.query(models.Devices).all()
+    device_model = serialisers.DeviceSchema(many=True)
+    return jsonify({'devices': device_model.dump(devices)})
 
 ## \brief get_device()
 #
 #
-@app.route("/api/device/<device_pk>", methods=["GET"])
-def get_device(device_pk):
-    return models.Devices.get_delete_put_post(device_pk)
+@app.route("/api/device/<int:d_id>", methods=["GET"])
+def get_device(d_id):
+    devices = db.session.query(models.Devices).filter_by(device_id=d_id).first()
+    device_model = serialisers.DeviceSchema()
+    return jsonify(device_model.dump(devices))
+
 
 @app.route("/api/device/power/<device_pk>", methods=["GET"])
 def toggle_power(device_pk):
@@ -170,14 +176,6 @@ def toggle_power(device_pk):
     device.on = not power_state
     db.session.commit()
     return models.Devices.get_delete_put_post(device_pk)
-
-## \brief Get floorplan method
-#
-#
-@app.route("/api/floorplan", methods=["GET"])
-# @auth.login_required
-def get_floorplan():
-    return jsonify(image="floorplan.png")
 
 
 @app.route("/api/device/add/<name_pk>/<rated_power_pk>/<device_type_pk>/<room_pk>", methods=["GET"])
@@ -191,7 +189,7 @@ def add_device(name_pk, rated_power_pk, device_type_pk, room_pk):
 
 ## \brief get_usage()
 #
-# Gets the energy usage 
+# Gets the energy usage
 @app.route("/api/usage/<int:device_pk>/<string:date_pk>/<string:time_pk>",
            methods=["GET"])
 def get_usage(device_pk, date_pk, time_pk):
@@ -201,24 +199,31 @@ def get_usage(device_pk, date_pk, time_pk):
                                                date=date_pk,
                                                time=time_pk).all()
 #    usages = db.session.query(Usage).filter_by(device_id=device_pk).all()
-    usage_schema = UsageSchema(many=True)
+    usage_schema = serialisers.UsageSchema(many=True)
     result = usage_schema.dump(usages)
     return jsonify(result)
 
 
-UsageSchema = Schema.from_dict({
-    'device_id': fields.Int(),
-    'date': fields.Str(),
-    'time': fields.Str(),
-    'energy_usage': fields.Float()
-    })
+@app.route('/api/room', methods=['GET'])
+def get_all_rooms():
+    rooms = db.session.query(models.Room).all()
+    room_schema = serialisers.RoomSchema(many=True)
+    return jsonify({'rooms': room_schema.dump(rooms)})
 
 
-UserSchema = Schema.from_dict({
-             "username": fields.Str(required=True),
-             "email": fields.Email(required=True),
-             "password": fields.Str(required=True)})
+@app.route('/api/room/<int:r_id>', methods=['GET'])
+def get_room(r_id):
+    room = db.session.query(models.Room).filter_by(room_id=r_id).first()
+    room_schema = serialisers.RoomSchema()
+    return jsonify(room_schema.dump(room))
 
-LoginSchema = Schema.from_dict({
-             "email": fields.Email(required=True),
-             "password": fields.Str(required=True)})
+@app.route('/api/room/<int:r_id>', methods=['DELETE'])
+def delete_room(r_id):
+    room = db.session.query(models.Room).filter_by(room_id=r_id).first()
+    if room is None:
+        raise APIError(detail='cannot find room with ID: {}'.format(r_id),
+                       status_code=404)
+    delete_q = models.Room.__table__.delete().where(models.Room.room_id == r_id)
+    db.session.execute(delete_q)
+    db.session.commit()
+    return jsonify({'success': 'user deleted'}), 200

@@ -87,18 +87,17 @@ rooms (4)
 
 RoomListResource
 - GET /api/room
--- get all rooms in the form [{room_id, room_name, [devices]}]
+-- get all rooms in the form [{room_id, room_name}]
 
 - POST /api/room, {room_name}
 -- create room, return room_id
 
-RoomResource
 - PUT /api/room/<room_id> url_args: field=value
 -- change room name
 -- /api/room/4?room_name='kitchen'
 
 - GET /api/room/<room_id>
--- get information for room in the form {room_id, room_name, [devices]}
+-- get information for room in the form {room_id, room_name}
 
 - DELETE /api/room/<room_id>
 -- delete room
