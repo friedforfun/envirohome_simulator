@@ -12,20 +12,16 @@ const RoomMenu = props => {
     */
 
   const devices = useSelector(state => state.deviceStore.devices);
-  console.log("from store:")
   
+  const roomNameList = [...new Set(devices.map(item => item.room_id))];
   
-  const roomNameList = [...new Set(devices.map(item => item.room))];
-  
- 
   const roomList = roomNameList.map(room => {
-    const roomDevices = devices.filter(device => device.room === room);
+    const roomDevices = devices.filter(device => device.room_id === room);
     const device_num = roomDevices.length;
     const power = roomDevices.reduce((sum, next) => sum + next.rated_power, 0)
     return { "name": room, "power": power, "device_num": device_num, "deviceArray": roomDevices }
   })
-  console.log(roomList)
-  //const roomList = [{ "name": "test", "power": 100, "device_num": 5, "deviceArray": []}]
+ 
 
   const selectRoomHandler = (item) => {
     console.log('Nav to ' + item.name)

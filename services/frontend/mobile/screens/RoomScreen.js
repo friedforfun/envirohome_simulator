@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { useSelector } from 'react-redux';
 
 import RoomMenu from '../components/render/RoomMenu';
 import Fetching from '../components/render/Fetching';
@@ -11,9 +10,7 @@ const RoomScreen = props => {
 
     
     const dispatchComplete = () => {
-        console.log("Dispatch ready")
         setReduxReady(true)
-        console.log(reduxReady)
     } 
     
     //! CHANGE <FETCHING /> TO GET ALL ROOMS

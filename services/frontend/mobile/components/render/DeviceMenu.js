@@ -7,10 +7,14 @@ import * as _ from 'lodash/fp';
 import TogglePower from '../logic/TogglePower';
 import { toDevice } from '../logic/GetAllRooms';
 import { removeDeviceFromRoom, addDeviceToRoom } from '../../store/actions/rooms';
-import { removeDevice, addDevice } from '../../store/actions/devices';
+import { removeDevice, addDevice, updateDevice } from '../../store/actions/devices';
 
 const DeviceMenu = props => {
-    const [deviceArray, updateDeviceArray] = useState(props.devices)
+
+    const deviceStore = useSelector(state => state.deviceStore.devices);
+    const deviceArr = deviceStore.filter(device => device.room_id === props.roomName)
+
+    const [deviceArray, updateDeviceArray] = useState(deviceArr)
     /*
         props:
             roomName
@@ -50,20 +54,20 @@ const DeviceMenu = props => {
     }
 
     const test = async device => {
-        console.log("toggle power")
-
-        //await dispatch(removeDevice(device.device_id))
-
         var tempDevice = _.cloneDeep(device)
         tempDevice.on = !tempDevice.on
 
         const updatedDevice = _.cloneDeep(tempDevice)
 
-        
-        //await dispatch(addDevice(updatedDevice))
+        await dispatch(updateDevice(updatedDevice));
 
-        //const tempDeviceStore = useSelector(state => state.deviceStore.devices)
-        //const newDeviceArr = tempDeviceStore.filter(device => device.room === props.roomName)
+
+        /*
+        const tempDeviceStore = await useSelector(state => state.deviceStore.devices)
+        console.log(tempDeviceStore)
+        const newDeviceArr = tempDeviceStore.filter(deviceElement => deviceElement.room_id === device.room_id)
+        console.log(newDeviceArr)
+        */
 
         var mutator = _.cloneDeep(deviceArray);
 

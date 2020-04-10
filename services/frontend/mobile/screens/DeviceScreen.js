@@ -1,15 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements'
-import { useSelector } from 'react-redux';
 
 import DeviceMenu from '../components/render/DeviceMenu';
 
 const DeviceScreen = props => {
-    //console.log(props)
-
-    const deviceStore = useSelector(state => state.deviceStore.devices);
-    const deviceArr = deviceStore.filter(device => device.room === props.route.params.roomName)
 
     return (
         <View style={styles.container}>
@@ -23,7 +18,7 @@ const DeviceScreen = props => {
             />
             <Divider style={{backgroundColor: 'black', height:2}}/>
             <ScrollView style={styles.content}>
-                <DeviceMenu devices={deviceArr} roomName={props.route.params.roomName} />
+                <DeviceMenu roomName={props.route.params.roomName} />
             </ScrollView>
         </View>
     );

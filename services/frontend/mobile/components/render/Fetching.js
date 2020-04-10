@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useDispatch } from 'react-redux';
 import { View } from 'react-native';
+import { Icon } from 'react-native-elements';
 
 import { testResponse } from '../logic/fetchFunc';
 import { populateRooms, removeRoom, addRoom } from '../../store/actions/rooms';
@@ -19,11 +20,18 @@ const Fetching = props => {
     props.ready - tells parent dispatch is complete
     */
     const [isLoading, setIsLoading] = useState(true);
+    const [tryAgain, setTryAgain] = useState(0);
     const dispatch = useDispatch();
 
     const loading = bool => {
         setIsLoading(bool);
     }
+
+    const keepTrying = () =>{
+        setTryAgain( tryAgain + 1 )
+    }
+
+    const maxNumberOfTrys = 50;
 
     const checkStore = (what, data) => {
         
@@ -61,6 +69,8 @@ const Fetching = props => {
         }
     }
 
+    const retry = () => setTryAgain(0);
+
 
     useEffect(() => {
         //loading(true);
@@ -79,12 +89,16 @@ const Fetching = props => {
         .then(props.ready())
         .catch(error => {
             console.log(error.message)
+            
+            if (error.message === "Network request failed" && tryAgain < maxNumberOfTrys){
+                keepTrying()
+            } else {
+                console.log(maxNumberOfTrys+" attempts to get data failed")
+            }
+            loading(false)
         })
 
-        return (() => {
-            loading(false)
-        });
-    }, [])
+    }, [tryAgain])
 
     return(
         <View>
@@ -92,6 +106,13 @@ const Fetching = props => {
                 visible={isLoading}
                 textContent={'...'+props.fetchWhat}
             />
+            {tryAgain === maxNumberOfTrys &&
+                <Icon 
+                name='sync'
+                type='octicon'
+                size={100}
+                onPress={() => retry()}
+            />}
         </View>
     );
 
