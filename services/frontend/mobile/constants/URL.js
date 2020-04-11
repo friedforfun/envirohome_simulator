@@ -7,6 +7,7 @@ export default {
 
     api: '/api',
     alldevices: '/devices',
-    getDevice:'/device',
-    togglePower:'/device/power/'
+    room: '/room',
+    device:'/device/',
+    togglePower:'/toggle_power'
 }

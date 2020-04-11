@@ -1,24 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 
 import RoomMenu from '../components/render/RoomMenu';
 import Fetching from '../components/render/Fetching';
+import GetAllRooms from '../components/logic/GetAllRooms';
 import GetAllDevices from '../components/logic/GetAllDevices';
 
 const RoomScreen = props => {
-    const [reduxReady, setReduxReady] = useState(false);
-
+    const [roomsReady, setRoomsReady] = useState(false);
+    const [devicesReady, setDevicesReady] = useState(false);
     
-    const dispatchComplete = () => {
-        setReduxReady(true)
+    const roomsDispatched = () => {
+        setRoomsReady(true)
     } 
+
+    const devicesDispatched = () => {
+        setDevicesReady(true)
+    }
     
-    //! CHANGE <FETCHING /> TO GET ALL ROOMS
     return (
         <View style={styles.container}>
-            {!reduxReady && <Fetching fetchFunc={GetAllDevices} fetchWhat={"devices"} ready={() => dispatchComplete} />}
+            {!roomsReady && <Fetching fetchFunc={GetAllRooms} fetchWhat={"rooms"} ready={() => roomsDispatched} />}
+            {roomsReady && !devicesReady && <Fetching fetchFunc={GetAllDevices} fetchWhat={"devices"} ready={() => devicesDispatched} />}
             <ScrollView style={styles.content}>
-                {reduxReady && <RoomMenu navigation={props.navigation} />}
+                {roomsReady && devicesReady && <RoomMenu navigation={props.navigation} />}
             </ScrollView>
         </View>
     );

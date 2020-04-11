@@ -6,13 +6,13 @@ import * as _ from 'lodash/fp';
 
 import TogglePower from '../logic/TogglePower';
 import { toDevice } from '../logic/GetAllRooms';
-import { removeDeviceFromRoom, addDeviceToRoom } from '../../store/actions/rooms';
-import { removeDevice, addDevice, updateDevice } from '../../store/actions/devices';
+import { updateDevice } from '../../store/actions/devices';
+import { testResponse } from '../logic/fetchFunc';
 
 const DeviceMenu = props => {
 
     const deviceStore = useSelector(state => state.deviceStore.devices);
-    const deviceArr = deviceStore.filter(device => device.room_id === props.roomName)
+    const deviceArr = deviceStore.filter(device => device.room_id === props.roomId)
 
     const [deviceArray, updateDeviceArray] = useState(deviceArr)
     /*
@@ -54,27 +54,48 @@ const DeviceMenu = props => {
     }
 
     const test = async device => {
-        var tempDevice = _.cloneDeep(device)
-        tempDevice.on = !tempDevice.on
 
-        const updatedDevice = _.cloneDeep(tempDevice)
-
-        await dispatch(updateDevice(updatedDevice));
-
-
-        /*
-        const tempDeviceStore = await useSelector(state => state.deviceStore.devices)
-        console.log(tempDeviceStore)
-        const newDeviceArr = tempDeviceStore.filter(deviceElement => deviceElement.room_id === device.room_id)
-        console.log(newDeviceArr)
-        */
-
-        var mutator = _.cloneDeep(deviceArray);
-
-        const index = deviceArray.findIndex(storDev => storDev.device_id === device.device_id)
-        mutator.splice(index, 1, updatedDevice)
-
-        updateDeviceArray(mutator)
+        TogglePower(device)
+            .then(response => {
+                return testResponse(response)
+            })
+            .then(response => {
+                return response.json();
+            })
+            .then(json => {
+                if(json.success){
+                    const powerVal = device.is_on ? "False" : "True";
+                    if (json.success === "device ID: "+device.device_id+" power is now "+powerVal) {
+                        console.log("Power toggle sucess");
+                        return powerVal;
+                    }else {
+                        throw new Error("Client and server out of sync");
+                    }
+                }else {
+                    console.log(json)
+                    throw new Error("Undefined toggle power error");
+                }
+            })
+            .then(powerState => {
+                var tempDevice = _.cloneDeep(device)
+                const onVal = powerState === "True" ? true : false;
+                tempDevice.is_on = onVal;
+                return tempDevice;
+            })
+            .then(tDevice =>{
+                const updatedDevice = _.cloneDeep(tDevice);
+                dispatch(updateDevice(updatedDevice));
+                var mutator = _.cloneDeep(deviceArray);
+                const index = deviceArray.findIndex(storDev => storDev.device_id === device.device_id)
+                mutator.splice(index, 1, updatedDevice)
+                return mutator;
+            })
+            .then(newArray =>{
+                updateDeviceArray(newArray);
+            })     
+            .catch(error => {
+                console.log(error.message);
+            })
     }
 
 
@@ -86,9 +107,9 @@ const DeviceMenu = props => {
                     <ListItem
                         key={i}
                         title={item.device_name}
-                        subtitle={item.rated_power}
+                        subtitle={"Power: "+item.rated_power}
                         switch={{
-                            value: item.on,
+                            value: item.is_on,
                             onValueChange: () => test(item),
                         }}
                         bottomDivider

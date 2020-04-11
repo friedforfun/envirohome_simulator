@@ -11,8 +11,8 @@ export const addDevice = device => {
     }
 };
  
-export const removeDevice = (id) => {
-    return { type: REMOVE_DEVICE, deviceID: id }
+export const removeDevice = (device_id) => {
+    return { type: REMOVE_DEVICE, deviceId: device_id }
 };
 
 export const updateDevice = device => {
@@ -23,7 +23,7 @@ export const clearDeviceStore = () => {
     return { type: CLEAR_DEVICE_STORE }
 }
 
-export const populateDevices = (deviceArr) => {
-    return { type: POPULATE_DEVICES, deviceArray: deviceArr }
+export const populateDevices = (devices) => {
+    return { type: POPULATE_DEVICES, response: devices }
 }
 

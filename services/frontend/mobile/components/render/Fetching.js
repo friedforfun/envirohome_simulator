@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useDispatch } from 'react-redux';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { testResponse } from '../logic/fetchFunc';
 import { populateRooms, removeRoom, addRoom } from '../../store/actions/rooms';
 import { populateDevices, addDevice, removeDevice } from '../../store/actions/devices';
-import GetAllDevices from '../logic/GetAllDevices';
 
 
 
@@ -107,12 +106,15 @@ const Fetching = props => {
                 textContent={'...'+props.fetchWhat}
             />
             {tryAgain === maxNumberOfTrys &&
-                <Icon 
-                name='sync'
-                type='octicon'
-                size={100}
-                onPress={() => retry()}
-            />}
+                <View>
+                    <Icon 
+                        name='sync'
+                        type='octicon'
+                        size={100}
+                        onPress={() => retry()}
+                    />
+                    <Text>Try again?</Text>
+                </View>}
         </View>
     );
 

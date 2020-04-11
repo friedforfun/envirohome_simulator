@@ -12,11 +12,11 @@ const DeviceReducer = (state = initialState, action) => {
             const newDevice = {
                 "device_id": action.device.device_id,
                 "device_name": action.device.device_name,
-                "device_type": action.device.device_type,
-                "fault": action.device.fault,
-                "on": action.device.on,
+                "is_fault": action.device.is_fault,
+                "is_on": action.device.is_on,
                 "rated_power": action.device.rated_power,
-                "room": action.device.room
+                "room_id": action.device.room_id,
+                "type": action.device.type,
             }
             const addIndex = state.devices.findIndex(device => device.device_id === action.device_id);
 
@@ -47,11 +47,11 @@ const DeviceReducer = (state = initialState, action) => {
             const updateIndex = state.devices.findIndex(device => device.device_id === action.device.device_id);
             if (updateIndex >= 0){
                 var tempDevices = lodash.cloneDeep(state.devices);
-                tempDevices.splice(updateIndex, 1, action.device)
+                tempDevices.splice(updateIndex, 1, action.device);
                 return { ...state, devices: tempDevices }
             } else {
-                console.log("Device not found.")
-                console.log("Device ID: " + action.ID)
+                console.log("Device not found.");
+                console.log("Device ID: " + action.device.device_id);
                 return { ...state }
             }
 
@@ -60,7 +60,7 @@ const DeviceReducer = (state = initialState, action) => {
 
         case POPULATE_DEVICES:
             console.log("POPULATED DEVICES")
-            return { ...state, devices: action.deviceArray }
+            return { ...state, devices: action.response.devices }
 
     }
     return state;

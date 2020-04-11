@@ -11,14 +11,14 @@ const DeviceScreen = props => {
             <ListItem 
                 key={'roomName'}
                 title={props.route.params.roomName}
-                subtitle={"Power: "+props.route.params.roomPower}
+                subtitle={"Power: "+props.route.params.roomCurrentPower}
                 titleStyle={{ fontWeight: 'bold'}}
                 chevron={{transform: [{rotate: '270deg'}]}}
                
             />
             <Divider style={{backgroundColor: 'black', height:2}}/>
             <ScrollView style={styles.content}>
-                <DeviceMenu roomName={props.route.params.roomName} />
+                <DeviceMenu roomId={props.route.params.roomId} />
             </ScrollView>
         </View>
     );
