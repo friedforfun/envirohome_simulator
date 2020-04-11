@@ -36,12 +36,12 @@ def seed_db():
 #    db.session.add(User(username='admin', email='nobody@nowhere.address',
 #                        password_hash='totally a real hash'))
 
-    living_room = models.Room(room_id=0, room_name='living_room')
-    outside = models.Room(room_name='outside')
-    bedroom_1 = models.Room(room_name='bedroom_1')
-    bedroom_2 = models.Room(room_name='bedroom_2')
-    kitchen = models.Room(room_name='kitchen')
-    bathroom_1 = models.Room(room_name='bathroom_1')
+    living_room = models.Room(room_id=0, room_name='Living Room')
+    outside = models.Room(room_name='Outside')
+    bedroom_1 = models.Room(room_name='Bedroom 1')
+    bedroom_2 = models.Room(room_name='Bedroom 2')
+    kitchen = models.Room(room_name='Kitchen')
+    bathroom_1 = models.Room(room_name='Bathroom 1')
 
     db.session.add(living_room)
     db.session.add(outside)
