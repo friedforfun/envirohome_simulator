@@ -119,6 +119,9 @@ def new_user():
     return jsonify({"user_id": "{}".format(user.public_id)})
 
 
+################# USER ROUTES ################################################
+
+
 @app.route("/user/<public_id>", methods=["GET"])
 def get_user(public_id):
     user = models.User.query.filter_by(public_id=public_id).first()
@@ -149,6 +152,9 @@ def delete_user():
     pass
 
 
+################# DEVICE ROUTES ################################################
+
+
 @app.route("/api/devices", methods=["GET"])
 ## \brief get_devices()
 # instatiates a session to the database and parses everything in the devices table
@@ -169,22 +175,25 @@ def get_device(d_id):
     return jsonify(device_model.dump(devices))
 
 
-@app.route("/api/device/power/<device_pk>", methods=["GET"])
+@app.route("/api/device/<device_pk>/toggle_power", methods=["GET"])
 def toggle_power(device_pk):
     device = db.session.query(models.Devices).filter_by(device_id=device_pk).first()
-    power_state = device.on
-    device.on = not power_state
+    power_state = device.is_on
+    device.is_on = not power_state
     db.session.commit()
-    return models.Devices.get_delete_put_post(device_pk)
+    return jsonify({'success': 'device ID: {} power was toggled successfully'.format(device_pk)})
 
 
-@app.route("/api/device/add/<name_pk>/<rated_power_pk>/<device_type_pk>/<room_pk>", methods=["GET"])
+@app.route("/api/device", methods=["POST"])
 def add_device(name_pk, rated_power_pk, device_type_pk, room_pk):
     db.session.add(models.Devices(device_name=name_pk, rated_power=rated_power_pk,
                                   device_type=device_type_pk, fault=False,
                                   room=room_pk, on=True))
     db.session.commit()
     return models.Devices.get_delete_put_post(None)
+
+
+################# USAGE ROUTES ################################################
 
 
 ## \brief get_usage()
@@ -202,6 +211,9 @@ def get_usage(device_pk, date_pk, time_pk):
     usage_schema = serialisers.UsageSchema(many=True)
     result = usage_schema.dump(usages)
     return jsonify(result)
+
+
+################# ROOM ROUTES ################################################
 
 
 @app.route('/api/room', methods=['GET'])

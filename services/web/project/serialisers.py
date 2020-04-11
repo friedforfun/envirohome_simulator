@@ -58,7 +58,7 @@ DeviceSchema = Schema.from_dict({
     'device_name': fields.Str(required=True),
     'rated_power': fields.Integer(required=True),
     'type': fields.Str(required=True),
-    'fault': fields.Boolean(required=True),
-    'on': fields.Boolean(required=True),
+    'is_fault': fields.Boolean(required=True),
+    'is_on': fields.Boolean(required=True),
     'room_id': fields.Integer(required=True)
 })
