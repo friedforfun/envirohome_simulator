@@ -19,7 +19,10 @@ LoginSchema = Schema.from_dict({
 
 RoomSchema = Schema.from_dict({
     'room_id': fields.Int(),
-    'room_name': fields.Str()
+    'room_name': fields.Str(),
+    'total_power': fields.Int(),
+    'device_count': fields.Int(),
+    'current_power': fields.Int()
 })
 
 DeviceSchema = Schema.from_dict({

@@ -11,7 +11,7 @@
 # from flask import Flask, jsonify
 from project import app, db
 from flask import jsonify, request
-from sqlalchemy import or_
+from sqlalchemy import or_, and_, func
 from werkzeug.security import check_password_hash, generate_password_hash
 from marshmallow import ValidationError
 from functools import wraps
@@ -182,7 +182,7 @@ def toggle_power(device_pk):
     power_state = device.is_on
     device.is_on = not power_state
     db.session.commit()
-    return jsonify({'success': 'device ID: {} power was toggled successfully'.format(device_pk)})
+    return jsonify({'success': 'device ID: {} power is now {}'.format(device_pk, not power_state)})
 
 
 @app.route("/api/device", methods=["POST"])
@@ -217,6 +217,10 @@ def get_usage(device_pk, date_pk, time_pk):
 @app.route('/api/room', methods=['GET'])
 def get_all_rooms():
     rooms = db.session.query(models.Room).all()
+    for room in rooms:
+        room.total_power = get_room_total_power(room)
+        room.device_count = get_room_device_count(room)
+        room.current_power = get_room_current_power(room)
     room_schema = serialisers.RoomSchema(many=True)
     return jsonify({'rooms': room_schema.dump(rooms)})
 
@@ -224,6 +228,12 @@ def get_all_rooms():
 @app.route('/api/room/<int:r_id>', methods=['GET'])
 def get_room(r_id):
     room = db.session.query(models.Room).filter_by(room_id=r_id).first()
+    if room is None:
+        raise APIError(detail='cannot find room with ID: {}'.format(r_id),
+                       status_code=404)
+    room.total_power = get_room_total_power(room)
+    room.device_count = get_room_device_count(room)
+    room.current_power = get_room_current_power(room)
     room_schema = serialisers.RoomSchema()
     return jsonify(room_schema.dump(room))
 
@@ -241,7 +251,22 @@ def delete_room(r_id):
 
 @app.route('/api/room/<int:r_id>/devices', methods=['GET'])
 def get_devices_in_room(r_id):
-    devices = db.session.query(models.Room).filter_by(room_id=r_id).first().devices
+    room = db.session.query(models.Room).filter_by(room_id=r_id).first()
+    if room is None:
+        raise APIError(detail='cannot find room with ID: {}'.format(r_id),
+                       status_code=404)
+    devices = room.devices
     devices_json = [get_device_model(device.type)().dump(device) for device
                     in devices]
     return jsonify({'devices': devices_json})
+
+
+################# HELPER FUNCTIONS ################################################
+def get_room_device_count(room):
+    return db.session.query(models.Devices).filter_by(room_id=room.room_id).count()
+
+def get_room_total_power(room):
+    return db.session.query(func.sum(models.Devices.rated_power)).filter_by(room_id=room.room_id).scalar()
+
+def get_room_current_power(room):
+    return db.session.query(func.sum(models.Devices.rated_power)).filter(and_(models.Devices.room_id==room.room_id, models.Devices.is_on==True)).scalar()
