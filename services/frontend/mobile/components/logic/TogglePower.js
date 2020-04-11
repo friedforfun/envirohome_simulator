@@ -1,9 +1,10 @@
 import URL from '../../constants/URL';
 
-const TogglePower = device => {
-    const path = URL.base + URL.api + URL.togglePower + device.id;
+const TogglePower = async device => {
+    // GET: .../api/device/<device_id>/toggle_power
+    const path = URL.base + URL.api + URL.device + device.device_id + URL.togglePower;
 
-    return fetch(path).then(response => response.json());
+    return await fetch(path);
 }
 
 export default TogglePower;
