@@ -1,4 +1,5 @@
 #!/bin/sh
-export HOST_IP=$(ifconfig  $(route | awk '/default/{print $NF}') | awk '/inet[^0-9]/{print $2}')
-sed -i "s/HOST_IP=.*/HOST_IP=$HOST_IP/" .env
+## export HOST_IP=$(ifconfig | grep inet | grep -v -e 'inet6'  -e '127.0.0.1' | awk '{print $2}') 
+export HOST_IP=$(ifconfig $(ip route show | grep ^default | cut -d" " -f5) | grep inet[^0-9] | tr -s ' ' | cut -d" " -f3)
+sed -i '' -e "s/HOST_IP=.*/HOST_IP=$HOST_IP/" .env
 exec docker-compose build
