@@ -17,6 +17,7 @@ from marshmallow import ValidationError
 from functools import wraps
 import project.models as models
 import project.serialisers as serialisers
+from project. serialisers import get_device_model
 import uuid
 import jwt
 import datetime
@@ -186,9 +187,6 @@ def toggle_power(device_pk):
 
 @app.route("/api/device", methods=["POST"])
 def add_device(name_pk, rated_power_pk, device_type_pk, room_pk):
-    db.session.add(models.Devices(device_name=name_pk, rated_power=rated_power_pk,
-                                  device_type=device_type_pk, fault=False,
-                                  room=room_pk, on=True))
     db.session.commit()
     return models.Devices.get_delete_put_post(None)
 
@@ -239,3 +237,11 @@ def delete_room(r_id):
     db.session.execute(delete_q)
     db.session.commit()
     return jsonify({'success': 'user deleted'}), 200
+
+
+@app.route('/api/room/<int:r_id>/devices', methods=['GET'])
+def get_devices_in_room(r_id):
+    devices = db.session.query(models.Room).filter_by(room_id=r_id).first().devices
+    devices_json = [get_device_model(device.type)().dump(device) for device
+                    in devices]
+    return jsonify({'devices': devices_json})
