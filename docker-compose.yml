@@ -4,6 +4,7 @@ services:
   mobile:
     environment:
       - "REACT_NATIVE_PACKAGER_HOSTNAME=${HOST_IP}"
+      - "HOST_IP=${HOST_IP}"
 
     build: ./services/frontend/mobile
 
@@ -22,6 +23,9 @@ services:
   web:
     # Build directory relative to compose file
     build: ./services/web
+
+    environment: 
+      - "HOST_IP=${HOST_IP}"
 
     # Python command to run service
     command: python manage.py run -h 0.0.0.0
@@ -48,6 +52,19 @@ services:
       - POSTGRES_USER=envirohome_db
       - POSTGRES_PASSWORD=envirohome_db
       - POSTGRES_DB=envirohome_db_dev
+  eventstore.db:
+    image: eventstore/eventstore
+    environment:
+      - EVENTSTORE_CLUSTER_SIZE=1
+      - EVENTSTORE_INT_TCP_PORT=1112
+      - EVENTSTORE_EXT_TCP_PORT=1113
+      - EVENTSTORE_INT_HTTP_PORT=2112
+      - EVENTSTORE_EXT_HTTP_PORT=2113
+    ports:
+      - "1112:1112"
+      - "1113:1113"
+      - "2112:2112"
+      - "2113:2113"
 
 volumes:
   postgres_data:
