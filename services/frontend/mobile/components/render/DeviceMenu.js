@@ -3,7 +3,10 @@ import { View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux';
 import * as _ from 'lodash/fp';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
 
+import { seed } from "../../utils/uuidSeed";
 import TogglePower from '../logic/TogglePower';
 import { toDevice } from '../logic/GetAllRooms';
 import { updateDevice } from '../../store/actions/devices';
@@ -11,7 +14,7 @@ import { testResponse } from '../logic/fetchFunc';
 import Chart from './Chart';
 
 const DeviceMenu = props => {
-    const [deviceExpanded, setDeviceExpanded] = useState([0])
+    const [deviceExpanded, setDeviceExpanded] = useState([])
 
     const deviceStore = useSelector(state => state.deviceStore.devices);
     const deviceArr = deviceStore.filter(device => device.room_id === props.roomId)
@@ -100,15 +103,27 @@ const DeviceMenu = props => {
             })
     }
 
+    const expandDevice = device => {
+        if (deviceExpanded.includes(device.device_id)){
+            const deviceIndex = deviceExpanded.findIndex(id => id === device.device_id)
+            var newExpansionArray = _.cloneDeep(deviceExpanded);
+            newExpansionArray.splice(deviceIndex, 1);
+            setDeviceExpanded(newExpansionArray);
+        } else {
+            var newExpansionArray = deviceExpanded.concat(device.device_id);
+            setDeviceExpanded(newExpansionArray);
+        }
+    }
+
 
     // Create a list of devices using list.map. see: `https://react-native-elements.github.io/react-native-elements/docs/listitem.html`
     return (
         <View>
             {
                 deviceArray.map((item, i) => (
-                    <View>
+                    <View key={uuidv4({ random: seed() })}>
                         <ListItem
-                            key={i}
+                            key={uuidv4({ random: seed() })}
                             title={item.device_name}
                             subtitle={"Power: "+item.rated_power}
                             switch={{
@@ -117,9 +132,9 @@ const DeviceMenu = props => {
                             }}
                             bottomDivider
                             chevron
-                            onPress={() => {}}
+                            onPress={() => expandDevice(item)}
                         />
-                        { deviceExpanded.includes(item.device_id) && <Chart device={item} />}
+                        {deviceExpanded.includes(item.device_id) && <Chart device={item} key={uuidv4({ random: seed() })}/>}
                     </View>
                 ))
             }
