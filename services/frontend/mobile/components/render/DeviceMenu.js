@@ -8,8 +8,10 @@ import TogglePower from '../logic/TogglePower';
 import { toDevice } from '../logic/GetAllRooms';
 import { updateDevice } from '../../store/actions/devices';
 import { testResponse } from '../logic/fetchFunc';
+import Chart from './Chart';
 
 const DeviceMenu = props => {
+    const [deviceExpanded, setDeviceExpanded] = useState([0])
 
     const deviceStore = useSelector(state => state.deviceStore.devices);
     const deviceArr = deviceStore.filter(device => device.room_id === props.roomId)
@@ -104,18 +106,21 @@ const DeviceMenu = props => {
         <View>
             {
                 deviceArray.map((item, i) => (
-                    <ListItem
-                        key={i}
-                        title={item.device_name}
-                        subtitle={"Power: "+item.rated_power}
-                        switch={{
-                            value: item.is_on,
-                            onValueChange: () => test(item),
-                        }}
-                        bottomDivider
-                        chevron
-
-                    />
+                    <View>
+                        <ListItem
+                            key={i}
+                            title={item.device_name}
+                            subtitle={"Power: "+item.rated_power}
+                            switch={{
+                                value: item.is_on,
+                                onValueChange: () => test(item),
+                            }}
+                            bottomDivider
+                            chevron
+                            onPress={() => {}}
+                        />
+                        { deviceExpanded.includes(item.device_id) && <Chart device={item} />}
+                    </View>
                 ))
             }
         </View>
