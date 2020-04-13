@@ -1,7 +1,6 @@
 import URL from '../../constants/URL';
 
 const LoginUser = async (email, pword) => {
-
     const path = URL.base + URL.auth + URL.login;
     const response = await fetch(path, {
         method: "POST",

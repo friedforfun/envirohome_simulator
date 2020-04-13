@@ -3,7 +3,8 @@ import { Input } from 'react-native-elements';
 import { View, StyleSheet, Text  } from 'react-native';
 
 const INPUT_CHANGE = 'INPUT_CHANGE';
-const INPUT_BLUR = 'INPUT_BLUR'
+const INPUT_BLUR = 'INPUT_BLUR';
+const INPUT_TOUCHED = 'INPUT_TOUCHED';
 
 const formInputReducer = (state, action) => {
   switch (action.type) {
@@ -16,6 +17,11 @@ const formInputReducer = (state, action) => {
     case INPUT_BLUR:
       return {
         ...state,
+        endEdit: true
+      }
+    case INPUT_TOUCHED:
+      return {
+        ...state,
         touched: true
       }
     default:
@@ -23,15 +29,12 @@ const formInputReducer = (state, action) => {
   }
 };
 
-const AdvFormInput = forwardRef((props, ref) => {
-  <FormInput ref={ref} {...props} />
-})
-
 const FormInput = forwardRef((props, ref) => {
   const [inputState, dispatch] = useReducer(formInputReducer, {
     value: props.initvalue ? props.initvalue : '',
     isValid: props.initValid,
-    touched: false
+    touched: false,
+    endEdit: false
   });
 
   const { onInputChange, id } = props;
@@ -56,6 +59,7 @@ const FormInput = forwardRef((props, ref) => {
       isValid = false;
     }
     dispatch({ type: INPUT_CHANGE, value: text, isValid: isValid });
+    dispatch({ type: INPUT_TOUCHED })
   }
 
 
