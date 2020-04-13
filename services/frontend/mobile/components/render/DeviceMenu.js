@@ -44,7 +44,7 @@ const DeviceMenu = props => {
                     const powerVal = device.is_on ? "False" : "True";
                     if (json.success === "device ID: "+device.device_id+" power is now "+powerVal) {
                         console.log("Power toggle sucess");
-                        log(email, 3, device.device_name+" power toggled (ID: "+device.device_id+")", "Toggle-power")
+                        log(email, 3, device.device_name + " power toggled (ID: " + device.device_id + ")", device.device_id+"_power_toggled")
                         return powerVal;
                     }else {
                         throw new Error("Client and server out of sync");

@@ -63,9 +63,15 @@ const LoginScreen = props => {
         setIsLoading(false)
     }
 
+    const loginHandler = () =>{
+        PASSWORD.current.blur();
+        Keyboard.dismiss();
+        postLogin();
+    }
+
     // 401: error.status_code === 401 + error.detail === incorrect username or password
-    const loginHandler = async () => {
-        Keyboard.dismiss()
+    const postLogin = async () => {
+        
         setIsLoading(true)
         await LoginUser(formState.inputValues.email, formState.inputValues.password)
         .then(response => {return handleError(response)})

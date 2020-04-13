@@ -47,7 +47,6 @@ const PostLog = async (email, eventId, eventDescription, type) => {
     };
     
     const path = URL.eventStore + URL.streams + URL.logStream;
-    console.log("PATH: "+path)
     return await fetch(path, requestOptions)
 }
 
