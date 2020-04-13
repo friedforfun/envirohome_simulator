@@ -1,5 +1,9 @@
+import { HOST_IP } from 'react-native-dotenv';
+
+const host_ip = 'http://' + HOST_IP.toString();
+
 export default {
-    base: 'http://192.168.86.26:5000',
+    base: host_ip+':5000',
 
     auth: '/auth',
     register: '/register',
@@ -9,5 +13,9 @@ export default {
     alldevices: '/devices',
     room: '/room',
     device:'/device/',
-    togglePower:'/toggle_power'
+    togglePower:'/toggle_power',
+
+    eventStore: host_ip + ':2113',
+    streams: '/streams',
+    logStream: '/mobilelogstream'
 }

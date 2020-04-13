@@ -70,10 +70,14 @@ const RegisterScreen = props => {
 
     const signupHandler = async () => {
         setIsLoading(true);
-
+        
         await RegisterUser(formState.inputValues.username, formState.inputValues.password, formState.inputValues.email)
             .then(response => {return handleError(response)})
             .then(response => {return response.json()})
+            .then(json => {
+                const email = { "email": formState.inputValues.email };
+                return { ...json, ...email }
+            })
             .then(response => {
                 dispatch(authActions.signup(response));
             }).then(next => {
@@ -98,7 +102,7 @@ const RegisterScreen = props => {
                         break;
 
                     case "Network request failed":
-                        console.log(error.stack)
+                        //console.log(error.stack)
                         regWarning("Network issue, check connection or try again", setIsLoadingFalse())
                         break;
                     default:

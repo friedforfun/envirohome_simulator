@@ -3,15 +3,14 @@ import { View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux';
 import * as _ from 'lodash/fp';
-import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 
 import { seed } from "../../utils/uuidSeed";
 import TogglePower from '../logic/TogglePower';
-import { toDevice } from '../logic/GetAllRooms';
 import { updateDevice } from '../../store/actions/devices';
 import { testResponse } from '../logic/fetchFunc';
 import Chart from './Chart';
+import { log } from '../logic/PostLog';
 
 const DeviceMenu = props => {
     const [deviceExpanded, setDeviceExpanded] = useState([])
@@ -26,39 +25,12 @@ const DeviceMenu = props => {
             roomID
             deviceArray -> list of devices
     */
-   const dispatch = useDispatch();
+    const dispatch = useDispatch();
+    const email = useSelector(state => state.authStore.email)
 
-    const togglePower = async (device) => {
-        let nextDeviceState;
-        useEffect(() => {
-            let updatedDevice;
-            TogglePower(device)
-                .then(response => { return toDevice(response) })
-                .then(response => updatedDevice = response)
-                .then(() => {
-                    removeDeviceFromRoom(props.roomID, device)
-                })
-                .then(() => {
-                    addDeviceToRoom(props.roomID, updatedDevice)
-                })
-                .then(() => {
-                    return useSelector(state => state.roomStore.rooms);
-                })
-                .then(selector => {
-                    return selector[selector.findIndex(room => room.id === props.roomID)].deviceArray;
-                })
-                .then(result => {
-                    nextDeviceState = result;
-                })
-                .catch(error => {
-                    console.log("An error has occured");
-                    console.log(error.message);
-                })
-        } ,[])
-        await updateDeviceArray(nextDeviceState)
-    }
+    const togglePower = async device => {
 
-    const test = async device => {
+        
 
         TogglePower(device)
             .then(response => {
@@ -72,6 +44,7 @@ const DeviceMenu = props => {
                     const powerVal = device.is_on ? "False" : "True";
                     if (json.success === "device ID: "+device.device_id+" power is now "+powerVal) {
                         console.log("Power toggle sucess");
+                        log(email, 3, device.device_name+" power toggled (ID: "+device.device_id+")", "Toggle-power")
                         return powerVal;
                     }else {
                         throw new Error("Client and server out of sync");
@@ -128,7 +101,7 @@ const DeviceMenu = props => {
                             subtitle={"Power: "+item.rated_power}
                             switch={{
                                 value: item.is_on,
-                                onValueChange: () => test(item),
+                                onValueChange: () => togglePower(item),
                             }}
                             bottomDivider
                             chevron

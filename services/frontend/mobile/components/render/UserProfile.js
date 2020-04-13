@@ -40,7 +40,7 @@ const UserProfile = props => {
                 <View style={styles.controls}>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => { dispatch(authActions.logout()) }}>
-                            <Button title="Logout" color={Colours.left} />
+                            <Button title="Logout" color={Colours.left} onPress={() => { dispatch(authActions.logout()) }} />
                         </TouchableOpacity>
                     </View>
                 </View>

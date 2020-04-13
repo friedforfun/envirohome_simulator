@@ -8,8 +8,6 @@ export const REQUEST_PENDING = 'REQUEST_PENDING';
 export const REQUEST_ERROR = 'REQUEST_ERROR';
 export const SET_DID_TRY_AL = 'SET_DID_TRY_AL';
 
-
-
 let timer;
 
 export const fetchingData = () => ({
@@ -43,7 +41,7 @@ export const signup = payload => {
 }
 
 export const login = payload => {
-    //console.log(payload);
+    console.log(payload);
     //console.log("LOGIN. Auth Token: "+JSON.stringify(payload.data.token));
     return {
         type: LOGIN,

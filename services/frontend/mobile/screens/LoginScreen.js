@@ -12,8 +12,6 @@ import * as authActions from '../store/actions/auth';
 import LoginUser from '../components/logic/LoginUser';
 import { authError as handleError, loginWarning } from '../components/logic/fetchFunc';
 
-
-
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
 const formReducer = (state, action) => {
@@ -73,6 +71,10 @@ const LoginScreen = props => {
         .then(response => {return handleError(response)})
         .then(response => {
             return response.json()
+        })
+        .then(json => {
+            const email = { "email": formState.inputValues.email};
+            return { ...json, ...email }
         })
         .then(response => dispatch(authActions.login(response)))
         .catch(error => {
@@ -148,7 +150,7 @@ const LoginScreen = props => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={() => props.navigation.navigate('RegisterScreen')}>
+                    <TouchableOpacity onPress={() =>  props.navigation.navigate('RegisterScreen')}>
                         <Button title="Register" color={Colours.left} />
                     </TouchableOpacity>
                 </View>
