@@ -17,11 +17,10 @@ const data = {
 
 
 const renderLineChart = (
-    <View>
-        <Text>Bezier Line Chart</Text>
+    <View >
         <LineChart
             data={{
-                labels: ["January", "February", "March", "April", "May", "June"],
+                labels: ["Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"],
                 datasets: [
                     {
                         data: [
@@ -30,25 +29,25 @@ const renderLineChart = (
                             "42",
                             "64",
                             "100",
-                            "80"
+                            "80",
+                            "25",
                         ]
                     }
                 ]
             }}
-            width={Dimensions.get("window").width} // from react-native
+            width={Dimensions.get("window").width-75} // from react-native
             height={220}
-            yAxisLabel="$"
-            yAxisSuffix="k"
+            yAxisSuffix="kWh"
             yAxisInterval={1} // optional, defaults to 1
             chartConfig={{
                 backgroundColor: "#e26a00",
                 backgroundGradientFrom: "#fb8c00",
                 backgroundGradientTo: "#ffa726",
-                decimalPlaces: 2, // optional, defaults to 2dp
+                decimalPlaces: 0, // optional, defaults to 2dp
                 color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                 labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                 style: {
-                    borderRadius: 16
+                    borderRadius: 15
                 },
                 propsForDots: {
                     r: "6",
@@ -59,13 +58,16 @@ const renderLineChart = (
             bezier
             style={{
                 marginVertical: 8,
-                borderRadius: 16
+                borderRadius: 5
             }}
         />
     </View>
 )
 
 const Chart = props => {
+    const [chartData, setChartData] = useState();
+
+
     return (
         <View>
             { renderLineChart }
