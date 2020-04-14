@@ -3,16 +3,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Platform } from 'react-native';
 
 import Colours from '../constants/Colours';
-import RoomScreen from '../screens/RoomScreen';
-import DeviceScreen from '../screens/DeviceScreen';
 import AvatarButton from '../components/render/AvatarButton';
-import SettingsIcon from '../components/render/SettingsIcon';
 import Utilisation from '../components/render/Utilisation';
-
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import SettingsRoot from '../screens/SettingsRoot';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import RoomScreen from '../screens/RoomScreen';
+import DeviceScreen from '../screens/DeviceScreen';
 
 const defaultNavOptions = {
     headerStyle: {
@@ -26,7 +23,7 @@ const defaultNavOptions = {
         fontFamily: 'open-sans'
     },
     headerTintColor: Platform.OS === 'android' ? 'white' : Colours.center,
-    headerTitle: () => (<Utilisation usage={0.5} />),
+    headerTitle: () => (<Utilisation />),
 };
 
 const RoomListStack = createStackNavigator();

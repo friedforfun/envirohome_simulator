@@ -85,6 +85,7 @@ const Fetching = props => {
             return checkStore(what, json)
         })
         .then(json => pickAction(what, json))
+        // update max rated power in settings store here
         .then(props.ready())
         .catch(error => {
             console.log(error.message)
