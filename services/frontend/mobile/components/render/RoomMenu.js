@@ -22,18 +22,20 @@ const RoomMenu = props => {
   return (
         <View>
             {!!rooms &&
-            rooms.map((item, i) => (
+            rooms.map((item, i) => {
+              const powerVal = "Rated Power: " + item.current_power
+              return (
                 <ListItem
-                key={i}
-                title={item.room_name}
-                subtitle={item.current_power}
-                badge={{ value: item.device_count, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
-                bottomDivider
-                chevron
-                onPress={() => selectRoomHandler(item)}
+                  key = { i }
+                  title = { item.room_name }
+                  subtitle = {powerVal}
+                  badge = {{ value: item.device_count, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
+                  bottomDivider
+                  chevron
+                  onPress={() => selectRoomHandler(item)}
                 />
-            ))
-            }
+                );
+            })}
         </View>
     );
   }
