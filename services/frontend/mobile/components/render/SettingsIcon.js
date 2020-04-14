@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import Colours from '../../constants/Colours';
 
@@ -13,7 +12,7 @@ const SettingsIcon = props => {
                     name="gear"
                     type="octicon"
                     color={Platform.OS === 'android' ? 'white' : Colours.center}
-                    onPress={props.settings}
+                    onPress={props.action}
                     iconStyle={{height: '100%'}}
                 />                     
         </View>

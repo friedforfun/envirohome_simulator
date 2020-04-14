@@ -1,10 +1,25 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Divider, ListItem } from 'react-native-elements'
+import { useDispatch } from 'react-redux';
 
 import DeviceMenu from '../components/render/DeviceMenu';
+import SettingsIcon from '../components/render/SettingsIcon';
+import { openSettings } from '../store/actions/settings';
 
 const DeviceScreen = props => {
+
+    const dispatch = useDispatch();
+    React.useLayoutEffect(() => {
+        props.navigation.setOptions({
+            headerRight: () => <TouchableOpacity><SettingsIcon action={settingsNav} /></TouchableOpacity>
+        });
+    }, [props.navigation])
+
+    const settingsNav = () => {
+        dispatch(openSettings())
+    };
 
     return (
         <View style={styles.container}>

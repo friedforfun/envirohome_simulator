@@ -1,12 +1,31 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
+import SettingsIcon from '../components/render/SettingsIcon';
 import RoomMenu from '../components/render/RoomMenu';
 import Fetching from '../components/render/Fetching';
 import GetAllRooms from '../components/logic/GetAllRooms';
 import GetAllDevices from '../components/logic/GetAllDevices';
+import { openSettings } from '../store/actions/settings';
+
 
 const RoomScreen = props => {
+    const dispatch = useDispatch();
+    
+    const nav = useNavigation();
+    React.useLayoutEffect(() => {
+        props.navigation.setOptions({
+            headerRight: () => <TouchableOpacity><SettingsIcon action={settingsNav} /></TouchableOpacity>
+        });
+    }, [props.navigation])
+
+    const settingsNav = () => {
+        dispatch(openSettings())
+    };
+
     const [roomsReady, setRoomsReady] = useState(false);
     const [devicesReady, setDevicesReady] = useState(false);
     

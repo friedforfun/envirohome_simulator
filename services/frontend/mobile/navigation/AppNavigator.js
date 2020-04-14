@@ -14,7 +14,6 @@ import RegisterScreen from '../screens/RegisterScreen';
 import SettingsRoot from '../screens/SettingsRoot';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-
 const defaultNavOptions = {
     headerStyle: {
         backgroundColor: Platform.OS === 'android' ? Colours.center : ''
@@ -27,8 +26,7 @@ const defaultNavOptions = {
         fontFamily: 'open-sans'
     },
     headerTintColor: Platform.OS === 'android' ? 'white' : Colours.center,
-    headerTitle: () => (<Utilisation usage={'50%'}/>),
-    headerRight: props => (<TouchableOpacity><SettingsIcon settings={ () => console.log()}/></TouchableOpacity>)
+    headerTitle: () => (<Utilisation usage={0.5} />),
 };
 
 const RoomListStack = createStackNavigator();
@@ -44,12 +42,12 @@ export const RoomNavigator = props => {
 };
 
 const SettingsStack = createStackNavigator();
-const SettingsNavigator = props => {
-    <SettingsStack.Navigator initialRouteName="SettingsRoot" >
-        <SettingsStack.Screen name="SettingsRoot" component={SettingsRoot} />
-    </SettingsStack.Navigator>
-//
-// all settings children
+export const SettingsNavigator = props => {
+    return (
+        <SettingsStack.Navigator screenOptions={defaultNavOptions} initialRouteName="SettingsRoot" >
+            <SettingsStack.Screen name="SettingsRoot" component={SettingsRoot} options={{ headerLeft: () => (<AvatarButton user='A' />) }} />
+        </SettingsStack.Navigator>
+    );
 };
 
 const AuthNavOptions = {

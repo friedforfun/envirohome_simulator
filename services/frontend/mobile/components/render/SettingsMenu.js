@@ -1,13 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
-import { ThemeProvider, ListItem } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
 
 // toggle settings menu based on user privileges (case switch or something)
 const settings = [
-    {title: 'Power management'}, { title: 'Rooms' }, {title: 'Statistics'}, {title:'Notification Settings'}
+    {title: 'Power management'}, { title: 'Edit Rooms' }, {title: 'Statistics'}, {title:'Notification Settings'}
 ];
 const adminSettings = [
-    settings, { title: 'Manage Users' }, { title: 'Logs' }
+    ...settings, { title: 'Manage Users' }, { title: 'Logs' }
 ];
 
 const menuDisplay = (priv) => {
@@ -50,7 +50,7 @@ const menuDisplay = (priv) => {
 
 const SettingsMenu = () => {
     return (
-        menuDisplay('user')
+        menuDisplay('admin')
     )
 }
 
