@@ -47,6 +47,7 @@ const DeviceMenu = props => {
                         log(email, 3, device.device_name + " power toggled (ID: " + device.device_id + ")", device.device_id+"_power_toggled")
                         return powerVal;
                     }else {
+                        log(email, 3, device.device_name + " power toggled (ID: " + device.device_id + ")", device.device_id + "_power_toggled")
                         throw new Error("Client and server out of sync");
                     }
                 }else {
@@ -73,6 +74,8 @@ const DeviceMenu = props => {
             })     
             .catch(error => {
                 console.log(error.message);
+                if(error.message === "Network request failed")
+                    log(email, 3, device.device_name + " power toggled (ID: " + device.device_id + ")", device.device_id + "_power_toggled");
             })
     }
 

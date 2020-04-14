@@ -1,8 +1,8 @@
 import React, { useReducer, useCallback, useRef, useState } from 'react';
 import { StyleSheet, View, Button, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon, Card } from 'react-native-elements';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -42,6 +42,7 @@ const formReducer = (state, action) => {
 
 
 const RegisterScreen = props => {
+
     const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
 
@@ -103,6 +104,7 @@ const RegisterScreen = props => {
 
                     case "Network request failed":
                         //console.log(error.stack)
+                        log(formState.inputValues.email, 1, "User signup", "Signup");
                         regWarning("Network issue, check connection or try again", setIsLoadingFalse())
                         break;
                     default:
