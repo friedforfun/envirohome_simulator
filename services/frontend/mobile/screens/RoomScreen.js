@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-import SettingsIcon from '../components/render/SettingsIcon';
+import SettingsIcon from '../components/render/settings/SettingsIcon';
 import RoomMenu from '../components/render/RoomMenu';
 import Fetching from '../components/render/Fetching';
 import GetAllRooms from '../components/logic/GetAllRooms';

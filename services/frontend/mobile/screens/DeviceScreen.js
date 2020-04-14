@@ -5,7 +5,7 @@ import { Divider, ListItem } from 'react-native-elements'
 import { useDispatch } from 'react-redux';
 
 import DeviceMenu from '../components/render/DeviceMenu';
-import SettingsIcon from '../components/render/SettingsIcon';
+import SettingsIcon from '../components/render/settings/SettingsIcon';
 import { openSettings } from '../store/actions/settings';
 
 const DeviceScreen = props => {

@@ -8,6 +8,7 @@ import Utilisation from '../components/render/Utilisation';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import SettingsRoot from '../screens/SettingsRoot';
+import SettingsContent from '../screens/SettingsContent';
 import RoomScreen from '../screens/RoomScreen';
 import DeviceScreen from '../screens/DeviceScreen';
 
@@ -43,6 +44,7 @@ export const SettingsNavigator = props => {
     return (
         <SettingsStack.Navigator screenOptions={defaultNavOptions} initialRouteName="SettingsRoot" >
             <SettingsStack.Screen name="SettingsRoot" component={SettingsRoot} options={{ headerLeft: () => (<AvatarButton user='A' />) }} />
+            <SettingsStack.Screen name="SettingsContent" component={SettingsContent} />
         </SettingsStack.Navigator>
     );
 };

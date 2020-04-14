@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import Colours from '../../constants/Colours';
+import Colours from '../../../constants/Colours';
 
 const SettingsIcon = props => {
     return (

@@ -1,17 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import SettingsMenu from '../components/render/SettingsMenu';
-import { useNavigation } from '@react-navigation/native';
+
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 
+import SettingsMenu from '../components/render/settings/SettingsMenu';
 import HomeIcon from '../components/render/HomeIcon';
 import { closeSettings } from '../store/actions/settings';
 
 const SettingsScreen = props => {
     const dispatch = useDispatch();
-
-    const nav = useNavigation();
+    
     React.useLayoutEffect(() => {
         props.navigation.setOptions({
             headerRight: () => <TouchableOpacity><HomeIcon action={settingsNav} /></TouchableOpacity>
