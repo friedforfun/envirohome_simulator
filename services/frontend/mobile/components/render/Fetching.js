@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { View, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { testResponse } from '../logic/fetchFunc';
 import { populateRooms, removeRoom, addRoom } from '../../store/actions/rooms';
 import { populateDevices, addDevice, removeDevice } from '../../store/actions/devices';
+import { updateMaxRatedPower } from '../../store/actions/settings';
 
 
 
@@ -17,6 +18,7 @@ const Fetching = props => {
     props.fetchFunc - fetch function, display spinner while function is running
     props.fetchWhat - text describing what is being fetched
     props.ready - tells parent dispatch is complete
+    props.updateParentState - parent component state update function
     */
     const [isLoading, setIsLoading] = useState(true);
     const [tryAgain, setTryAgain] = useState(0);
@@ -63,8 +65,19 @@ const Fetching = props => {
             case 'device':
                 return (dispatch(addDevice(data)))
 
+            case 'logs':
+                props.updateParentState(data)
+
             default:
                 break;
+        }
+    }
+
+
+    const deviceArray = useSelector(state => state.deviceStore.devices);
+    const updatePowerStore = () => {
+        if (deviceArray !== []){
+            dispatch(updateMaxRatedPower(deviceArray));
         }
     }
 
@@ -85,7 +98,10 @@ const Fetching = props => {
             return checkStore(what, json)
         })
         .then(json => pickAction(what, json))
-        // update max rated power in settings store here
+        .then(() => {
+            if (["rooms", "room", "devices", "device"].includes(what))
+                updatePowerStore();
+        })
         .then(props.ready())
         .catch(error => {
             console.log(error.message)
