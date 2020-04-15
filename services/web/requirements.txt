@@ -7,3 +7,5 @@ flask-marshmallow
 marshmallow-sqlalchemy
 nose2
 PyJWT==1.7.1
+Celery
+redis

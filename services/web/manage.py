@@ -13,13 +13,17 @@
 from flask.cli import FlaskGroup
 from project import app, db
 import project.models as models
-from sqlalchemy.schema import DropTable
-from sqlalchemy.ext.compiler import compiles
+from project.tasks import hello_world_async
 import csv
 import os
 
 
 cli = FlaskGroup(app)
+
+
+@cli.command('start_usage')
+def start_usage():
+    task = hello_world_async.delay()
 
 
 @cli.command('create_db')
