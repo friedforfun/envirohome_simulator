@@ -32,6 +32,7 @@ class Config(object):
     #
     SECRET_KEY = 'mMUsP5arT3x3BQxYuKWQhhN5HytX3t'
 
-    CELERY_BROKER_URL = 'redis://localhost:6379/0'
+    base_url = os.getenv('HOST_IP', 'localhost')
+    CELERY_BROKER_URL = 'redis://{}:6379/0'.format(base_url)
 
-    CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://{}:6379/0'.format(base_url)
