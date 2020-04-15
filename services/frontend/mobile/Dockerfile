@@ -5,7 +5,7 @@ FROM mhart/alpine-node:13 AS builder
 # install build deps
 RUN apk add --no-cache ca-certificates bash tini git
 RUN apk --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ add android-tools
-RUN apk add --no-cache --virtual .build-deps make gcc g++ python && npm install -g expo-cli
+RUN apk add --no-cache --virtual .build-deps make gcc g++ python && yarn global add expo-cli && yarn global add react-native-cli
 
 # copy directory into container
 WORKDIR /usr/src/app
