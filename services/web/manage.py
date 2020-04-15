@@ -13,13 +13,17 @@
 from flask.cli import FlaskGroup
 from project import app, db
 import project.models as models
-from sqlalchemy.schema import DropTable
-from sqlalchemy.ext.compiler import compiles
+from project.tasks import hello_world_async
 import csv
 import os
 
 
 cli = FlaskGroup(app)
+
+
+@cli.command('start_usage')
+def start_usage():
+    task = hello_world_async.delay()
 
 
 @cli.command('create_db')
@@ -70,28 +74,6 @@ def seed_db():
                                  is_fault=False, room=bathroom_1, is_on=True))
     db.session.add(models.Plug(device_name='Kitchen Plug', rated_power=500,
                                is_fault=True, room=kitchen, is_on=True))
-    db.session.commit()
-
-    with open(os.getcwd() + '/mock_data/dev_1.txt', 'r') as f:
-        reader = csv.reader(f, delimiter=';', quoting=csv.QUOTE_NONE)
-        next(reader)  # skip csv header
-        for row in reader:
-            db.session.add(models.Usage(device_id=row[0], date=row[1], time=row[2],
-                           energy_usage=row[3]))
-
-    with open(os.getcwd() + '/mock_data/dev_2.txt', 'r') as f:
-        reader = csv.reader(f, delimiter=';', quoting=csv.QUOTE_NONE)
-        next(reader)  # skip csv header
-        for row in reader:
-            db.session.add(models.Usage(device_id=row[0], date=row[1], time=row[2],
-                           energy_usage=row[3]))
-
-    with open(os.getcwd() + '/mock_data/dev_3.txt', 'r') as f:
-        reader = csv.reader(f, delimiter=';', quoting=csv.QUOTE_NONE)
-        next(reader)  # skip csv header
-        for row in reader:
-            db.session.add(models.Usage(device_id=row[0], date=row[1], time=row[2],
-                           energy_usage=row[3]))
     db.session.commit()
 
 
