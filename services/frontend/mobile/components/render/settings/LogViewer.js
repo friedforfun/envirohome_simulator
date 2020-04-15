@@ -1,9 +1,10 @@
 import React, { useState, useRef, createRef, useEffect, useCallback } from 'react';
-import { View, ScrollView, ActivityIndicator, Text } from 'react-native';
+import { View, ScrollView, ActivityIndicator, Text, Button } from 'react-native';
 import { ListItem, ButtonGroup } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import dateFormat from 'dateformat';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as _ from 'lodash/fp';
 
 import { seed } from "../../../utils/uuidSeed";
@@ -17,7 +18,9 @@ const LogViewer = props => {
     const [entryLoading, setEntryLoading] = useState([])
     const [expandedLogEntries, setExpandedLogEntries] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [buttonIndex, setButtonIndex] = useState();
+    const [nextPageLink, setNextPageLink] = useState(null);
+    const [clickNextPage, setClickNextPage] = useState(false);
+
     
 
     const devices = useSelector(state => state.deviceStore.devices);
@@ -33,6 +36,13 @@ const LogViewer = props => {
 
     const updateLogEntries = response => {
         const entries = response.entries;
+        const links = response.links;
+        const next = links.find(link => link.relation === "next")
+        if (next != undefined) {
+            setNextPageLink(next.uri)
+        } else {
+            setNextPageLink(null)
+        }
         setLogEntries(response.entries)
         const loadingArr = Array(entries.length).fill(false)
         setEntryLoading(loadingArr);
@@ -88,7 +98,13 @@ const LogViewer = props => {
     return (
         <View>
             <ScrollView>
-                {!logEntries && <Fetching fetchFunc={GetLogStream} fetchWhat={"logs"} ready={() => finishedLoading} updateParentState={updateLogEntries}/>}
+                {!logEntries && isLoading &&
+                <Fetching 
+                    fetchFunc={GetLogStream} 
+                    fetchWhat={"logs"} 
+                    ready={() => finishedLoading} 
+                    updateParentState={updateLogEntries}
+                />}
                 {!!logEntries && 
                 logEntries.map((log, i) => {
                 
@@ -115,7 +131,7 @@ const LogViewer = props => {
                             {
                                 !entryLoading[i] &&
                                 !!expandedLogEntries[i] &&
-                                <View>
+                                <View key={uuidv4({ random: seed() })}>
                                     <Text key={uuidv4({ random: seed() })}>
                                         Email: {expandedLogEntries[i].content.data.email}
                                     </Text>
@@ -135,9 +151,41 @@ const LogViewer = props => {
                 })}
                 <ListItem
                     key={"Next page"}
-                    title={"Next page"}
+                    leftElement={
+                        <TouchableOpacity onPress={() => {
+                            setLogEntries(null)
+                            setIsLoading(true)
+                        }}>
+                            <Button title="Return to front" />
+                        </TouchableOpacity>
+                    }
+                    rightElement={
+                        <View>
+
+                            {!!nextPageLink && 
+                            <TouchableOpacity onPress={() => {
+                                setClickNextPage(true)
+                                setIsLoading(true)
+                                }}>
+                                <Button title="Next Page" />
+                                
+                            </TouchableOpacity>}
+                            {nextPageLink === null && 
+
+                            <Button title="Next Page" disabled />
+                            
+                            }
+                        </View>
+                    }
                     
                 />
+                {clickNextPage && !!nextPageLink && isLoading &&
+                <Fetching 
+                    fetchFunc={() => GetLogStream(nextPageLink)} 
+                    fetchWhat={"logs"} 
+                    ready={() => finishedLoading} 
+                    updateParentState={updateLogEntries} 
+                />}
             </ScrollView>
         </View>
     )
