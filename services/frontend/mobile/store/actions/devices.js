@@ -3,6 +3,7 @@ export const REMOVE_DEVICE = 'REMOVE_DEVICE';
 export const POPULATE_DEVICES = 'POPULATE_DEVICES';
 export const CLEAR_DEVICE_STORE = 'CLEAR_DEVICE_STORE';
 export const UPDATE_DEVICE = 'UPDATE_DEVICE';
+export const SET_USAGE_VAL = 'SET_USAGE_VAL';
 
 export const addDevice = device => {
     return { 
@@ -25,5 +26,9 @@ export const clearDeviceStore = () => {
 
 export const populateDevices = (devices) => {
     return { type: POPULATE_DEVICES, response: devices }
+}
+
+export const setUsageVal = (energy, deviceId) => {
+    return { type: SET_USAGE_VAL, energy: energy, deviceId: deviceId }
 }
 

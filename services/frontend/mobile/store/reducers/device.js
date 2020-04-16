@@ -1,9 +1,10 @@
 import * as lodash from 'lodash/fp';
 
-import { ADD_DEVICE, REMOVE_DEVICE, POPULATE_DEVICES, CLEAR_DEVICE_STORE, UPDATE_DEVICE } from '../actions/devices';
+import { ADD_DEVICE, REMOVE_DEVICE, POPULATE_DEVICES, CLEAR_DEVICE_STORE, UPDATE_DEVICE, SET_USAGE_VAL } from '../actions/devices';
 
 const initialState = {
-    devices: []
+    devices: [],
+    deviceUsage: []
 };
 
 const DeviceReducer = (state = initialState, action) => {
@@ -42,8 +43,7 @@ const DeviceReducer = (state = initialState, action) => {
                 return { ...state }
             }
 
-        case UPDATE_DEVICE:
-            
+        case UPDATE_DEVICE: 
             const updateIndex = state.devices.findIndex(device => device.device_id === action.device.device_id);
             if (updateIndex >= 0){
                 var tempDevices = lodash.cloneDeep(state.devices);
@@ -61,7 +61,24 @@ const DeviceReducer = (state = initialState, action) => {
         case POPULATE_DEVICES:
             console.log("POPULATED DEVICES")
             return { ...state, devices: action.response.devices }
-
+        
+        case SET_USAGE_VAL:
+            
+            const findRoomId = state.devices.find(device => device.device_id === action.deviceId).room_id
+            const newItem = {
+                "device_id": action.deviceId,
+                "room_id": findRoomId,
+                "usage": action.energy
+            }
+            var tempUsage = lodash.cloneDeep(state.deviceUsage)
+            const usageIndex = tempUsage.findIndex(element => element.device_id === action.deviceId)
+            if (usageIndex >= 0){
+                tempUsage.splice(usageIndex, 1, newItem)
+                return {...state, tempUsage}
+            } else {
+                const newArray = tempUsage.concat(newItem)
+                return {...state, newArray}
+            }
     }
     return state;
 }
