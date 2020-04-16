@@ -13,9 +13,13 @@
 from flask.cli import FlaskGroup
 from project import app, db
 import project.models as models
-from project.tasks import hello_world_async
+from project.tasks import emit_usage_event
+import requests
 import csv
 import os
+import time
+import datetime
+import uuid
 
 
 cli = FlaskGroup(app)
@@ -23,7 +27,7 @@ cli = FlaskGroup(app)
 
 @cli.command('start_usage')
 def start_usage():
-    task = hello_world_async.delay()
+    data = emit_usage_event.delay()
 
 
 @cli.command('create_db')
@@ -36,10 +40,6 @@ def create_db():
 
 @cli.command('seed_db')
 def seed_db():
-
-#    db.session.add(User(username='admin', email='nobody@nowhere.address',
-#                        password_hash='totally a real hash'))
-
     living_room = models.Room(room_id=0, room_name='Living Room')
     outside = models.Room(room_name='Outside')
     bedroom_1 = models.Room(room_name='Bedroom 1')
