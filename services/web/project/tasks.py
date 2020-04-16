@@ -21,13 +21,13 @@ def emit_usage_event():
 
             data = {'timestamp': datetime.datetime.now().__str__(),
                     'usage': usage}
-            print(data)
+            #print(data)
             headers = {"Content-Type": "application/json",
                        "ES-EventType": "UploadUsageData",
                        "ES-EventId": "{}".format(uuid.uuid4())}
-            print(headers)
+            #print(headers)
             stream_name = 'device_{}'.format(device.device_id)
             res = requests.post(base_url + stream_name, json=data, headers=headers,
                                 auth=requests.auth.HTTPBasicAuth('admin', 'changeit'))
-            print(res.status_code)
+            #print(res.status_code)
         time.sleep(1)
