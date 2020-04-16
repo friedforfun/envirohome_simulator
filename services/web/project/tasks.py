@@ -5,6 +5,7 @@ import os
 import uuid
 import requests
 import datetime
+import json
 
 celery = create_celery_app(app)
 
@@ -18,7 +19,7 @@ def emit_usage_event():
         for device in devices:
             usage = device.rated_power * (time.time() - start_time) / 3.6e+6
 
-            data = {'timestamp': datetime.datetime.now(),
+            data = {'timestamp': datetime.datetime.now().__str__(),
                     'usage': usage}
             print(data)
             headers = {"Content-Type": "application/json",
@@ -26,7 +27,7 @@ def emit_usage_event():
                        "ES-EventId": "{}".format(uuid.uuid4())}
             print(headers)
             stream_name = 'device_{}'.format(device.device_id)
-            res = requests.post(base_url + stream_name, data=data, headers=headers,
+            res = requests.post(base_url + stream_name, json={'data': data}, headers=headers,
                                 auth=requests.auth.HTTPBasicAuth('admin', 'changeit'))
             print(res.status_code)
         time.sleep(1)
