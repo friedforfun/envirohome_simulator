@@ -110,13 +110,13 @@ const LogViewer = props => {
                 
                     const name = humanName(log.summary);
                     return (
-                        <View>
+                        <View key={i}>
                             <ListItem
-                                key={uuidv4({ random: seed() })}
+                                key={log.title+i}
                                 title={name}
                                 rightSubtitle={dateFormat(log.updated, "h:MM:ss TT, mmmm dS, yyyy")}
                                 rightElement={
-                                    <View>
+                                    <View key={i+log.id}>
                                         <ActivityIndicator 
                                             key={uuidv4({ random: seed() })}
                                             animating={entryLoading[i]}
@@ -131,17 +131,17 @@ const LogViewer = props => {
                             {
                                 !entryLoading[i] &&
                                 !!expandedLogEntries[i] &&
-                                <View key={uuidv4({ random: seed() })}>
+                                <View key={uuidv4({ random: seed() })+1}>
                                     <Text key={uuidv4({ random: seed() })}>
                                         Email: {expandedLogEntries[i].content.data.email}
                                     </Text>
-                                    <Text key={uuidv4({ random: seed() })}>
+                                    <Text key={uuidv4({ random: seed() })+2}>
                                         Device name: {expandedLogEntries[i].content.data.device_info.device_name}
                                     </Text>
-                                    <Text key={uuidv4({ random: seed() })}>
+                                    <Text key={uuidv4({ random: seed() })+3}>
                                         Device platform: {expandedLogEntries[i].content.data.device_info.device_platform}
                                     </Text>
-                                    <Text key={uuidv4({ random: seed() })}>
+                                    <Text key={uuidv4({ random: seed() })+4}>
                                         Event description: {expandedLogEntries[i].content.data.event_description}
                                     </Text>
                                 </View>
@@ -152,27 +152,27 @@ const LogViewer = props => {
                 <ListItem
                     key={"Next page"}
                     leftElement={
-                        <TouchableOpacity onPress={() => {
+                        <TouchableOpacity key={100} onPress={() => {
                             setLogEntries(null)
                             setIsLoading(true)
                         }}>
-                            <Button title="Return to front" />
+                            <Button key={"Front button"} title="Return to front" />
                         </TouchableOpacity>
                     }
                     rightElement={
-                        <View>
+                        <View key={"really annoying missing key bug"}>
 
                             {!!nextPageLink && 
-                            <TouchableOpacity onPress={() => {
+                            <TouchableOpacity key={"another unique key"} onPress={() => {
                                 setClickNextPage(true)
                                 setIsLoading(true)
                                 }}>
-                                <Button title="Next Page" />
+                                <Button key={"I guess everything needs a unique key"} title="Next Page" />
                                 
                             </TouchableOpacity>}
                             {nextPageLink === null && 
 
-                            <Button title="Next Page" disabled />
+                            <Button key={"last one..."} title="Next Page" disabled />
                             
                             }
                         </View>

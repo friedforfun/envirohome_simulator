@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import SettingsIcon from '../components/render/settings/SettingsIcon';
@@ -15,7 +14,6 @@ import { openSettings } from '../store/actions/settings';
 const RoomScreen = props => {
     const dispatch = useDispatch();
     
-    const nav = useNavigation();
     React.useLayoutEffect(() => {
         props.navigation.setOptions({
             headerRight: () => <TouchableOpacity><SettingsIcon action={settingsNav} /></TouchableOpacity>
@@ -53,16 +51,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
-    topNav: {
-        padding: 4,
-        borderColor: 'black',
-        borderWidth: 1,
-    },
-    modePicker: {
-        borderColor: 'black',
-        borderWidth: 1,
 
-    }
 });
 
 export default RoomScreen;
