@@ -249,6 +249,19 @@ def delete_room(r_id):
     return jsonify({'success': 'user deleted'}), 200
 
 
+@app.route('/api/room', methods=['POST'])
+def add_room():
+    room_data = request.get_json()
+    if not room_data['room_name']:
+        raise APIError(detail='no room name supplied', status_code=400)
+
+    db.session.add(models.Room(room_name=room_data['room_name']))
+    db.session.commit()
+    room_id = db.session.query(models.Room).filter_by(room_name=room_data['room_name']).first().room_id
+    return jsonify({'success': 'room ID: {} succesfully added'.format(room_id)}), 201
+
+
+
 @app.route('/api/room/<int:r_id>/devices', methods=['GET'])
 def get_devices_in_room(r_id):
     room = db.session.query(models.Room).filter_by(room_id=r_id).first()

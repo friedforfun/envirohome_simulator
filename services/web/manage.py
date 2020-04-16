@@ -13,13 +13,21 @@
 from flask.cli import FlaskGroup
 from project import app, db
 import project.models as models
-from sqlalchemy.schema import DropTable
-from sqlalchemy.ext.compiler import compiles
+from project.tasks import emit_usage_event
+import requests
 import csv
 import os
+import time
+import datetime
+import uuid
 
 
 cli = FlaskGroup(app)
+
+
+@cli.command('start_usage')
+def start_usage():
+    data = emit_usage_event.delay()
 
 
 @cli.command('create_db')
@@ -32,10 +40,6 @@ def create_db():
 
 @cli.command('seed_db')
 def seed_db():
-
-#    db.session.add(User(username='admin', email='nobody@nowhere.address',
-#                        password_hash='totally a real hash'))
-
     living_room = models.Room(room_id=0, room_name='Living Room')
     outside = models.Room(room_name='Outside')
     bedroom_1 = models.Room(room_name='Bedroom 1')
@@ -70,28 +74,6 @@ def seed_db():
                                  is_fault=False, room=bathroom_1, is_on=True))
     db.session.add(models.Plug(device_name='Kitchen Plug', rated_power=500,
                                is_fault=True, room=kitchen, is_on=True))
-    db.session.commit()
-
-    with open(os.getcwd() + '/mock_data/dev_1.txt', 'r') as f:
-        reader = csv.reader(f, delimiter=';', quoting=csv.QUOTE_NONE)
-        next(reader)  # skip csv header
-        for row in reader:
-            db.session.add(models.Usage(device_id=row[0], date=row[1], time=row[2],
-                           energy_usage=row[3]))
-
-    with open(os.getcwd() + '/mock_data/dev_2.txt', 'r') as f:
-        reader = csv.reader(f, delimiter=';', quoting=csv.QUOTE_NONE)
-        next(reader)  # skip csv header
-        for row in reader:
-            db.session.add(models.Usage(device_id=row[0], date=row[1], time=row[2],
-                           energy_usage=row[3]))
-
-    with open(os.getcwd() + '/mock_data/dev_3.txt', 'r') as f:
-        reader = csv.reader(f, delimiter=';', quoting=csv.QUOTE_NONE)
-        next(reader)  # skip csv header
-        for row in reader:
-            db.session.add(models.Usage(device_id=row[0], date=row[1], time=row[2],
-                           energy_usage=row[3]))
     db.session.commit()
 
 
