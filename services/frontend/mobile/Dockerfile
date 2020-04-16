@@ -39,7 +39,7 @@ EXPOSE 19001
 EXPOSE 19002
 EXPOSE 19006
 
-RUN yarn install
+RUN yarn cache clean && yarn install
 
 # CMD adb connect $ADB_IP && \
 #   yarn run android
