@@ -64,16 +64,20 @@ const LogViewer = props => {
     }
 
 
-    const toggleEntryLoading = index => {
-        var mutator = _.cloneDeep(entryLoading);
-        mutator.splice(index, 1,mutator[index] ? false : true);
-        setEntryLoading(mutator);
-    }
+
 
     const fetchLogEntryData = (id, index) => {
+
+        const toggleEntryLoading = () => {
+            console.log("Toggle")
+            var mutator = _.cloneDeep(entryLoading);
+            mutator.splice(index, 1, mutator[index] ? false : true);
+            setEntryLoading(mutator);
+        }
+
         var tempLog = _.cloneDeep(expandedLogEntries);
         toggleEntryLoading(index);
-
+        
         GetLogStream(id)
         .then(response => testResponse(response))
         .then(response => {
@@ -87,8 +91,6 @@ const LogViewer = props => {
         .catch(error => {
             console.log(error.message)
         })
-        
-
         
     }
 
