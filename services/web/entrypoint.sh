@@ -16,5 +16,6 @@ sh ./data/get_data.sh
 celery -A project.tasks.celery worker --loglevel=info &
 python manage.py create_db 
 python manage.py seed_db
+python manage.py start_usage
 
 exec "$@"
