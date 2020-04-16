@@ -74,7 +74,6 @@ const LogViewer = props => {
         var tempLog = _.cloneDeep(expandedLogEntries);
         toggleEntryLoading(index);
 
-        
         GetLogStream(id)
         .then(response => testResponse(response))
         .then(response => {

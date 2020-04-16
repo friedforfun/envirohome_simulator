@@ -12,6 +12,7 @@ import RegistrationInput from '../components/render/RegistrationInput';
 import * as authActions from '../store/actions/auth';
 import FormInput from '../components/render/FormInput';
 import { authError as handleError, regWarning } from '../components/logic/fetchFunc';
+import { log } from '../components/logic/PostLog';
 
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';

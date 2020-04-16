@@ -17,5 +17,7 @@ export default {
 
     eventStore: host_ip + ':2113',
     streams: '/streams',
-    logStream: '/mobilelogstream'
+    logStream: '/mobilelogstream',
+    deviceUsage: '/device_',
+    head: '/head',
 }
