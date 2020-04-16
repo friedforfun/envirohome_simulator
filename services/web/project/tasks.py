@@ -27,7 +27,7 @@ def emit_usage_event():
                        "ES-EventId": "{}".format(uuid.uuid4())}
             print(headers)
             stream_name = 'device_{}'.format(device.device_id)
-            res = requests.post(base_url + stream_name, json={'data': data}, headers=headers,
+            res = requests.post(base_url + stream_name, json=data, headers=headers,
                                 auth=requests.auth.HTTPBasicAuth('admin', 'changeit'))
             print(res.status_code)
         time.sleep(1)
