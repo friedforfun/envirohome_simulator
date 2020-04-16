@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { updateMaxRatedPower } from '../../store/actions/settings';
 
 const RoomMenu = props => {
   /*
@@ -9,7 +11,19 @@ const RoomMenu = props => {
             navigation -> navigation stack from RoomNavigator.js
     */
 
+  const [updatingPower, setUpdatingPower] = useState(true);
+
+  const dispatch = useDispatch();
+
   const rooms = useSelector(state => state.roomStore.rooms);
+
+  const deviceArray = useSelector(state => state.deviceStore.devices);
+  const updatePowerStore = () => {
+    if (deviceArray !== []) {
+      dispatch(updateMaxRatedPower(deviceArray));
+    }
+    setUpdatingPower(false)
+  }
 
   const selectRoomHandler = (item) => {
     props.navigation.navigate('DevicesInRoom', {
@@ -21,6 +35,7 @@ const RoomMenu = props => {
  
   return (
         <View>
+            { updatingPower && updatePowerStore() }
             {!!rooms &&
             rooms.map((item, i) => {
               const powerVal = "Rated Power: " + item.current_power

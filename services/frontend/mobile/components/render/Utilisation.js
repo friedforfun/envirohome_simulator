@@ -8,12 +8,18 @@ import { useInterval } from '../logic/useInterval';
 
 const Utilisation = props => {
 
-    const [usage, setUsage] = useState(0.8);
+    
+
+    const [usage, setUsage] = useState(1);
+    const [powerLimit, setPowerLimit] = useState(0)
+
+    const maxRatedPower = useSelector(state => state.settingsStore.maxRatedPower)
 
     useInterval(() => {
+        setPowerLimit(maxRatedPower)
         // fetch current total power usage from eventstore here
         setUsage(Math.random())
-    }, 500);
+    }, 1000);
 
     const pickColour = () => {
         let barColour;
@@ -36,10 +42,11 @@ const Utilisation = props => {
     return (
         <View>
             <Text style={styles.textColour}>Energy Utility: {Math.trunc(usage*100)}%</Text>
+            <Text style={styles.textColour}>Max rated power: {powerLimit}</Text>
             <ProgressBar 
                 progress={usage} 
                 color={pickColour()}
-                height={15} 
+                height={14} 
             />
         </View>
     );
