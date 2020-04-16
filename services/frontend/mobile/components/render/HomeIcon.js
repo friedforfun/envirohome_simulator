@@ -13,7 +13,7 @@ const HomeIcon = props => {
                 type="octicon"
                 color={Platform.OS === 'android' ? 'white' : Colours.center}
                 onPress={props.action}
-                iconStyle={{ height: '100%' }}
+                size={50}
             />
         </View>
     );
