@@ -18,10 +18,8 @@ const defaultNavOptions = {
     },
     headerTitleStyle: {
         justifyContent: 'center',
-        fontFamily: 'open-sans-bold'
     },
     headerBackTitleStyle: {
-        fontFamily: 'open-sans'
     },
     headerTintColor: Platform.OS === 'android' ? 'white' : Colours.center,
     headerTitle: () => (<Utilisation />),
@@ -57,11 +55,11 @@ const AuthNavOptions = {
     headerTitleStyle: {
         textAlign: 'center',
         alignSelf: 'center',
-        fontFamily: 'open-sans-bold',
+
         flex: 1
     },
     headerBackTitleStyle: {
-        fontFamily: 'open-sans'
+
     },
     headerTintColor: Platform.OS === 'android' ? 'white' : Colours.center
 }
