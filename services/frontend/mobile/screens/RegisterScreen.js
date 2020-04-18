@@ -8,7 +8,6 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 import Colours from '../constants/Colours';
 import RegisterUser from '../components/logic/RegisterUser';
-import RegistrationInput from '../components/render/RegistrationInput';
 import * as authActions from '../store/actions/auth';
 import FormInput from '../components/render/FormInput';
 import { authError as handleError, regWarning } from '../components/logic/fetchFunc';
