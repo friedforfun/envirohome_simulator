@@ -12,8 +12,12 @@ import { updateDevice } from '../../store/actions/devices';
 import { testResponse } from '../logic/fetchFunc';
 import Chart from './Chart';
 import { log } from '../logic/PostLog';
-import DeviceUtilisationBar from './DeviceUtilisationBar';
-import UsageText from './UsageText';
+import DeviceBarUpdater from './reduxConnect/DeviceBarUpdater';
+import UsageTextContainer from './reduxConnect/UsageTextContainer';
+import { updateMaxRatedPower } from '../../store/actions/settings';
+import ChartData from './ChartData';
+import ChartWrapper from './reduxConnect/ChartWrapper';
+
 
 
 const DeviceMenu = props => {
@@ -28,33 +32,10 @@ const DeviceMenu = props => {
     const deviceStore = useSelector(state => state.deviceStore.devices);
     const deviceArr = deviceStore.filter(device => device.room_id === props.roomId);
 
-    const usageStore = useSelector(state => state.deviceStore.deviceUsage);
-    const usageArr = usageStore.filter(device => device.room_id == props.roomId);
-
-    const [deviceArray, updateDeviceArray] = useState(deviceArr)
-    const [livePower, updateLivePower] = useState(usageArr)
-    
+    const [deviceArray, updateDeviceArray] = useState(deviceArr)  
 
     const dispatch = useDispatch();
     const email = useSelector(state => state.authStore.email)
-
-    const notifyUsageUpdate = () => {
-        const updatedUsageStore = useSelector(state => state.deviceStore.deviceUsage);
-        const newUsageArr = updatedUsageStore.filter(device => device.room_id === props.roomId);
-        updateLivePower(newUsageArr)
-    }
-
-    const matchEnergy = (deviceId) => {
-        console.log(livePower)
-        const result = livePower.find(device => device.device_id === deviceId);
-        console.log("Match found: "+result)
-        if (result !== undefined){
-            return result.usage
-        } else {
-            return NaN
-        }
-         
-    }
 
     const togglePower = async device => {
 
@@ -68,7 +49,7 @@ const DeviceMenu = props => {
 
         const flipSwitch = (powerState) => {
             var tempDevice = _.cloneDeep(device)
-            const onVal = powerState === "True" ? true : false;
+            const onVal = powerState === "True"  || powerState === true ? true : false;
             tempDevice.is_on = onVal;
             return tempDevice
         }
@@ -88,7 +69,6 @@ const DeviceMenu = props => {
                         log(email, 3, device.device_name + " power toggled (ID: " + device.device_id + ")", device.device_id+"_power_toggled")
                         return powerVal;
                     }else {
-                        log(email, 3, device.device_name + " power toggled (ID: " + device.device_id + ")", device.device_id + "_power_toggled")
                         throw new Error("Client and server out of sync");
                     }
                 }else {
@@ -144,7 +124,7 @@ const DeviceMenu = props => {
                         <ListItem
                             key={uuidv4({ random: seed() })}
                             title={item.device_name}
-                            subtitle={<UsageText deviceId={item.device_id} />}
+                            subtitle={<UsageTextContainer deviceId={item.device_id} ratedPower={item.rated_power} />}
                             switch={{
                                 value: item.is_on,
                                 onValueChange: () => togglePower(item),
@@ -152,7 +132,7 @@ const DeviceMenu = props => {
                             chevron
                             onPress={() => expandDevice(item)}
                         />
-                        <DeviceUtilisationBar 
+                        <DeviceBarUpdater 
                             key={uuidv4({ random: seed() })} 
                             maxIsBad={true} 
                             deviceId={item.device_id}
@@ -160,12 +140,13 @@ const DeviceMenu = props => {
                             deviceRp={item.rated_power}
 
                         />
+                        <ChartData deviceId={item.device_id} />
                         {deviceExpanded.includes(item.device_id) && 
                         <View>
                             <Grid>
                                 <Row style={styles.chartContainer}>
                                     <Text style={{alignSelf: 'center'}}>Chart Text</Text>
-                                    <Chart device={item} key={uuidv4({ random: seed() })} />
+                                    <ChartWrapper deviceId={item.device_id} key={uuidv4({ random: seed() })} />
                                 </Row>
                                 
                             </Grid>
