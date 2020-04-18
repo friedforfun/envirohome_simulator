@@ -28,7 +28,7 @@ const DeviceUtilisationBar = props => {
 
     useInterval(() => {  
         rerender(render+1);
-    }, 2000);
+    }, 1000);
 
     useEffect(()=>{
         let cancel = false;
@@ -44,7 +44,7 @@ const DeviceUtilisationBar = props => {
                 .then(usage => {
                     const value = (usage) / rpps
                     if (!cancel){
-                        updateValNow(value)
+                        //updateValNow(value)
                         dispatch(setUsageVal(value, props.deviceId))
                     }
 
@@ -62,7 +62,7 @@ const DeviceUtilisationBar = props => {
     return (
         <UtilisationBar 
             {...props}
-            value={valNow}
+            value={props.rawUsageVal}
             animationConfig={{ bounciness: 10 }}
             height={30}
         />
