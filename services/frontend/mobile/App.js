@@ -12,6 +12,7 @@ import RoomReducer from './store/reducers/room';
 import AuthReducer from './store/reducers/auth';
 import DeviceReducer from './store/reducers/device';
 import SettingsReducer from './store/reducers/settings';
+import ChartReducer from './store/reducers/charts';
 
 // merge reducers into single reducer (RoomReducer, AuthReducer...)
 // to facilitate access to the store
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   roomStore: RoomReducer, 
   deviceStore: DeviceReducer,
   authStore: AuthReducer,
-  settingsStore: SettingsReducer
+  settingsStore: SettingsReducer,
+  chartStore: ChartReducer
 });
 
 // actual store with thunk middleware to add data from async functions
