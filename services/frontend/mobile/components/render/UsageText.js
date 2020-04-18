@@ -1,54 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Text } from 'react-native';
-import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { useInterval } from '../logic/useInterval';
 
 const UsageText = props => {
 /*
     props:
-        deviceId
+        rawUsageVal
 */
-    const getData = () => {
-        const updatedUsageStore = useSelector(state => state.deviceStore.deviceUsage);
-        const newUsage = updatedUsageStore.find(device => device.device_id === props.deviceId);
-        if (newUsage !== undefined) {
-            return newUsage.usage;
-        }
-        return NaN;
-    }
-    const [renderText, setRenderText] = useState(getData());
-    const [render, rerender] = useState(0);
-
-
-
-    useInterval(() => {
-        rerender(render + 1);  
-    }, 2000);
-
-    const updateText = (val) => {
-        setRenderText(val)
-    }
-/*
-    useEffect(() => {
-        let cancel = false;
-        if(!cancel){
-            const newUsage = getData();
-            console.log(newUsage)
-            if(newUsage !== undefined){
-                //updateText(newUsage.usage);
-            }
-            
-        }
-
-        return () => {
-            cancel = true
-        }
-    }, [])
-*/
+    var humanReadable = Math.trunc(((props.rawUsageVal) * (props.ratedPower / 3600000.0)) * 3600000.0)
     return (
-    <Text>{renderText}</Text>
+        <Text>{humanReadable} / {props.ratedPower} Watts</Text>
     )
+}
+
+
+UsageText.propTypes = {
+    rawUsageVal: PropTypes.number.isRequired,
+    ratedPower: PropTypes.number.isRequired
 }
 
 export default UsageText;
