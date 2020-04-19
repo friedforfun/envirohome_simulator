@@ -151,6 +151,3 @@ web-report/
 
 # macOS
 .DS_Store
-
-# ignore that goddamn yarn file
-services/frontend/mobile/yarn.lock
