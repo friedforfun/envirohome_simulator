@@ -9,9 +9,9 @@ import SEO from "../components/seo"
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
-    <h1>Hi pussies</h1>
+    <h1>This is the Index Page</h1>
     <p>Welcome to the Eco Home Website</p>
-    <p>Now go build something great.</p>
+    <p>This is where the ethier login page or base data will be shown.</p>
     <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
       <Image />
     </div>
