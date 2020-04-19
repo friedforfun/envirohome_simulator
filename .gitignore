@@ -102,7 +102,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -152,3 +151,6 @@ web-report/
 
 # macOS
 .DS_Store
+
+# ignore that goddamn yarn file
+services/frontend/mobile/yarn.lock

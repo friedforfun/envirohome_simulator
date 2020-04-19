@@ -1,30 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
-import { ThemeProvider, ListItem } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
+import { useDispatch, useSelector } from 'react-redux';
 
-
+import { updateMaxRatedPower } from '../../store/actions/settings';
 
 const RoomMenu = props => {
   /*
         props:
-            rooms -> list of rooms
+            navigation -> navigation stack from RoomNavigator.js
     */
-  // Create a list of devices using list.map. see: `https://react-native-elements.github.io/react-native-elements/docs/listitem.html`
-  //! TODO: access rooms from redux room store 
+
+  const [updatingPower, setUpdatingPower] = useState(true);
+
+  const dispatch = useDispatch();
+
+  const rooms = useSelector(state => state.roomStore.rooms);
+
+  const deviceArray = useSelector(state => state.deviceStore.devices);
+  const updatePowerStore = () => {
+    if (deviceArray !== []) {
+      dispatch(updateMaxRatedPower(deviceArray));
+    }
+    setUpdatingPower(false)
+  }
+
+  const selectRoomHandler = (item) => {
+    props.navigation.navigate('DevicesInRoom', {
+      roomId: item.room_id,
+      roomName: item.room_name,
+      roomCurrentPower: item.current_power
+    });
+  };
+ 
   return (
         <View>
-            {
-            props.rooms.map((item, i) => (
+            { updatingPower && updatePowerStore() }
+            {!!rooms &&
+            rooms.map((item, i) => {
+              const powerVal = "Rated Power: " + item.current_power
+              return (
                 <ListItem
-                key={i}
-                title={item.name}
-                badge={{ value: 3, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
-                bottomDivider
-                chevron
-                onPress={() => console.log("Open "+item.name+" Devices")}
+                  key = { i }
+                  title = { item.room_name }
+                  subtitle = {powerVal}
+                  badge = {{ value: item.device_count, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
+                  bottomDivider
+                  chevron
+                  onPress={() => selectRoomHandler(item)}
                 />
-            ))
-            }
+                );
+            })}
         </View>
     );
   }

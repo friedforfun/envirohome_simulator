@@ -1,54 +1,68 @@
-import { ROOMDATA } from '../dummyData';
-import { ADD_ROOM, REMOVE_ROOM, ADD_DEVICE_TO_ROOM } from '../actions/rooms';
-import Room from '../../models/room';
+import * as lodash from 'lodash/fp';
 
+import { ADD_ROOM, REMOVE_ROOM, POPULATE_ROOMS, CLEAR_ROOM_STORE, UPDATE_ROOM } from '../actions/rooms';
 
-
-//? Find a better initial state
 const initialState = {
-    rooms: ROOMDATA
+    rooms: []
 };
 
 const RoomReducer = (state = initialState, action) => {
     switch (action.type){
         case ADD_ROOM:
-            if (state.rooms.length >= 1){
-                const idArr = state.rooms.map(room => room.id);
-                const newID = 1 + idArr.reduce((high, next) => { high > next ? high : next });
-                const newRoom = new Room(newID, action.roomName);
-                return { ...state, rooms: state.rooms.concat(newRoom) };
+            const newRoom = {
+                "current_power": action.room.current_power,
+                "device_count": action.room.device_count,
+                "room_id": action.room.room_id,
+                "room_name": action.room.room_name,
+                "total_power": action.room.total_power
+            }
+            const checkName = state.rooms.findIndex(room => room.name === action.room_name);
+
+            if (checkName < 0){
+                const newState = state.devices.concat(newRoom);
+                return { ...state, rooms: newState };
             } else {
-                const newRoom = new Room(0, action.roomName);
-                return { ...state, rooms: state.rooms.concat(newRoom) };
+                console.log("Room with this name already exists.");
+                console.log("Existing Room: "+state.rooms[checkName]);
+                console.log("New Room: "+newRoom);
+                return { ...state };
             }
             
         case REMOVE_ROOM:
-            const getIndex = state.rooms.findIndex(room => room.id === action.roomID);
+            const getIndex = state.rooms.findIndex(room => room.room_id === action.roomId);
             if (getIndex >= 0){
-                const tempRooms = [...state.rooms];
-                tempRooms.splice(getIndex, 1);
-                return { ...state, rooms: tempRooms };
+                const tempRooms = lodash.cloneDeep(state.rooms);
+                const retRooms = tempRooms.splice(getIndex, 1);
+                return { ...state, rooms: retRooms };
             } else {
+                console.log("Room not found");
+                console.log("Room ID:"+ action.room_id);
                 return { ...state };
             }
 
-        case ADD_DEVICE_TO_ROOM:
-            const getRoomIndex = state.rooms.findIndex(room => room.id === action.roomID);
-            const testIndex = state.rooms.findIndex(room => room.name === action.device.room);
-            if (getRoomIndex === testIndex){
-                const tempRooms = [...state.rooms];
-                const updateRoom = tempRooms[getIndex];
-                updateRoom.addDevice(action.deviceObj);
-                tempRooms.splice(getIndex, 1);
-                tempRooms.concat(updateRoom);
-                return { ...state, rooms: tempRooms}
+        case UPDATE_ROOM:
+            const updateIndex = state.rooms.findIndex(room => room.room_id === action.roomId);
+            if (updateIndex >= 0){
+                var tempRooms = lodash.cloneDeep(state.rooms);
+                tempRooms.splice(updateIndex, 1, action.room);
+                return { ...state, rooms: tempRooms }
             } else {
+                console.log("Room not found.");
+                console.log("Room ID:"+action.room.room_id);
                 return { ...state }
             }
+            
+        case CLEAR_ROOM_STORE:
+            return { ...state, rooms: [] }
 
+        case POPULATE_ROOMS:
+            console.log("POPULATED ROOMS")
+        
+            return { ...state, rooms: action.response.rooms }
 
+        default:
+            return state;
     }
-    return state;
 }
 
 export default RoomReducer;

@@ -12,86 +12,70 @@
 # services/users/manage.py
 from flask.cli import FlaskGroup
 from project import app, db
-from project.models import User, Usage, Devices
+import project.models as models
+from project.tasks import emit_usage_event
+import requests
 import csv
 import os
+import time
+import datetime
+import uuid
 
 
 cli = FlaskGroup(app)
 
-## \brief Create command at CLI to create and apply new database model
-#
-#
+
+@cli.command('start_usage')
+def start_usage():
+    data = emit_usage_event.delay()
+
+
 @cli.command('create_db')
 def create_db():
+    db.reflect()
     db.drop_all()
     db.create_all()
     db.session.commit()
 
-## \brief
-#
-#
+
 @cli.command('seed_db')
 def seed_db():
+    living_room = models.Room(room_id=0, room_name='Living Room')
+    outside = models.Room(room_name='Outside')
+    bedroom_1 = models.Room(room_name='Bedroom 1')
+    bedroom_2 = models.Room(room_name='Bedroom 2')
+    kitchen = models.Room(room_name='Kitchen')
+    bathroom_1 = models.Room(room_name='Bathroom 1')
 
-    db.session.add(User(username='admin', email='nobody@nowhere.address',
-                        password_hash='totally a real hash'))
-
-    db.session.add(Devices(device_id=0, device_name='Living Room TV',
-                           rated_power=700, device_type='tv', fault=False,
-                           room='living_room', on=True))
-    db.session.add(Devices(device_name='Outside Lights', rated_power=40,
-                           device_type='lights', fault=False, room='outside',
-                           on=True))
-    db.session.add(Devices(device_name='Bedroom 1 Lights', rated_power=40,
-                           device_type='lights', fault=False, room='bedroom_1',
-                           on=True))
-    db.session.add(Devices(device_name='Bedroom 2 Lights', rated_power=40,
-                           device_type='lights', fault=False, room='bedroom_2',
-                           on=True))
-    db.session.add(Devices(device_name='Kitchen Lights', rated_power=40,
-                           device_type='lights', fault=False, room='kitchen',
-                           on=True))
-    db.session.add(Devices(device_name='Living Room Lights 1', rated_power=40,
-                           device_type='lights', fault=False, room='living_room',
-                           on=True))
-    db.session.add(Devices(device_name='Living Room Lights 2', rated_power=40,
-                           device_type='lights', fault=False, room='living_room',
-                           on=True))
-    db.session.add(Devices(device_name='Bathroom 1 Lights', rated_power=40,
-                           device_type='lights', fault=False, room='bathroom_1',
-                           on=True))
-
-    db.session.add(Devices(device_name='Kitchen Plug', rated_power=500,
-                           device_type='plug', fault=True, room='kitchen',
-                           on=True))
+    db.session.add(living_room)
+    db.session.add(outside)
+    db.session.add(bedroom_1)
+    db.session.add(bedroom_2)
+    db.session.add(kitchen)
+    db.session.add(bathroom_1)
     db.session.commit()
 
-    with open(os.getcwd() + '/mock_data/dev_1.txt', 'r') as f:
-        reader = csv.reader(f, delimiter=';', quoting=csv.QUOTE_NONE)
-        next(reader)  # skip csv header
-        for row in reader:
-            db.session.add(Usage(device_id=row[0], date=row[1], time=row[2],
-                           energy_usage=row[3]))
-
-    with open(os.getcwd() + '/mock_data/dev_2.txt', 'r') as f:
-        reader = csv.reader(f, delimiter=';', quoting=csv.QUOTE_NONE)
-        next(reader)  # skip csv header
-        for row in reader:
-            db.session.add(Usage(device_id=row[0], date=row[1], time=row[2],
-                           energy_usage=row[3]))
-
-    with open(os.getcwd() + '/mock_data/dev_3.txt', 'r') as f:
-        reader = csv.reader(f, delimiter=';', quoting=csv.QUOTE_NONE)
-        next(reader)  # skip csv header
-        for row in reader:
-            db.session.add(Usage(device_id=row[0], date=row[1], time=row[2],
-                           energy_usage=row[3]))
+    db.session.add(models.TV(device_id=0, device_name='Living Room TV',
+                   rated_power=700, is_fault=False, room=living_room,
+                   is_on=True))
+    db.session.add(models.Lights(device_name='Outside Lights', rated_power=40,
+                                 is_fault=False, room=outside, is_on=True))
+    db.session.add(models.Lights(device_name='Bedroom 1 Lights', rated_power=40,
+                                 is_fault=False, room=bedroom_1, is_on=True))
+    db.session.add(models.Lights(device_name='Bedroom 2 Lights', rated_power=40,
+                                 is_fault=False, room=bedroom_2, is_on=True))
+    db.session.add(models.Lights(device_name='Kitchen Lights', rated_power=40,
+                                 is_fault=False, room=kitchen, is_on=True))
+    db.session.add(models.Lights(device_name='Living Room Lights 1', rated_power=40,
+                                 is_fault=False, room=living_room, is_on=True))
+    db.session.add(models.Lights(device_name='Living Room Lights 2', rated_power=40,
+                                 is_fault=False, room=living_room, is_on=True))
+    db.session.add(models.Lights(device_name='Bathroom 1 Lights', rated_power=40,
+                                 is_fault=False, room=bathroom_1, is_on=True))
+    db.session.add(models.Plug(device_name='Kitchen Plug', rated_power=500,
+                               is_fault=True, room=kitchen, is_on=True))
     db.session.commit()
 
 
-## \brief flaskgroup instance to exend the normal cli with flask commands
-#
-#
 if __name__ == '__main__':
     cli()

@@ -1,79 +1,58 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
+import { Container } from 'native-base';
+import { Ionicons } from '@expo/vector-icons';
 
+import Navigator from './navigation/Navigator';
 import RoomReducer from './store/reducers/room';
-import NavBar from './components/render/NavBar';
-import  ContentRenderer from './components/render/ContentRenderer';
-import ModePicker from './components/render/ModePicker';
-import AllDevices from './components/logic/CallAllDevices';
+import AuthReducer from './store/reducers/auth';
+import DeviceReducer from './store/reducers/device';
+import SettingsReducer from './store/reducers/settings';
+import ChartReducer from './store/reducers/charts';
 
-//! TODO finish these functions
-/*
-const uniqueRooms = apiState => {
-  if (apiState.isLoading === false) {
-    return [...new Set(apiState.dataSource.map(item => item.room))]
-  }
-};
-*/
-//! dispatch add room action on these devices
-//const initRooms = uniqueRooms(AllDevices).map();
+// merge reducers into single reducer (RoomReducer, AuthReducer...)
+// to facilitate access to the store
+const rootReducer = combineReducers({
+  roomStore: RoomReducer, 
+  deviceStore: DeviceReducer,
+  authStore: AuthReducer,
+  settingsStore: SettingsReducer,
+  chartStore: ChartReducer
+});
 
+// actual store with thunk middleware to add data from async functions
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default function App() {
-  const [currentContent, nextContent] = useState('list');
+  const [fontLoaded, setFontLoaded] = useState(false);
 
-  // merge reducers into single reducer (RoomReducer, UserReducer...)
-  // allows us to access the 'rooms' state
-  const rootReducer = combineReducers({
-    roomStore: RoomReducer
-  });
-
-  // actual store
-  const store = createStore(rootReducer);
- 
-  // dispatch actions to populate store here using rootReducer and CallAllDevices
-
-  const pageToRender = page => {
-    nextContent(page)
+  const fetchFonts = async () => {
+    return await Font.loadAsync({
+      Roboto: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+      ...Ionicons.font,
+    });
   };
 
+  if (!fontLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => {setFontLoaded(true)}}
+        onError={console.warn}
+      />
+    );
+  }
   return (
     <Provider store={store}>
-      <View style={styles.container}>
-        <View style={styles.topNav}>
-          <NavBar 
-            usage={ <Text>50%</Text> } 
-            settings={() => pageToRender('settings')} 
-          />
-        </View>
-        <ContentRenderer page={ currentContent } />
-        <View style={styles.modePicker}>
-          <ModePicker 
-            mapView={() => pageToRender('map')} 
-            listView={() => pageToRender('roomList')}
-          />
-        </View>
-      </View>
+      <Container>
+        <Navigator />
+      </Container>
     </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 45,
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  topNav:{
-    padding: 4,
-    borderColor: 'black',
-    borderWidth: 1,
-  },
-  modePicker:{
-    borderColor: 'black',
-    borderWidth: 1,
-    
-  }
-});

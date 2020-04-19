@@ -2,6 +2,10 @@ version: '3.7'
 
 services:
   mobile:
+    environment:
+      - "REACT_NATIVE_PACKAGER_HOSTNAME=${HOST_IP}"
+      - "HOST_IP=${HOST_IP}"
+
     build: ./services/frontend/mobile
 
     command: yarn start
@@ -20,6 +24,9 @@ services:
     # Build directory relative to compose file
     build: ./services/web
 
+    environment: 
+      - "HOST_IP=${HOST_IP}"
+
     # Python command to run service
     command: python manage.py run -h 0.0.0.0
     volumes:
@@ -34,6 +41,7 @@ services:
  # Postgres DB image
     depends_on:
       - db
+      - redis
   db:
     # Docker image pulled for container
     image: postgres:12.0-alpine
@@ -45,6 +53,27 @@ services:
       - POSTGRES_USER=envirohome_db
       - POSTGRES_PASSWORD=envirohome_db
       - POSTGRES_DB=envirohome_db_dev
+  eventstore.db:
+    image: eventstore/eventstore
+    environment:
+      - EVENTSTORE_CLUSTER_SIZE=1
+      - EVENTSTORE_INT_TCP_PORT=1112
+      - EVENTSTORE_EXT_TCP_PORT=1113
+      - EVENTSTORE_INT_HTTP_PORT=2112
+      - EVENTSTORE_EXT_HTTP_PORT=2113
+      - EVENTSTORE_RUN_PROJECTIONS=All
+      - EVENTSTORE_START_STANDARD_PROJECTIONS=true
+      
+    ports:
+      - "1112:1112"
+      - "1113:1113"
+      - "2112:2112"
+      - "2113:2113"
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
 
 volumes:
   postgres_data:

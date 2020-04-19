@@ -1,22 +1,34 @@
-// action identifiers
-// add new device
 export const ADD_DEVICE = 'ADD_DEVICE';
-
-// populate device from backend
-export const POPULATE_DEVICE = 'POPULATE_DEVICE';
-
-// remove device
 export const REMOVE_DEVICE = 'REMOVE_DEVICE';
+export const POPULATE_DEVICES = 'POPULATE_DEVICES';
+export const CLEAR_DEVICE_STORE = 'CLEAR_DEVICE_STORE';
+export const UPDATE_DEVICE = 'UPDATE_DEVICE';
+export const SET_USAGE_VAL = 'SET_USAGE_VAL';
 
-// action functions
-export const addDevice = (name, type, ratedPower, room) => {
-    return { type: ADD_DEVICE, deviceName: name, deviceType: type, deviceRoom: room, power: ratedPower }
+export const addDevice = device => {
+    return { 
+        type: ADD_DEVICE, 
+        device: device
+    }
+};
+ 
+export const removeDevice = (device_id) => {
+    return { type: REMOVE_DEVICE, deviceId: device_id }
 };
 
-export const populateDevice = (id, name, type, fault, on, ratedPower, room) => {
-    return { type: POPULATE_DEVICE, deviceId: id, deviceName: name, deviceType: type, deviceFault: fault, deviceOn: on, rPower: ratedPower, deviceRoom: room }
+export const updateDevice = device => {
+    return { type: UPDATE_DEVICE, device: device }
 }
 
-export const removeDevice = (id) => {
-    return { type: REMOVE_DEVICE, deviceID: id }
-};
+export const clearDeviceStore = () => {
+    return { type: CLEAR_DEVICE_STORE }
+}
+
+export const populateDevices = (devices) => {
+    return { type: POPULATE_DEVICES, response: devices }
+}
+
+export const setUsageVal = (energy, deviceId) => {
+    return { type: SET_USAGE_VAL, energy: energy, deviceId: deviceId }
+}
+

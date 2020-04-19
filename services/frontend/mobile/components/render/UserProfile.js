@@ -1,6 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Overlay, Avatar } from 'react-native-elements';
+import { useDispatch } from 'react-redux';
+
+import Colours from '../../constants/Colours';
+import * as authActions from '../../store/actions/auth';
 
 const UserProfile = props => {
     /*
@@ -8,6 +13,8 @@ const UserProfile = props => {
             handler -> function(boolean)
             visible -> returns: visibility state of this component
     */
+
+    const dispatch = useDispatch();
 
     return (
         <Overlay 
@@ -31,9 +38,11 @@ const UserProfile = props => {
                 </View>
                 
                 <View style={styles.controls}>
-                    <Text>
-                        User profile settings buttons here.
-                    </Text>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => { dispatch(authActions.logout()) }}>
+                            <Button title="Logout" color={Colours.left} onPress={() => { dispatch(authActions.logout()) }} />
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </Overlay>
@@ -51,8 +60,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignContent: 'center'
     },
+    buttonContainer: {
+        minWidth: 250,
+        marginTop: 10
+    },
     controls: {
-        flexDirection: 'row',
         justifyContent: 'center'
 
     }
