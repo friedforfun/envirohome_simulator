@@ -135,7 +135,9 @@ last_week.txt
 
 # Node stuff
 node_modules/**/*
+node_modules
 .expo/*
+.expo
 npm-debug.*
 *.jks
 *.p8
