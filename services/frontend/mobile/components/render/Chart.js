@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, Dimensions, Text } from 'react-native';
 import { LineChart } from "react-native-chart-kit";
+import dateFormat from 'dateformat';
 
 const screenWidth = Dimensions.get("window").width;
 
 const Chart = props => {
     const plotValues = props.plotData.map(element => {
-        return element.data
+        return element.data * 3600000
     })
     const timeStamps = props.plotData.map(element => {
         return element.timeStamp
@@ -27,20 +28,20 @@ const Chart = props => {
                 data={data}
                 width={Dimensions.get("window").width - 75} // from react-native
                 height={220}
-                yAxisSuffix="kWh"
+                yAxisSuffix=" Ws"
                 yAxisInterval={1} // optional, defaults to 1
                 chartConfig={{
                     backgroundColor: "#e26a00",
                     backgroundGradientFrom: "#fb8c00",
                     backgroundGradientTo: "#ffa726",
-                    decimalPlaces: 0, // optional, defaults to 2dp
+                    decimalPlaces: 1, // optional, defaults to 2dp
                     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     style: {
                         borderRadius: 15
                     },
                     propsForDots: {
-                        r: "6",
+                        r: "2",
                         strokeWidth: "2",
                         stroke: "#ffa726"
                     }

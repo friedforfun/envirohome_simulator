@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { fetchHead } from '../logic/DevicePower';
 import { addDataPoint } from '../../store/actions/charts';
 import {useInterval} from '../logic/useInterval';
-
+import { validDataTypes as type } from '../../store/reducers/charts';
 
 
 const ChartData = props => {
@@ -23,7 +23,7 @@ const ChartData = props => {
                 .then(json => {
                     const id = json.title.split("@").slice(0, 1)[0];
                     fetchId = id;
-                    dispatch(addDataPoint(props.deviceId, json.content.data, id));
+                    dispatch(addDataPoint(props.deviceId, json.content.data, id, type.FROM_NOW));
                 })
                 .catch(error => console.log(error.message))
         }
