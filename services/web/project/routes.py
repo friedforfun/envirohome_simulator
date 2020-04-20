@@ -246,7 +246,7 @@ def delete_room(r_id):
     delete_q = models.Room.__table__.delete().where(models.Room.room_id == r_id)
     db.session.execute(delete_q)
     db.session.commit()
-    return jsonify({'success': 'user deleted'}), 200
+    return jsonify({'success': 'room deleted'}), 200
 
 
 @app.route('/api/room', methods=['POST'])
