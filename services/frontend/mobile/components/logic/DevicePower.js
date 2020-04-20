@@ -10,10 +10,6 @@ export const fetchHead = async (deviceId) => {
         .then(ok => {
             return ok.json()
         })
-        .catch(error => {
-            console.log(error.message)
-        })
-
 }
 
 export const fetchNext = async (deviceId, uriSuffix) => {
@@ -25,10 +21,6 @@ export const fetchNext = async (deviceId, uriSuffix) => {
         .then(ok => {
             return ok.json()
         })
-        .catch(error => {
-            console.log(error.message)
-        })
-
 }
 
 export const fetchFirst = async (deviceId) => {
@@ -39,9 +31,6 @@ export const fetchFirst = async (deviceId) => {
         })
         .then(ok => {
             return ok.json()
-        })
-        .catch(error => {
-            console.log(error.message)
         })
 }
 
