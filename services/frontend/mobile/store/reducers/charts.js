@@ -8,7 +8,7 @@ export const validDataTypes = {
     ALL_TIME: "allTime"
 }
 
-import { ADD_DATA_POINT } from '../actions/charts'
+import { ADD_DATA_POINT, CLEAR_DATA } from '../actions/charts'
 
 const initialState = {
     "fromNow": [],
@@ -35,14 +35,15 @@ const ChartReducer = (state = initialState, action) => {
                 if (checkFetchId == undefined){
                     var mutator = lodash.cloneDeep(state[action.dataType][device_id])
                     mutator.push(newObj)
-                    return { ...state, [action.dataType]: {...state[action.dataType], [device_id]: mutator}};
+                    return { ...state, [action.dataType]: {...state[action.dataType], [device_id]: mutator} };
                 }
                 break;
             } else {
-                return { ...state, [action.dataType]: {...state[action.dataType], [device_id]: [newObj]}};
+                return { ...state, [action.dataType]: {...state[action.dataType], [device_id]: [newObj]} };
             }
         
-
+        case CLEAR_DATA:
+            return { ...state, [action.dataType]: [] }
 
 
         default:
