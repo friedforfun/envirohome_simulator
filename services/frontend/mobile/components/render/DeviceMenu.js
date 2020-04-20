@@ -17,6 +17,7 @@ import UsageTextContainer from './reduxConnect/UsageTextContainer';
 import { updateMaxRatedPower } from '../../store/actions/settings';
 import ChartData from './ChartData';
 import ChartWrapper from './reduxConnect/ChartWrapper';
+import ChartContentPicker from './ChartContentPicker';
 
 
 
@@ -143,10 +144,10 @@ const DeviceMenu = props => {
                         <ChartData deviceId={item.device_id} />
                         {deviceExpanded.includes(item.device_id) && 
                         <View>
+                            <ChartContentPicker />
                             <Grid>
                                 <Row style={styles.chartContainer}>
-                                    <Text style={{alignSelf: 'center'}}>Chart Text</Text>
-                                    <ChartWrapper deviceId={item.device_id} key={uuidv4({ random: seed() })} />
+                                    <ChartWrapper chartSize={30} deviceId={item.device_id} key={uuidv4({ random: seed() })} />
                                 </Row>
                                 
                             </Grid>
@@ -162,7 +163,7 @@ const DeviceMenu = props => {
 
 const styles = StyleSheet.create({
     chartContainer: {
-        justifyContent: "space-between"
+        justifyContent: "center"
     }
 });
 
