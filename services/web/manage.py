@@ -13,7 +13,7 @@
 from flask.cli import FlaskGroup
 from project import app, db
 import project.models as models
-from project.tasks import emit_usage_event
+import project.tasks as tasks
 import requests
 import csv
 import os
@@ -25,9 +25,19 @@ import uuid
 cli = FlaskGroup(app)
 
 
-@cli.command('start_usage')
-def start_usage():
-    data = emit_usage_event.delay()
+@cli.command('start_usage_second')
+def start_usage_second():
+    tasks.emit_usage_event_second.delay()
+
+
+@cli.command('start_usage_minute')
+def start_usage_minute():
+    tasks.emit_usage_event_minute.delay()
+
+
+@cli.command('start_usage_hour')
+def start_usage_hour():
+    tasks.emit_usage_event_hour.delay()
 
 
 @cli.command('create_db')

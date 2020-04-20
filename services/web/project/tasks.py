@@ -23,43 +23,113 @@ def post_to_stream(stream_name, data):
                   auth=requests.auth.HTTPBasicAuth('admin', 'changeit'))
 
 
-@celery.task
-def emit_usage_event():
-    while True:
-        start_time = time.time()
-        devices = db.session.query(models.Devices).all()
-        rooms = db.session.query(models.Room).all()
-        db.session.commit()
+def emit_usage_event(interval, stream_suffix):
+    devices = db.session.query(models.Devices).all()
+    rooms = db.session.query(models.Room).all()
+    db.session.commit()
 
-        for device in devices:
-            usage = device.rated_power * effective_power \
-                                       * (time.time() - start_time) / 3.6e+6 \
-                    if device.is_on else 0
-
-            data = {'timestamp': datetime.datetime.now().__str__(),
-                    'usage': usage}
-
-            stream_name = 'device_{}'.format(device.device_id)
-            post_to_stream(stream_name, data)
-
-        for room in rooms:
-            stream_name = 'room_{}'.format(room.room_id)
-            usage = sum([device.rated_power * effective_power
-                         if device.is_on
-                         else 0
-                         for device in rooms[0].devices])
-
-            data = {'timestamp': datetime.datetime.now().__str__(),
-                    'usage': usage}
-            post_to_stream(stream_name, data)
-
-        usage = sum([device.rated_power * effective_power
-                     if device.is_on
-                     else 0
-                     for device in devices])
+    for device in devices:
+        usage = device.rated_power * effective_power \
+                                   * interval \
+                if device.is_on else 0
 
         data = {'timestamp': datetime.datetime.now().__str__(),
                 'usage': usage}
-        post_to_stream('home', data)
 
-        time.sleep(1)
+        stream_name = 'device_{}_{}'.format(device.device_id,
+                                            stream_suffix)
+        post_to_stream(stream_name, data)
+
+    for room in rooms:
+        usage = sum([device.rated_power * effective_power
+                                        * interval
+                     if device.is_on
+                     else 0
+                     for device in room.devices])
+
+        data = {'timestamp': datetime.datetime.now().__str__(),
+                'usage': usage}
+        stream_name = 'room_{}_{}'.format(room.room_id,
+                                          stream_suffix)
+        post_to_stream(stream_name, data)
+
+    usage = sum([device.rated_power * effective_power
+                                    * interval
+                 if device.is_on
+                 else 0
+                 for device in devices])
+
+    data = {'timestamp': datetime.datetime.now().__str__(),
+            'usage': usage}
+
+    post_to_stream('home_{}'.format(stream_suffix), data)
+
+    time.sleep(interval)
+
+
+@celery.task
+def emit_usage_event_second():
+    while True:
+        emit_usage_event(1, 'second')
+
+
+@celery.task
+def emit_usage_event_minute():
+    time.sleep(2)
+    devices = db.session.query(models.Devices).all()
+    rooms = db.session.query(models.Room).all()
+    db.session.commit()
+
+    data = {'timestamp': datetime.datetime.now().__str__(),
+            'usage': 0}
+
+    device_names = ['device_{}_minute'.format(device.device_id)
+                    for device
+                    in devices]
+
+    for device_name in device_names:
+        post_to_stream(device_name, data)
+
+    room_names = ['room_{}_minute'.format(room.room_id)
+                  for room
+                  in rooms]
+
+    for room_name in room_names:
+        post_to_stream(room_name, data)
+
+    post_to_stream('home_minute', data)
+
+    while True:
+        time.sleep(60)
+        emit_usage_event(60, 'minute')
+
+
+@celery.task
+def emit_usage_event_hour():
+    time.sleep(2)
+    devices = db.session.query(models.Devices).all()
+    rooms = db.session.query(models.Room).all()
+    db.session.commit()
+
+    data = {'timestamp': datetime.datetime.now().__str__(),
+            'usage': 0}
+
+    device_names = ['device_{}_hour'.format(device.device_id)
+                    for device
+                    in devices]
+
+    for device_name in device_names:
+        post_to_stream(device_name, data)
+
+    room_names = ['room_{}_hour'.format(room.room_id)
+                  for room
+                  in rooms]
+
+    for room_name in room_names:
+        post_to_stream(room_name, data)
+
+    post_to_stream('home_hour', data)
+
+    while True:
+        time.sleep(3600)
+        emit_usage_event(3600, 'hour')
