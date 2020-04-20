@@ -9,5 +9,12 @@ export default {
     THREE: 3,
 
     // user-logout
-    Four: 4
+    Four: 4,
+
+    // room added
+    Five: 5,
+
+    // room deleted
+    Six: 6,
+    
 }
