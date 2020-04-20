@@ -17,6 +17,8 @@ export default AuthReducer = (state = initialState, action) => {
             return {
                 email: action.payload.email,
                 authToken: action.payload.token,
+                email: action.payload.email,
+                user_id: action.payload.user_id
             };
         case SET_DID_TRY_AL:
             return {

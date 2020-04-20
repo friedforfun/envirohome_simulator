@@ -11,9 +11,10 @@ import DeleteRoom from '../../logic/DeleteRoom';
 import { testResponse } from '../../logic/fetchFunc';
 import Fetching from '../Fetching';
 import GetAllRooms from '../../logic/GetAllRooms';
+import { log } from '../../logic/PostLog';
 
 const RoomEditor = props => {
-    const rooms = useSelector(state => state.roomStore.rooms)
+    const userEmail = useSelector(state => state.authStore.email)
     const [overlayState, setOverlayState] = useState(false)
     const [fetchingRooms, setFetchingRooms] = useState(false)
 
@@ -46,6 +47,7 @@ const RoomEditor = props => {
             .then(json => {
                 console.log(json)
                 if (json.success) {
+                    log(userEmail, 6, "Room " + roomId + " deleted sucessfully. Response ok.", "Room " + roomId + " deleted")
                     Alert.alert(
                         'Success',
                         json.success,
@@ -59,6 +61,7 @@ const RoomEditor = props => {
             .catch(error => {
                 console.log(error.message)
                 if (error.message === "Network request failed") {
+                    log(userEmail, 6, "Room "+roomId+" was deleted with the error: Network request failed.", "Room "+roomId+" deleted")
                     Alert.alert(
                         'Network request failed',
                         'Invalid response from server, this may indicate a problem with your network. Please refresh the page.',

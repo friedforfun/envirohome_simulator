@@ -4,6 +4,8 @@ import { ListItem } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { updateMaxRatedPower } from '../../store/actions/settings';
+import { clearData } from '../../store/actions/charts';
+import { validDataTypes } from '../../store/reducers/charts';
 
 const RoomMenu = props => {
   /*
@@ -26,6 +28,7 @@ const RoomMenu = props => {
   }
 
   const selectRoomHandler = (item) => {
+    dispatch(clearData(validDataTypes.FROM_NOW))
     props.navigation.navigate('DevicesInRoom', {
       roomId: item.room_id,
       roomName: item.room_name,

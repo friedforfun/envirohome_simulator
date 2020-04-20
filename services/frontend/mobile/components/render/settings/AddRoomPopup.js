@@ -1,13 +1,15 @@
 import React, { useState, useReducer, useCallback } from 'react';
 import { Overlay } from 'react-native-elements';
 import { View, Button, StyleSheet, Alert} from 'react-native';
-import { Card, CardItem, Body, Text, Footer } from 'native-base';
+import { Card, CardItem, Body, Text } from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
 
 import FormInput from '../FormInput';
 import Colours from '../../../constants/Colours';
 import AddRoom from '../../logic/AddRoom';
 import { testResponse } from '../../logic/fetchFunc';
+import { log } from '../../logic/PostLog';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
@@ -36,7 +38,7 @@ const formReducer = (state, action) => {
 
 const AddRoomPopup = props => {
     const [confirmation, setConfirmation] = useState(false)
-
+    const userEmail = useSelector(state => state.authStore.email)
     const [formState, dispatchFormState] = useReducer(formReducer, {
         inputValues: {
             roomName: ''
@@ -99,6 +101,8 @@ const AddRoomPopup = props => {
             .then(json => {
                 console.log(json)
                 if(json.success){
+                    log(userEmail, 5, "Room sucessfully added: "+formState.inputValues.roomName+"\nResponse:"+json.success,  "Room added")
+                    log()
                     Alert.alert(
                         'Success',
                         json.success,
@@ -112,6 +116,7 @@ const AddRoomPopup = props => {
             .catch(error => {
                 console.log(error.message)
                 if (error.message === "Network request failed"){
+                    log(userEmail, 5, "Room "+formState.inputValues.roomName+" was added with the error: Network request failed.", "Room added")
                     Alert.alert(
                         'Network request failed',
                         'Invalid response from server, this may indicate a problem with your network. Please refresh the page.',

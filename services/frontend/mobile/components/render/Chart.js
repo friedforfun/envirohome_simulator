@@ -26,7 +26,7 @@ const Chart = props => {
         <View >
             <LineChart
                 data={data}
-                width={Dimensions.get("window").width - 75} // from react-native
+                width={Dimensions.get("window").width - 15} // from react-native
                 height={220}
                 yAxisSuffix=" Ws"
                 yAxisInterval={1} // optional, defaults to 1
