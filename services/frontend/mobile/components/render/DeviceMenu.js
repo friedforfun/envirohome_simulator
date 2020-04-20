@@ -4,7 +4,8 @@ import { ListItem, Divider } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux';
 import * as _ from 'lodash/fp';
 import { v4 as uuidv4 } from 'uuid';
-import {Row, Grid } from 'react-native-easy-grid';
+import { Row, Grid, Col } from 'react-native-easy-grid';
+import {  } from 'native-base';
 
 import { seed } from "../../utils/uuidSeed";
 import TogglePower from '../logic/TogglePower';
@@ -18,6 +19,8 @@ import { updateMaxRatedPower } from '../../store/actions/settings';
 import ChartData from './ChartData';
 import ChartWrapper from './reduxConnect/ChartWrapper';
 import ChartContentPicker from './ChartContentPicker';
+import TimeFramePicker from './TimeFramePicker';
+
 
 
 
@@ -133,6 +136,7 @@ const DeviceMenu = props => {
                             chevron
                             onPress={() => expandDevice(item)}
                         />
+                        <Divider />
                         <DeviceBarUpdater 
                             key={uuidv4({ random: seed() })} 
                             maxIsBad={true} 
@@ -141,10 +145,20 @@ const DeviceMenu = props => {
                             deviceRp={item.rated_power}
 
                         />
+                        <Divider />
                         <ChartData deviceId={item.device_id} />
+                        <Divider />
                         {deviceExpanded.includes(item.device_id) && 
                         <View>
-                            <ChartContentPicker />
+                            <Grid>
+                                <Col>
+                                    <ChartContentPicker />
+                                </Col>
+                                <Col>
+                                    <TimeFramePicker />
+                                </Col>
+                            </Grid>
+                            
                             <Grid>
                                 <Row style={styles.chartContainer}>
                                     <ChartWrapper chartSize={30} deviceId={item.device_id} key={uuidv4({ random: seed() })} />

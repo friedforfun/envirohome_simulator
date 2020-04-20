@@ -7,7 +7,7 @@ const screenWidth = Dimensions.get("window").width;
 
 const Chart = props => {
     const plotValues = props.plotData.map(element => {
-        return element.data * 3600000
+        return element.data
     })
     const timeStamps = props.plotData.map(element => {
         return element.timeStamp

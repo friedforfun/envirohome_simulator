@@ -6,6 +6,7 @@ import { fetchHead } from '../logic/DevicePower';
 import { addDataPoint } from '../../store/actions/charts';
 import {useInterval} from '../logic/useInterval';
 import { validDataTypes as type } from '../../store/reducers/charts';
+import { setUsageVal } from '../../store/actions/devices';
 
 
 const ChartData = props => {
@@ -14,7 +15,7 @@ const ChartData = props => {
 
     useInterval(() => {
         updateNow(now + 1);
-    }, 3000);
+    }, 2000);
     
     useEffect(()=>{
         const realTime = async () => {
@@ -24,6 +25,7 @@ const ChartData = props => {
                     const id = json.title.split("@").slice(0, 1)[0];
                     fetchId = id;
                     dispatch(addDataPoint(props.deviceId, json.content.data, id, type.FROM_NOW));
+                    dispatch(setUsageVal(json.content.data, props.deviceId))
                 })
                 .catch(error => console.log(error.message))
         }

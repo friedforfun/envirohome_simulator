@@ -32,10 +32,11 @@ const LiveDataUpdater = ({ deviceArray, deviceUsageArray}) => {
                     return json.content.data.usage
                 })
                 .then(usage => {
-                    const value = (usage) / rpps
+                    //const value = (usage) / rpps
                     if (!cancel) {
-                        updateValNow(value)
-                        dispatch(setUsageVal(value, props.deviceId))
+                        //console.log(updateValNow(usage))
+                        console.log("dispatch usage: "+usage)
+                        dispatch(setUsageVal(usage, props.deviceId))
                     }
 
                 })
