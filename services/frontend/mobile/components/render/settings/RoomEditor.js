@@ -1,14 +1,16 @@
-import React from 'react';
-import { View, ScrollView, StyleSheet, Alert } from 'react-native';
+import React, {useState} from 'react';
+import { View, ScrollView, StyleSheet, Alert, Text } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 import { Button } from 'react-native';
 import { useSelector } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import colours from '../../../constants/Colours'
+import AddRoomPopup from './AddRoomPopup';
 
 const RoomEditor = props => {
     const rooms = useSelector(state => state.roomStore.rooms)
+    const [overlayState, setOverlayState] = useState(false)
 
 
     const confirm = () => {
@@ -16,17 +18,22 @@ const RoomEditor = props => {
             'Are you sure?',
             'This action will delete this room and all related devices',
             [
-                { text: 'OK', onPress: () => {console.log("Confirm") } },
                 { text: 'CANCEL', onPress: () => { console.log("Cancel") } },
+                { text: 'OK', onPress: () => { console.log("Confirm") } },
             ],
             { cancelable: false },
         );
+    }
+
+    const changeOverlayState = (bool) => {
+        setOverlayState(bool)
     }
     
 
 
     return (
         <View style={styles.container}>
+            <AddRoomPopup visible={overlayState} visHandler={changeOverlayState} />
             <ScrollView style={styles.content}>
                 {
                     rooms.map((item, i) =>{
@@ -50,10 +57,17 @@ const RoomEditor = props => {
                         )
                     })
                 }
-                
+                <View>
+                    <Icon
+                        name='sync'
+                        type='octicon'
+                        size={100}
+                        onPress={() => console.log("Fetch rooms")}
+                    />
+                </View>
             </ScrollView>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={() => console.log("Add room")}>
+                <TouchableOpacity onPress={() => changeOverlayState(true)}>
                     <Button 
                         title={"Add Room"}
                         color={colours.left}
