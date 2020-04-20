@@ -84,6 +84,7 @@ const AddRoomPopup = props => {
         clearForm()
         props.visHandler(false)
         setConfirmation(false)
+        props.refresh()
     }
 
     const submitForm = () => {
@@ -115,7 +116,10 @@ const AddRoomPopup = props => {
                         'Network request failed',
                         'Invalid response from server, this may indicate a problem with your network. Please refresh the page.',
                         [
-                            { text: 'OK', onPress: () => confirmationDialog() },
+                            { text: 'OK', onPress: () => {
+                                closeOverlay() 
+                                }
+                            },
                         ],
                         { cancelable: false },
                     );

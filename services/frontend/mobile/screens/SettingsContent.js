@@ -9,7 +9,7 @@ import LogViewer from '../components/render/settings/LogViewer';
 import ManageUsers from '../components/render/settings/ManageUsers';
 import NotificationSettings from '../components/render/settings/NotificationSettings';
 import PowerManager from '../components/render/settings/PowerManager';
-import RoomEditor from '../components/render/settings/RoomEditor';
+import RoomEditorWrapper from '../components/render/reduxConnect/RoomEditorWrapper';
 import StatsPage from '../components/render/settings/StatsPage';
 
 const SettingsContent = props => {
@@ -30,7 +30,7 @@ const SettingsContent = props => {
     return (
         <View style={{flex: 1}}>
             {content === "powerManager" && <PowerManager />}
-            {content === "editRooms" && <RoomEditor />}
+            {content === "editRooms" && <RoomEditorWrapper />}
             {content === "stats" && <StatsPage />}
             {content === "notificationSettings" && <NotificationSettings />}
             {content === "manageUsers" && <ManageUsers />}
