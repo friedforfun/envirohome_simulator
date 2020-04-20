@@ -92,7 +92,8 @@ def login():
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
         }, app.config['SECRET_KEY'])
         return jsonify({"token": token.decode('UTF-8'),
-                        'email': user.email})
+                        'email': user.email,
+                        'user_id': user.public_id})
     else:
         raise APIError('incorrect username or password', status_code=401)
 
