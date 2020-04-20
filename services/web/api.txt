@@ -10,14 +10,14 @@ users (7)
 - log user out
 - NOTE: NO FORGOT PASSWORD, AS NO EMAIL FUNCTIONALITY IS USED
 
-- GET '/api/user':
+- GET '/api/user': X
 -- IF ADMIN: return all users
 
-- GET '/api/user/<user_id>':
+- GET '/api/user/<user_id>': X
 -- IF ADMIN: return user
 -- IF USER: only return user info if authenticated as said user
 
-- POST '/api/user':
+- POST '/api/user': D
 -- {username, email, password}: if no conflict, create user
 -- return error status
 
@@ -41,11 +41,11 @@ users (7)
 
 auth (2)
 ----
-- POST '/api/auth/session':
+- POST '/api/auth/session': D
 -- {email, password}
 -- return token
 
-- DELETE '/api/auth/session':
+- DELETE '/api/auth/session': D
 -- IF ADMIN: log user out
 -- IF USER: log self out if ids match
 -- return error code
@@ -58,10 +58,10 @@ devices (6)
 - change device info (room, on status, etc)
 - certain state changing routes (remove, add, rename) need admin
 
-- GET '/api/device'
+- GET '/api/devices' X
 -- get all devices in home
 
-- GET /api/device/<device_id>
+- GET /api/device/<device_id> X
 -- get specific device information
 
 - GET /api/device/types
@@ -85,21 +85,20 @@ rooms (4)
 - get all devices in a room
 - rename rooms
 
-RoomListResource
-- GET /api/room
+- GET /api/room X
 -- get all rooms in the form [{room_id, room_name}]
 
-- POST /api/room, {room_name}
+- POST /api/room, {room_name} X
 -- create room, return room_id
 
-- PUT /api/room/<room_id> url_args: field=value
+- PUT /api/room/<room_id>/<name> X
 -- change room name
 -- /api/room/4?room_name='kitchen'
 
-- GET /api/room/<room_id>
+- GET /api/room/<room_id> X
 -- get information for room in the form {room_id, room_name}
 
-- DELETE /api/room/<room_id>
+- DELETE /api/room/<room_id> X
 -- delete room
 
 usage (8)
@@ -111,26 +110,26 @@ usage (8)
 - get consumer data
 - all of the above between time stamps
 
-- GET /api/usage
+- GET /api/usage D
 -- get usage data for entire house
 
-- GET /api/usage/device/<device_id>
+- GET /api/usage/device/<device_id> D
 -- get usage data for device
 
-- GET /api/usage/room
+- GET /api/usage/room D
 -- get usage data for room
 
-- GET /api/usage/producer
+- GET /api/usage/producer D
 -- get usage data for producers
 
-- GET /api/usage/consumer
+- GET /api/usage/consumer D
 -- get usage data for consumers
 
-- GET /api/usage/producer/room/<room_id>
+- GET /api/usage/producer/room/<room_id> D
 -- get usage data for producers in room_id
 
-- GET /api/usage/consumer/room/<room_id>
+- GET /api/usage/consumer/room/<room_id> D
 -- get usage data for consumers in room_id
 
-- GET <all of the above>/<timestamp_1>/<timestamp_2>
+- GET <all of the above>/<timestamp_1>/<timestamp_2> D
 -- get usage data in the formats between timestamps
