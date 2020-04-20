@@ -1,13 +1,42 @@
-import React, {useState } from 'react';
-import { Picker, Item, Form, Icon } from 'native-base';
+import React, { useState } from 'react';
+import { Picker, Item, Form, Icon, View } from 'native-base';
 import PropTypes from 'prop-types';
 
+const pickItems = key => {
+    switch (key) {
+        case "key0":
+            // real time
+            return (
+                <View>
+
+                </View>
+            )
+
+        case "key1":
+            // last hour
+            break;
+
+        case "key2":
+        
+            break;
+
+        case "key3":
+
+            break;
+
+        default:
+            break;
+    }
+}
+
 const ChartContentPicker = props => {
+    const [isVisible, setIsVisible] = useState(true)
     const [selected, setSelected] = useState(props.selected);
 
     return (
         <Form>
-            <Picker
+            {true &&
+                <Picker
                 mode="dropdown"
                 placeholder="Real time"
                 iosIcon={<Icon name="arrow-down" />}
@@ -22,11 +51,11 @@ const ChartContentPicker = props => {
                 selectedValue={() => console.log("Select value")}
                 onValueChange={() => console.log("change value")}
             >
-                <Picker.Item label="Real time" value="key0" />
-                <Picker.Item label="Last hour" value="key1" />
-                <Picker.Item label="Last day" value="key2" />
-                <Picker.Item label="All time" value="key3" />
-            </Picker>
+                <Picker.Item label="10 seconds" value="key0" />
+                <Picker.Item label="30 seconds" value="key1" />
+                <Picker.Item label="1 min" value="key2" />
+                <Picker.Item label="5 mins" value="key3" />
+            </Picker>}
         </Form>
     )
 }

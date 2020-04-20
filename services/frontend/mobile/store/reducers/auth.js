@@ -13,7 +13,7 @@ export default AuthReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOGIN:
             console.log("LOGIN: "+JSON.stringify(action.payload.token))
-            log(action.payload.email, 2, "User login", "Login");
+            log(action.payload.email, 2, "User login success", "Login");
             return {
                 email: action.payload.email,
                 authToken: action.payload.token,
@@ -25,13 +25,13 @@ export default AuthReducer = (state = initialState, action) => {
                 ...state,
             };
         case LOGOUT:
-            log(state.email, 4, "User logout", "Logout");
+            log(state.email, 4, "User logout success", "Logout");
             return {
                 ...initialState,
             };
         case SIGNUP:
             console.log("SIGNUP: "+action.payload.user_id);
-            log(action.payload.email, 1, "User signup", "Signup");
+            log(action.payload.email, 1, "User signup success", "Signup");
             return {
                 user_id: action.payload.user_id
             };
