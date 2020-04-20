@@ -158,7 +158,7 @@ def delete_user():
 ################# DEVICE ROUTES ################################################
 
 
-@app.route("/api/devices", methods=["GET"])
+@app.route("/api/device", methods=["GET"])
 ## \brief get_devices()
 # instatiates a session to the database and parses everything in the devices table
 # formats it into JSON
@@ -191,26 +191,6 @@ def toggle_power(device_pk):
 def add_device(name_pk, rated_power_pk, device_type_pk, room_pk):
     db.session.commit()
     return models.Devices.get_delete_put_post(None)
-
-
-################# USAGE ROUTES ################################################
-
-
-## \brief get_usage()
-#
-# Gets the energy usage
-@app.route("/api/usage/<int:device_pk>/<string:date_pk>/<string:time_pk>",
-           methods=["GET"])
-def get_usage(device_pk, date_pk, time_pk):
-    ## convert UK date to OSI
-    date_pk = date_pk[4:] + '-' + date_pk[2:4] + '-' + date_pk[0:2]
-    usages = db.session.query(models.Usage).filter_by(device_id=device_pk,
-                                               date=date_pk,
-                                               time=time_pk).all()
-#    usages = db.session.query(Usage).filter_by(device_id=device_pk).all()
-    usage_schema = serialisers.UsageSchema(many=True)
-    result = usage_schema.dump(usages)
-    return jsonify(result)
 
 
 ################# ROOM ROUTES ################################################
