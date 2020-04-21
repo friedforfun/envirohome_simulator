@@ -10,8 +10,11 @@ import json
 celery = create_celery_app(app)
 
 base_url = 'http://' + os.environ['HOST_IP'] + ':2113/streams/'
-effective_power = 0.6  # this is the % of rated power used while active
-                       # in actual implementation, would be measured
+
+effective_gen = (float(row)/31.0 for row in open('data/household_power_consumption.txt'))
+
+
+
 
 
 def post_to_stream(stream_name, data):
@@ -29,7 +32,7 @@ def emit_usage_event(interval, stream_suffix):
     db.session.commit()
 
     for device in devices:
-        usage = device.rated_power * effective_power \
+        usage = device.rated_power * next(effective_gen) \
                                    * interval \
                 if device.is_on else 0
 
@@ -41,7 +44,7 @@ def emit_usage_event(interval, stream_suffix):
         post_to_stream(stream_name, data)
 
     for room in rooms:
-        usage = sum([device.rated_power * effective_power
+        usage = sum([device.rated_power * next(effective_gen)
                                         * interval
                      if device.is_on
                      else 0
@@ -53,7 +56,7 @@ def emit_usage_event(interval, stream_suffix):
                                           stream_suffix)
         post_to_stream(stream_name, data)
 
-    usage = sum([device.rated_power * effective_power
+    usage = sum([device.rated_power * next(effective_gen)
                                     * interval
                  if device.is_on
                  else 0
