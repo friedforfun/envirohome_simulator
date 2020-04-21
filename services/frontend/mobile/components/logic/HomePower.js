@@ -1,9 +1,9 @@
 import URL from '../../constants/URL';
 import { testResponse } from './fetchFunc';
 
-export const fetchHead = async () => {
+export const fetchHead = async (streamUnit) => {
 
-    return await HomePower()
+    return await HomePower(true, 0, streamUnit)
         .then(response => {
             return testResponse(response)
         })
@@ -12,9 +12,9 @@ export const fetchHead = async () => {
         })
 }
 
-export const fetchNext = async ( uriSuffix) => {
+export const fetchNext = async ( uriSuffix, streamUnit) => {
 
-    return await HomePower(false, uriSuffix)
+    return await HomePower(false, uriSuffix, streamUnit)
         .then(response => {
             return testResponse(response)
         })
@@ -23,9 +23,9 @@ export const fetchNext = async ( uriSuffix) => {
         })
 }
 
-export const fetchFirst = async () => {
+export const fetchFirst = async (streamUnit) => {
 
-    return await HomePower(false, 0)
+    return await HomePower(false, 0, streamUnit)
         .then(response => {
             return testResponse(response)
         })

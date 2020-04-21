@@ -1,9 +1,9 @@
 import URL from '../../constants/URL';
 import {testResponse} from './fetchFunc';
 
-export const fetchHead = async (deviceId) => {
+export const fetchHead = async (deviceId, streamUnit) => {
 
-    return await DevicePower(deviceId)
+    return await DevicePower(deviceId, true, 0, streamUnit)
         .then(response => {
             return testResponse(response)
         })
@@ -12,9 +12,9 @@ export const fetchHead = async (deviceId) => {
         })
 }
 
-export const fetchNext = async (deviceId, uriSuffix) => {
+export const fetchNext = async (deviceId, uriSuffix, streamUnit) => {
 
-    return await DevicePower(deviceId, false, uriSuffix)
+    return await DevicePower(deviceId, false, uriSuffix, streamUnit)
         .then(response => {
             return testResponse(response)
         })
@@ -23,9 +23,9 @@ export const fetchNext = async (deviceId, uriSuffix) => {
         })
 }
 
-export const fetchFirst = async (deviceId) => {
+export const fetchFirst = async (deviceId, streamUnit) => {
 
-    return await DevicePower(deviceId, false, 0)
+    return await DevicePower(deviceId, false, 0, streamUnit)
         .then(response => {
             return testResponse(response)
         })
