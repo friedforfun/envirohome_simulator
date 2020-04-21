@@ -1,9 +1,5 @@
-// action identifiers
-export const ADD_ROOM = 'ADD_ROOM';
-export const REMOVE_ROOM = 'REMOVE_ROOM';
-export const UPDATE_ROOM = 'UPDATE_ROOM';
-export const POPULATE_ROOMS = 'POPULATE_ROOMS';
-export const CLEAR_ROOM_STORE = 'CLEAR_ROOM_STORE';
+import { ADD_ROOM, REMOVE_ROOM, UPDATE_ROOM, POPULATE_ROOMS, CLEAR_ROOM_STORE } from './actionIdentifiers';
+export { ADD_ROOM, REMOVE_ROOM, UPDATE_ROOM, POPULATE_ROOMS, CLEAR_ROOM_STORE } from './actionIdentifiers';
 
 // action functions
 export const addRoom = room => {

@@ -1,7 +1,5 @@
-
-export const OPEN_SETTINGS = 'OPEN_SETTINGS';
-export const CLOSE_SETTINGS = 'CLOSE_SETTINGS';
-export const UPDATE_MAX_RATED_POWER = 'UPDATE_MAX_RATED_POWER'
+import { OPEN_SETTINGS, CLOSE_SETTINGS, UPDATE_MAX_RATED_POWER, UPDATE_HOUSEHOLD_POWER } from './actionIdentifiers';
+export { OPEN_SETTINGS, CLOSE_SETTINGS, UPDATE_MAX_RATED_POWER, UPDATE_HOUSEHOLD_POWER } from './actionIdentifiers';
 
 export const openSettings = () => ({ 
     type: OPEN_SETTINGS 
@@ -14,3 +12,7 @@ export const closeSettings = () => ({
 export const updateMaxRatedPower = devArr => ({
     type: UPDATE_MAX_RATED_POWER, deviceArray: devArr
 });
+
+export const updateHouseholdPower = value => ({
+    type: UPDATE_HOUSEHOLD_POWER, data: value
+})

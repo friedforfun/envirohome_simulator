@@ -3,6 +3,8 @@ export default {
     right: '#67DF20',
     left: '#C7DF20',
 
+    error: '#9900cc',
+
     efficiency_max: '#00FF00',
     efficiency_mid_high: '#84FF00', // 60 - 80
     efficiency_mid: 'FFFF00', // 40 - 60

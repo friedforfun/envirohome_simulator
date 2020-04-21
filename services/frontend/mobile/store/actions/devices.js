@@ -1,9 +1,5 @@
-export const ADD_DEVICE = 'ADD_DEVICE';
-export const REMOVE_DEVICE = 'REMOVE_DEVICE';
-export const POPULATE_DEVICES = 'POPULATE_DEVICES';
-export const CLEAR_DEVICE_STORE = 'CLEAR_DEVICE_STORE';
-export const UPDATE_DEVICE = 'UPDATE_DEVICE';
-export const SET_USAGE_VAL = 'SET_USAGE_VAL';
+import { ADD_DEVICE, REMOVE_DEVICE, POPULATE_DEVICES, CLEAR_DEVICE_STORE, UPDATE_DEVICE, SET_USAGE_VAL } from './actionIdentifiers';
+export { ADD_DEVICE, REMOVE_DEVICE, POPULATE_DEVICES, CLEAR_DEVICE_STORE, UPDATE_DEVICE, SET_USAGE_VAL } from './actionIdentifiers';
 
 export const addDevice = device => {
     return { 
