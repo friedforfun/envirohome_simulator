@@ -1,9 +1,9 @@
-import { OPEN_SETTINGS, CLOSE_SETTINGS, UPDATE_MAX_RATED_POWER } from '../actions/settings';
+import { OPEN_SETTINGS, CLOSE_SETTINGS, UPDATE_MAX_RATED_POWER, UPDATE_HOUSEHOLD_POWER } from '../actions/settings';
 
 const initialState = {
     settingsOpen: false,
-    powerUsage: null,
-    maxRatedPower: null,
+    maxRatedPower: 0,
+    houseHoldPower: 0,
 };
 
 const SettingsReducer = (state = initialState, action) => {
@@ -24,6 +24,12 @@ const SettingsReducer = (state = initialState, action) => {
             console.log("Max rated power: "+maxPower)
 
             return { ...state, maxRatedPower: maxPower }
+
+        case UPDATE_HOUSEHOLD_POWER:
+            if (action.data !== undefined && action.data !== null) {
+                return { ...state, houseHoldPower: action.data}
+            } 
+            return { ...state }
 
         default:
             return state;
