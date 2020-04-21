@@ -10,10 +10,6 @@ export const fetchHead = async (deviceId) => {
         .then(ok => {
             return ok.json()
         })
-        .catch(error => {
-            console.log(error.message)
-        })
-
 }
 
 export const fetchNext = async (deviceId, uriSuffix) => {
@@ -25,10 +21,6 @@ export const fetchNext = async (deviceId, uriSuffix) => {
         .then(ok => {
             return ok.json()
         })
-        .catch(error => {
-            console.log(error.message)
-        })
-
 }
 
 export const fetchFirst = async (deviceId) => {
@@ -40,14 +32,32 @@ export const fetchFirst = async (deviceId) => {
         .then(ok => {
             return ok.json()
         })
-        .catch(error => {
-            console.log(error.message)
-        })
 }
 
-const DevicePower = async (deviceId, getHead = true, uriSuffix = 0) => {
+const DevicePower = async (deviceId, getHead = true, uriSuffix = 0, unit = 'second') => {
+    let path
+    switch (unit) {
+        case 'second':
+            path = getHead ? 
+                URL.eventStore + URL.streams + URL.deviceUsage + deviceId + URL.seconds + URL.head : 
+                URL.eventStore + URL.streams + URL.deviceUsage + deviceId + URL.seconds+ "/" + uriSuffix;
+            break;
 
-    const path = getHead ? URL.eventStore + URL.streams + URL.deviceUsage + deviceId + URL.head : URL.eventStore + URL.streams + URL.deviceUsage + deviceId + "/" + uriSuffix;
+        case 'minute':
+            path = getHead ?
+                URL.eventStore + URL.streams + URL.deviceUsage + deviceId + URL.mins + URL.head :
+                URL.eventStore + URL.streams + URL.deviceUsage + deviceId + URL.mins + "/" + uriSuffix;
+            break;
+
+        case 'hour':
+            path = getHead ?
+                URL.eventStore + URL.streams + URL.deviceUsage + deviceId + URL.hours + URL.head :
+                URL.eventStore + URL.streams + URL.deviceUsage + deviceId + URL.hours + "/" + uriSuffix;
+            break;
+        
+        default:
+            path = URL.eventStore + URL.streams + URL.deviceUsage + deviceId + URL.seconds + URL.head;
+    }
 
     var myHeaders = new Headers();
     myHeaders.append("Accept", "application/vnd.eventstore.atom+json");

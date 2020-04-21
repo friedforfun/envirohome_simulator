@@ -10,7 +10,7 @@ export default {
     login: '/login',
 
     api: '/api',
-    alldevices: '/devices',
+    alldevices: '/device',
     room: '/room',
     device:'/device/',
     togglePower:'/toggle_power',
@@ -18,6 +18,11 @@ export default {
     eventStore: host_ip + ':2113',
     streams: '/streams',
     logStream: '/mobilelogstream',
+    homeUsage: '/home',
+    roomUsage: '/room_',
     deviceUsage: '/device_',
     head: '/head',
+    seconds: '_second',
+    mins: '_minute',
+    hours: 'hour'
 }

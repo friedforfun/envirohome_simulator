@@ -8,7 +8,7 @@ const mapStateToProps = (state, ownProps) => {
     if (data !== undefined){
         return {
             ...ownProps,
-            rawUsageVal: data.usage
+            rawUsageVal: data.usage.usage
     }
     }
     return{

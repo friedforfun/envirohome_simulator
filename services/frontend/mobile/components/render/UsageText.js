@@ -8,9 +8,8 @@ const UsageText = props => {
     props:
         rawUsageVal
 */
-    var humanReadable = Math.trunc(((props.rawUsageVal) * (props.ratedPower / 3600000.0)) * 3600000.0)
     return (
-        <Text>{humanReadable} / {props.ratedPower} Watts</Text>
+        <Text>{props.rawUsageVal} / {props.ratedPower} Watts</Text>
     )
 }
 
