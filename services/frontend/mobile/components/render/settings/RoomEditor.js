@@ -120,6 +120,7 @@ const RoomEditor = props => {
                         name='sync'
                         type='octicon'
                         size={100}
+                        color="grey"
                         onPress={() => refreshRooms()}
                     />
                 </View>
