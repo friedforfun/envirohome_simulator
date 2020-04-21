@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+import { deviceArrProp, roomArrProp } from '../../constants/propTypes'
 
 import { updateMaxRatedPower } from '../../store/actions/settings';
 import { clearData } from '../../store/actions/charts';
@@ -17,9 +19,9 @@ const RoomMenu = props => {
 
   const dispatch = useDispatch();
 
-  const rooms = useSelector(state => state.roomStore.rooms);
+  const rooms = props.roomArray;
 
-  const deviceArray = useSelector(state => state.deviceStore.devices);
+  const deviceArray = props.deviceArray;
   const updatePowerStore = () => {
     if (deviceArray !== []) {
       dispatch(updateMaxRatedPower(deviceArray));
@@ -56,6 +58,11 @@ const RoomMenu = props => {
             })}
         </View>
     );
+  }
+
+  RoomMenu.propTypes = {
+    deviceArray: deviceArrProp.deviceArr,
+    roomArray: roomArrProp.roomArr
   }
 
   export default RoomMenu;

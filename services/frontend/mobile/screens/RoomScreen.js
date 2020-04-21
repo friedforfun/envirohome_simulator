@@ -4,11 +4,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 
 import SettingsIcon from '../components/render/settings/SettingsIcon';
-import RoomMenu from '../components/render/RoomMenu';
 import Fetching from '../components/render/Fetching';
 import GetAllRooms from '../components/logic/GetAllRooms';
 import GetAllDevices from '../components/logic/GetAllDevices';
 import { openSettings } from '../store/actions/settings';
+import RoomMenuWrapper from '../components/render/reduxConnect/RoomMenuWrapper';
 
 
 const RoomScreen = props => {
@@ -40,7 +40,7 @@ const RoomScreen = props => {
             {!roomsReady && <Fetching fetchFunc={GetAllRooms} fetchWhat={"rooms"} ready={() => roomsDispatched} />}
             {roomsReady && !devicesReady && <Fetching fetchFunc={GetAllDevices} fetchWhat={"devices"} ready={() => devicesDispatched} />}
             <ScrollView style={styles.content}>
-                {roomsReady && devicesReady && <RoomMenu navigation={props.navigation} />}
+                {roomsReady && devicesReady && <RoomMenuWrapper navigation={props.navigation} />}
             </ScrollView>
         </View>
     );
