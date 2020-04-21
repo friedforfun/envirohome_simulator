@@ -2,8 +2,9 @@
 
 if [ $# -eq 0 ]
   then
-    echo "No arguments supplied, attempting to automate. please provide your machines ip address as an argument next time."
-    export HOST_IP=$(ifconfig | grep inet | grep -v -e 'inet6'  -e '127.0.0.1' | awk '{print $2}') 
+    echo "No arguments supplied, attempting to automate. please provide your docker-machines ip address as an argument next time."
+    
+    export HOST_IP=$(docker-machine ip) 
     ##export HOST_IP=$(ifconfig $(ip route show | grep ^default | cut -d" " -f5) | grep inet[^0-9] | tr -s ' ' | cut -d" " -f3)
   else
     export HOST_IP="$1"
