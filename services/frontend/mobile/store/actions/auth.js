@@ -1,12 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
-export const SIGNUP = 'SIGNUP';
-export const LOGIN = 'LOGIN';
-export const LOGOUT = 'LOGOUT';
-
-export const REQUEST_PENDING = 'REQUEST_PENDING';
-export const REQUEST_ERROR = 'REQUEST_ERROR';
-export const SET_DID_TRY_AL = 'SET_DID_TRY_AL';
+import { SIGNUP, LOGIN, LOGOUT, REQUEST_PENDING, REQUEST_ERROR, SET_DID_TRY_AL } from './actionIdentifiers';
+export { SIGNUP, LOGIN, LOGOUT, REQUEST_PENDING, REQUEST_ERROR, SET_DID_TRY_AL } from './actionIdentifiers';
 
 let timer;
 

@@ -1,5 +1,5 @@
-export const ADD_DATA_POINT = 'ADD_DATA_POINT'
-export const CLEAR_DATA = 'CLEAR_DATA'
+import { ADD_DATA_POINT, CLEAR_DATA } from './actionIdentifiers';
+export { ADD_DATA_POINT, CLEAR_DATA } from './actionIdentifiers';
 
 export const addDataPoint = (deviceId, data, fetchId, dataType) => ({
     type: ADD_DATA_POINT, 
