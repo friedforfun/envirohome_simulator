@@ -261,7 +261,15 @@ def get_room_device_count(room):
     return db.session.query(models.Devices).filter_by(room_id=room.room_id).count()
 
 def get_room_total_power(room):
-    return db.session.query(func.sum(models.Devices.rated_power)).filter_by(room_id=room.room_id).scalar()
+    total_power = db.session.query(func.sum(models.Devices.rated_power)).filter_by(room_id=room.room_id).scalar()
+
+    if total_power is None:
+        total_power = 0
+    return total_power
 
 def get_room_current_power(room):
-    return db.session.query(func.sum(models.Devices.rated_power)).filter(and_(models.Devices.room_id==room.room_id, models.Devices.is_on==True)).scalar()
+    current_power = db.session.query(func.sum(models.Devices.rated_power)).filter(and_(models.Devices.room_id==room.room_id, models.Devices.is_on==True)).scalar()
+
+    if current_power is None:
+        current_power = 0
+    return current_power
