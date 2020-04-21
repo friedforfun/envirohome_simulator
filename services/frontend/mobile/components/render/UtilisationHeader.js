@@ -2,46 +2,43 @@ import React, { useState, useEffect } from 'react';
 import { Platform, View, Text, StyleSheet } from 'react-native';
 import { Col, Grid } from 'react-native-easy-grid';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import Colours, { hex2rgba } from '../../constants/Colours';
 import { useInterval } from '../logic/useInterval';
 import UtilisaionBar from './UtilisationBar';
 import { fetchHead } from '../logic/HomePower'
+import { updateHouseholdPower } from '../../store/actions/settings';
 
 const UtilisationHeader = props => {
-    const [usage, setUsage] = useState(props.maxRatedPower/2);
+
+    const dispatch = useDispatch();
+
+    const usage = props.householdPower;
+
+    const updateUsage = async () => {
+        return await fetchHead("second")
+            .then(json => {
+                if (json.content.data.usage !== undefined)
+                    dispatch(updateHouseholdPower(json.content.data.usage));
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+    }
 
     useInterval(() => {
         // fetch current total power usage from eventstore here
-        fetchHead("second")
-            .then(json =>{
-                if (json.content.data.usage !== undefined)
-                    setUsage(json.content.data.usage);
-            })
-            .catch(error => {
-                console.log(error.message)
-            })
+        updateUsage()
 
     }, 4000);
 
-    const updateUsage = data => {
-        setUsage(data)
-    }
 
     useEffect(() =>{
-        fetchHead("second")
-            .then(json => {
-                if (json.content.data.usage !== undefined)
-                    setUsage(json.content.data.usage);
-            })
-            .catch(error => {
-                console.log(error.message)
-            })
+        updateUsage()
     }, [])
 
     const percentage = (usage / props.maxRatedPower)
-
-    
 
     const grade = () => {
 
@@ -107,10 +104,8 @@ const UtilisationHeader = props => {
 }
 
 UtilisationHeader.propTypes = {
-    maxRatedPower: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.object
-    ]).isRequired
+    maxRatedPower: PropTypes.number.isRequired,
+    householdPower: PropTypes.number.isRequired
 }
 
 const styles = StyleSheet.create({

@@ -2,8 +2,8 @@ import { OPEN_SETTINGS, CLOSE_SETTINGS, UPDATE_MAX_RATED_POWER, UPDATE_HOUSEHOLD
 
 const initialState = {
     settingsOpen: false,
-    maxRatedPower: 0,
-    houseHoldPower: 0,
+    maxRatedPower: 1,
+    houseHoldPower: 1,
 };
 
 const SettingsReducer = (state = initialState, action) => {
