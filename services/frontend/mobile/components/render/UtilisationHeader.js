@@ -1,38 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Platform, View, Text, StyleSheet } from 'react-native';
-import { useSelector } from 'react-redux';
 import { Col, Grid } from 'react-native-easy-grid';
+import PropTypes from 'prop-types';
 
 import Colours, { hex2rgba } from '../../constants/Colours';
 import { useInterval } from '../logic/useInterval';
 import UtilisaionBar from './UtilisationBar';
+import { fetchHead } from '../logic/HomePower'
 
 const UtilisationHeader = props => {
-
-    
-
-    const [usage, setUsage] = useState(1);
-    const [powerLimit, setPowerLimit] = useState(0)
-
-    const maxRatedPower = useSelector(state => state.settingsStore.maxRatedPower)
+    const [usage, setUsage] = useState(props.maxRatedPower/2);
 
     useInterval(() => {
-        setPowerLimit(maxRatedPower)
         // fetch current total power usage from eventstore here
-        setUsage(Math.random())
-    }, 1000);
+        fetchHead("second")
+            .then(json =>{
+                if (json.content.data.usage !== undefined)
+                    setUsage(json.content.data.usage);
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
 
+    }, 5000);
+
+    const updateUsage = data => {
+        setUsage(data)
+    }
+
+    useEffect(() =>{
+        fetchHead("second")
+            .then(json => {
+                if (json.content.data.usage !== undefined)
+                    setUsage(json.content.data.usage);
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+    }, [])
+
+    const percentage = (usage / props.maxRatedPower)
 
     return (
         <Grid {...props} style={styles.gridStyle}>
             <Col style={styles.columnStyle}>
-                <Text style={styles.textColour}>Energy Utility: {Math.trunc(usage * 100)}%</Text>
-                <Text style={styles.textColour}>Max rated power: {powerLimit}</Text>
+                <Text style={styles.textColour}>Energy Utility: {Math.trunc(100-((usage/props.maxRatedPower)*100))}%</Text>
+                <Text style={styles.textColour}>Max rated power: {props.maxRatedPower}</Text>
                 <UtilisaionBar
-                    value={usage}
+                    value={percentage}
                     height={14}
                     width={null}
                     animationConfig={{ bounciness: 10 }}
+                    maxIsBad={true}
                 />
             </Col>
         </Grid>
@@ -40,6 +59,13 @@ const UtilisationHeader = props => {
        
     );
 
+}
+
+UtilisationHeader.propTypes = {
+    maxRatedPower: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.object
+    ]).isRequired
 }
 
 const styles = StyleSheet.create({
@@ -55,6 +81,5 @@ const styles = StyleSheet.create({
     }
 
 });
-
 
 export default UtilisationHeader;

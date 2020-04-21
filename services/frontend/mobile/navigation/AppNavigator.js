@@ -5,13 +5,13 @@ import { Platform } from 'react-native';
 
 import Colours from '../constants/Colours';
 import AvatarButton from '../components/render/AvatarButton';
-import UtilisationHeader from '../components/render/UtilisationHeader';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import SettingsRoot from '../screens/SettingsRoot';
 import SettingsContent from '../screens/SettingsContent';
 import RoomScreen from '../screens/RoomScreen';
 import DeviceScreen from '../screens/DeviceScreen';
+import UtilisationHeaderWrapper from '../components/render/reduxConnect/UtilisationHeaderWrapper';
 
 const defaultNavOptions = {
     headerStyle: {
@@ -23,7 +23,7 @@ const defaultNavOptions = {
     headerBackTitleStyle: {
     },
     headerTintColor: Platform.OS === 'android' ? 'white' : Colours.center,
-    headerTitle: () => (<UtilisationHeader />),
+    headerTitle: () => (<UtilisationHeaderWrapper />),
     
     headerRight: () => (<View></View>)
 };

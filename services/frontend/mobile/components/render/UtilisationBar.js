@@ -1,5 +1,6 @@
 import React from 'react';
 import ProgressBar from 'react-native-progress/Bar';
+import PropTypes from 'prop-types';
 
 import Colours, { hex2rgba } from '../../constants/Colours';
 
@@ -22,7 +23,7 @@ const UtilisationBar = props => {
             barColour = props.maxIsBad ? Colours.efficiency_mid_high : Colours.efficiency_mid_low
         } else if (props.value < 0.2) {
             barColour = props.maxIsBad ? Colours.efficiency_max : Colours.efficiency_min
-        }
+        } else barColour = Colours.error
 
         const colour = hex2rgba(barColour);
         return colour;
@@ -36,6 +37,11 @@ const UtilisationBar = props => {
         />
     );
 
+}
+
+UtilisationBar.propTypes = {
+    value: PropTypes.number.isRequired,
+    maxIsBad: PropTypes.bool.isRequired
 }
 
 export default UtilisationBar;
