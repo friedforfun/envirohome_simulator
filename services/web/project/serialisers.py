@@ -32,6 +32,7 @@ DeviceSchema = Schema.from_dict({
     'type': fields.Str(),
     'is_fault': fields.Boolean(),
     'is_on': fields.Boolean(),
+    'is_generator': fields.Boolean(),
     'room_id': fields.Int(required=True)
 })
 
@@ -54,6 +55,7 @@ class LightSchema(DeviceSchema):
 def get_device_model(type):
     models = {
         'plug': DeviceSchema,
+        'solar': DeviceSchema,
         'tv': TVSchema,
         'thermostat': ThermostatSchema,
         'lights': LightSchema,

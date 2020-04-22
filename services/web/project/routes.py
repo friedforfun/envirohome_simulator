@@ -17,7 +17,8 @@ from marshmallow import ValidationError
 from functools import wraps
 import project.models as models
 import project.serialisers as serialisers
-from project. serialisers import get_device_model
+from project.serialisers import get_device_model
+from project.tasks import post_to_stream
 import uuid
 import jwt
 import datetime
@@ -184,7 +185,7 @@ def toggle_power(device_pk):
 
 @app.route("/api/device/<string:device_type>", methods=["POST"])
 def add_device(device_type):
-    if device_type not in ['tv', 'plug', 'light', 'thermostat']:
+    if device_type not in ['tv', 'plug', 'light', 'thermostat', 'solar']:
         raise APIError('no such device type', status_code=400)
 
     device_data = request.get_json()
@@ -198,11 +199,15 @@ def add_device(device_type):
 
     if duplicate:
         raise APIError('device with name {} already\
-                exists'.format(device_data['device_name'], status_code=409))
+                exists'.format(device_data['device_name']), status_code=409)
 
     model = get_device_table_name(device_type)
     db.session.add(model(**device_data))
     db.session.commit()
+    device = db.session.query(models.Devices).filter_by(device_name=device_data['device_name']).first()
+    post_to_stream('device_{}_second'.format(device.device_id), 0)
+    post_to_stream('device_{}_minute'.format(device.device_id), 0)
+    post_to_stream('device_{}_hour'.format(device.device_id), 0)
     return jsonify({'success': 'device {} has been added'.format(device_data['device_name'])}), 201
 
 
@@ -314,6 +319,7 @@ def get_device_table_name(device_type):
         'tv': models.TV,
         'plug': models.Plug,
         'thermostat': models.Thermostat,
+        'solar': models.Solar
     }
 
     return device_types.get(device_type)
