@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Dimensions, StyleSheet, Text } from 'react-native';
+import React, { useState, memo } from 'react';
+import { View, Dimensions, StyleSheet, Text, FlatList } from 'react-native';
 import { ListItem, Divider } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux';
 import * as _ from 'lodash/fp';
@@ -23,7 +23,7 @@ import TimeFramePicker from './TimeFramePicker';
 
 
 
-const DeviceMenu = props => {
+const DeviceMenu = React.memo(props => {
     const [deviceExpanded, setDeviceExpanded] = useState([])
 
     const dispatch = useDispatch();
@@ -51,7 +51,7 @@ const DeviceMenu = props => {
                 if (json.success){
                     const powerVal = device.is_on ? "False" : "True";
                     if (json.success === "device ID: " + device.device_id + " power is now " + powerVal) {
-                        console.log("Power toggle sucess");
+                        //console.log("Power toggle sucess");
                         log(email, 3, device.device_name + " power toggled (ID: " + device.device_id + ")", device.device_id + "_power_toggled")
                         return powerVal;
                     } else {
@@ -98,62 +98,65 @@ const DeviceMenu = props => {
         }
     }
 
+    const keyExtractorFunc = (item, index) => index.toString()
+
+    const renderContent = ({ item }) => (
+        <View key={uuidv4({ random: seed() })}>
+            <ListItem
+                key={uuidv4({ random: seed() })}
+                title={item.device_name}
+                subtitle={<UsageTextContainer deviceId={item.device_id} ratedPower={item.rated_power} />}
+                switch={{
+                    value: item.is_on,
+                    onValueChange: () => togglePower(item),
+                }}
+                chevron
+                onPress={() => expandDevice(item)}
+            />
+            <Divider />
+            <DeviceBarUpdater
+                key={uuidv4({ random: seed() })}
+                maxIsBad={true}
+                deviceId={item.device_id}
+                width={deviceWidth}
+                deviceRp={item.rated_power}
+
+            />
+            <Divider />
+            {deviceExpanded.includes(item.device_id) &&
+                <View>
+                    <Grid>
+                        <Col>
+                            <ChartContentPicker />
+                        </Col>
+                        <Col>
+                            <TimeFramePicker />
+                        </Col>
+                    </Grid>
+
+                    <Grid>
+                        <Row style={styles.chartContainer}>
+                            <ChartWrapper chartSize={30} deviceId={item.device_id} key={uuidv4({ random: seed() })} />
+                        </Row>
+
+                    </Grid>
+                </View>
+            }
+            <Divider style={{ backgroundColor: 'black' }} />
+        </View>
+    )
+
 
     let deviceWidth = Dimensions.get('window').width
     // Create a list of devices using list.map. see: `https://react-native-elements.github.io/react-native-elements/docs/listitem.html`
     return (
-        <View>
-            {
-                props.deviceArray.map((item, i) => {
-                    return (
-                        <View key={uuidv4({ random: seed() })}>
-                            <ListItem
-                                key={uuidv4({ random: seed() })}
-                                title={item.device_name}
-                                subtitle={<UsageTextContainer deviceId={item.device_id} ratedPower={item.rated_power} />}
-                                switch={{
-                                    value: item.is_on,
-                                    onValueChange: () => togglePower(item),
-                                }}
-                                chevron
-                                onPress={() => expandDevice(item)}
-                            />
-                            <Divider />
-                            <DeviceBarUpdater 
-                                key={uuidv4({ random: seed() })} 
-                                maxIsBad={true} 
-                                deviceId={item.device_id}
-                                width={deviceWidth}
-                                deviceRp={item.rated_power}
-
-                            />
-                            <Divider />
-                            {deviceExpanded.includes(item.device_id) && 
-                            <View>
-                                <Grid>
-                                    <Col>
-                                        <ChartContentPicker />
-                                    </Col>
-                                    <Col>
-                                        <TimeFramePicker />
-                                    </Col>
-                                </Grid>
-                                
-                                <Grid>
-                                    <Row style={styles.chartContainer}>
-                                        <ChartWrapper chartSize={30} deviceId={item.device_id} key={uuidv4({ random: seed() })} />
-                                    </Row>
-                                    
-                                </Grid>
-                            </View>
-                            }
-                            <Divider style={{ backgroundColor: 'black' }} />
-                        </View>
-                )})
-            }
-        </View>
+        <FlatList
+            keyExtractor={keyExtractorFunc}
+            data={props.deviceArray}
+            renderItem={renderContent}
+        />
     )
-}
+});
 
 DeviceMenu.propTypes = {
     deviceArray: deviceArrProp.deviceArr.isRequired,
