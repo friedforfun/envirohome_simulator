@@ -1,0 +1,89 @@
+import { createSelector } from 'reselect'
+
+import { validDataTypes as cType } from '../reducers/charts'
+
+const deviceArray = (state) => state.deviceStore.devices;
+const deviceUsage = (state) => state.deviceStore.deviceUsage;
+const totalRatedPower = (state) => state.settingsStore.maxRatedPower;
+const currentPower = (state) => state.settingsStore.houseHoldPower;
+const livePlotData = (state, props) => state.chartStore[cType.FROM_NOW][props.deviceId];
+const hourPlotData = (state, props) => state.chartStore[cType.LAST_HOUR][props.deviceId];
+const dayPlotData = (state, props) => state.chartStore[cType.LAST_DAY][props.deviceId];
+const allTimePlotData = (state, props) => state.chartStore[cType.ALL_TIME][props.deviceId];
+
+const recieveProps = (_, props) => props;
+
+export const getVisibleDeviceUsage = createSelector(
+    [deviceUsage],
+    (deviceUsage) => {
+        return deviceUsage.filter(device => device.isVisible === true)
+    }
+)
+
+export const getCurrentDeviceUsage = createSelector(
+    [deviceUsage, recieveProps],
+    (deviceUsage, recieveProps) => {
+        return deviceUsage.find(entry => entry.device_id === recieveProps.deviceId)
+    }
+)
+
+export const getDeviceArrayByRoom = createSelector(
+    [deviceArray, recieveProps],
+    (deviceArray, recieveProps) => {
+        return deviceArray.filter(device => device.room_id === recieveProps.roomId);
+    }
+)
+
+export const houseHoldPowerStats = createSelector(
+    [totalRatedPower, recieveProps, currentPower],
+    (totalRatedPower, recieveProps, currentPower) => {
+        if (totalRatedPower !== undefined && totalRatedPower !== null) {
+            if (currentPower !== undefined && currentPower !== null) {
+                return {
+                    ...recieveProps,
+                    maxRatedPower: totalRatedPower,
+                    householdPower: currentPower
+                }
+            }
+            return {
+                ...recieveProps,
+                maxRatedPower: totalRatedPower
+            }
+        }
+        if (currentPower !== undefined && currentPower !== null) {
+            return {
+                ...recieveProps,
+                householdPower: currentPower
+            }
+        }
+        return {
+            ...recieveProps,
+            maxRatedPower: 1,
+            householdPower: 1
+        }
+    }
+)
+
+export const liveDataSlice = createSelector(
+    [livePlotData, recieveProps],
+    (livePlotData, recieveProps) => {
+        const dataPoints = recieveProps.chartSize;
+        let data
+        if (livePlotData !== undefined) {
+            if (livePlotData.length > dataPoints && livePlotData.length >= 2) {
+                //console.log(livePlotData)
+                data = livePlotData.slice(livePlotData.length - dataPoints, livePlotData.length)
+            } else {
+                data = livePlotData
+            }
+            return {
+                ...recieveProps,
+                plotData: data
+            }
+        }
+        return {
+            ...recieveProps,
+            plotData: [0, 0]
+        }
+    }
+)

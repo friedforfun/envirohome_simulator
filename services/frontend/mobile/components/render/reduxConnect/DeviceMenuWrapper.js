@@ -1,11 +1,10 @@
 import { connect } from 'react-redux';
 
 import DeviceMenu from '../DeviceMenu';
+import { getDeviceArrayByRoom } from '../../../store/selectors/device';
 
 const mapStateToProps = (state, ownProps) => {
-    const deviceStore = state.deviceStore.devices;
-    const deviceArr = deviceStore.filter(device => device.room_id === ownProps.roomId);
-
+    const deviceArr = getDeviceArrayByRoom(state, ownProps)
     if (deviceArr !== undefined && deviceArr !== null){
         return {
             ...ownProps,

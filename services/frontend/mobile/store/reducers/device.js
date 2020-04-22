@@ -83,8 +83,8 @@ const DeviceReducer = (state = initialState, action) => {
         
         case SET_USAGE_VAL:
             return produce(state, draftState => {
-                console.log("Update usage val")
-                console.log(draftState.deviceUsage)
+                //console.log("Update usage val")
+                //console.log(draftState.deviceUsage)
                 const findRoomId = getRoomId(action.deviceId)
                 
                 const usageIndex = getUsageIndex(action.deviceId)
@@ -108,8 +108,8 @@ const DeviceReducer = (state = initialState, action) => {
             });
         
         case SET_VISIBLE:
-            console.log("action device id: "+action.deviceId)
-            console.log(state.deviceUsage)
+            //console.log("action device id: "+action.deviceId)
+            //console.log(state.deviceUsage)
             var mutator = lodash.cloneDeep(state.deviceUsage)
             const setVisIndex = getUsageIndex(action.deviceId)
             if (setVisIndex >= 0) {
@@ -134,7 +134,7 @@ const DeviceReducer = (state = initialState, action) => {
                 
             }
             return {...state, deviceUsage: mutator}
-
+ 
         case SET_HIDDEN:
             return produce(state, draftState => {
                 const setHiddenIndex = getUsageIndex(action.deviceId);

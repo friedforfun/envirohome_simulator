@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 
 import DeviceUtilisationBar from '../DeviceUtilisationBar';
+import { getCurrentDeviceUsage } from '../../../store/selectors/device';
 
 const mapStateToProps = (state, ownProps) => {
-    const data = state.deviceStore.deviceUsage.find(entry => entry.device_id === ownProps.deviceId)
+    const data = getCurrentDeviceUsage(state, ownProps)
     
     if (data !== undefined){
         return {
