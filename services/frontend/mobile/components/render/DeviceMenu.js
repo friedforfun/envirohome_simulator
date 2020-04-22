@@ -40,7 +40,7 @@ const DeviceMenu = React.memo(props => {
             return tempDevice
         }
 
-        TogglePower(device)
+        TogglePower(device, props.authToken)
             .then(response => {
                 return testResponse(response)
             })

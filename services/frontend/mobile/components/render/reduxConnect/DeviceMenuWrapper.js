@@ -8,7 +8,8 @@ const mapStateToProps = (state, ownProps) => {
     if (deviceArr !== undefined && deviceArr !== null){
         return {
             ...ownProps,
-            deviceArray: deviceArr
+            deviceArray: deviceArr,
+            authToken: state.authStore.authToken
         }
     }
 
