@@ -1,7 +1,7 @@
 import * as lodash from 'lodash/fp';
 import produce from 'immer';
 
-import { ADD_DEVICE, REMOVE_DEVICE, POPULATE_DEVICES, CLEAR_DEVICE_STORE, UPDATE_DEVICE, SET_USAGE_VAL } from '../actions/devices';
+import { ADD_DEVICE, REMOVE_DEVICE, POPULATE_DEVICES, CLEAR_DEVICE_STORE, UPDATE_DEVICE, SET_USAGE_VAL, SET_VISIBLE, SET_HIDDEN, updateDevice } from '../actions/devices';
 
 const initialState = {
     devices: [],
@@ -9,6 +9,19 @@ const initialState = {
 };
 
 const DeviceReducer = (state = initialState, action) => {
+
+    const getIndex = deviceId => {
+        return state.devices.findIndex(device => device.device_id === deviceId)
+    }
+
+    const getUsageIndex = deviceId => {
+        return state.deviceUsage.findIndex(device => device.device_id === deviceId)
+    }
+
+    const getRoomId = deviceId => {
+        return state.devices.find(device => device.device_id === deviceId).room_id
+    }
+
     switch (action.type) {
         case ADD_DEVICE:
             const newDevice = {
@@ -19,9 +32,9 @@ const DeviceReducer = (state = initialState, action) => {
                 "rated_power": action.device.rated_power,
                 "room_id": action.device.room_id,
                 "type": action.device.type,
-                "isVisible": false
+                "isVisible": false,
             }
-            const addIndex = state.devices.findIndex(device => device.device_id === action.device_id);
+            const addIndex = getIndex(action.device_id);
 
             if (addIndex < 0){
                 const newState = state.devices.concat(newDevice);
@@ -34,7 +47,7 @@ const DeviceReducer = (state = initialState, action) => {
             }
             
         case REMOVE_DEVICE:
-            const removeIndex = state.devices.findIndex(device => device.device_id === action.deviceId);
+            const removeIndex = getIndex(action.device_id);
             if (removeIndex >= 0){
                 var tempDevices = lodash.cloneDeep(state.devices);
                 tempDevices.splice(removeIndex, 1);
@@ -46,7 +59,7 @@ const DeviceReducer = (state = initialState, action) => {
             }
 
         case UPDATE_DEVICE: 
-            const updateIndex = state.devices.findIndex(device => device.device_id === action.device.device_id);
+            const updateIndex = getIndex(action.device.device_id);
             if (updateIndex >= 0){
                 var tempDevices = lodash.cloneDeep(state.devices);
                 tempDevices.splice(updateIndex, 1, action.device);
@@ -69,25 +82,74 @@ const DeviceReducer = (state = initialState, action) => {
             return { ...state, devices: populate };
         
         case SET_USAGE_VAL:
-
             return produce(state, draftState => {
-                const findRoomId = draftState.devices.find(device => device.device_id === action.deviceId).room_id
-                const newItem = {
-                    "device_id": action.deviceId,
-                    "room_id": findRoomId,
-                    "usage": action.energy,
-                    "isVisible": false
-                }
-                const usageIndex = draftState.deviceUsage.findIndex(element => element.device_id === action.deviceId)
+                console.log("Update usage val")
+                console.log(draftState.deviceUsage)
+                const findRoomId = getRoomId(action.deviceId)
+                
+                const usageIndex = getUsageIndex(action.deviceId)
                 if (usageIndex >= 0) {
-                    draftState.deviceUsage.splice(usageIndex, 1, newItem)
+                    const updatedItem = {
+                        ...draftState.deviceUsage[usageIndex],
+                        "usage": action.energy,
+                    }
+                    draftState.deviceUsage.splice(usageIndex, 1, updatedItem)
                     
                 } else {
+                    const newItem = {
+                        "device_id": action.deviceId,
+                        "room_id": findRoomId,
+                        "usage": action.energy,
+                        "isVisible": false,
+                    }
                     draftState.deviceUsage.push(newItem);
                 }
                 
             });
         
+        case SET_VISIBLE:
+            console.log("action device id: "+action.deviceId)
+            console.log(state.deviceUsage)
+            var mutator = lodash.cloneDeep(state.deviceUsage)
+            const setVisIndex = getUsageIndex(action.deviceId)
+            if (setVisIndex >= 0) {
+                const visibleDevice = {
+                    ...state.deviceUsage[setVisIndex],
+                    isVisible: true,
+                }
+                
+                mutator.splice(setVisIndex, 1,visibleDevice);
+            } else {
+                const newRoomId = getRoomId(action.deviceId)
+
+                const newVisibleItem = {
+                    "device_id": action.deviceId,
+                    "room_id": newRoomId,
+                    "usage": 0,
+                    "isVisible": true,
+                }
+
+                console.log("SET_VISIBLE - new device")
+                mutator.push(newVisibleItem);
+                
+            }
+            return {...state, deviceUsage: mutator}
+
+        case SET_HIDDEN:
+            return produce(state, draftState => {
+                const setHiddenIndex = getUsageIndex(action.deviceId);
+                if (setHiddenIndex >= 0) {
+                    const visibleDevice = {
+                        ...draftState.deviceUsage[setHiddenIndex],
+                        isVisible: false,
+                    }
+                    draftState.deviceUsage.splice(updateIndex, 1, visibleDevice);
+                } else {
+                    console.log("Device not found.");
+                    console.log("Device ID: " + action.deviceId);
+                }
+            });
+
         default:
             return { ...state };
     }
