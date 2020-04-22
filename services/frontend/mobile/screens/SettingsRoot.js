@@ -13,7 +13,7 @@ const SettingsScreen = props => {
     
     React.useLayoutEffect(() => {
         props.navigation.setOptions({
-            headerRight: () => <TouchableOpacity><HomeIcon action={settingsNav} /></TouchableOpacity>
+            headerRight: () => <TouchableOpacity onPress={() => settingsNav()} ><HomeIcon action={settingsNav} /></TouchableOpacity>
         });
     }, [props.navigation])
 

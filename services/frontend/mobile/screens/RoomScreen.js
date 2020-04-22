@@ -16,7 +16,7 @@ const RoomScreen = props => {
     
     React.useLayoutEffect(() => {
         props.navigation.setOptions({
-            headerRight: () => <TouchableOpacity><SettingsIcon action={settingsNav} /></TouchableOpacity>
+            headerRight: () => <TouchableOpacity onPress={() => settingsNav()} ><SettingsIcon action={settingsNav} /></TouchableOpacity>
         });
     }, [props.navigation])
 
