@@ -1,22 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import UtilisationBar from './UtilisationBar';
-import { useInterval } from '../logic/useInterval';
-import DevicePower from '../logic/DevicePower';
-import { testResponse } from '../logic/fetchFunc';
-import { setUsageVal } from '../../store/actions/devices';
-
 
 const DeviceUtilisationBar = props => {
-
-    /*
-        PROPS:
-            deviceId -> identifier of device
-            tickRate -> time in ms between updates
-            deviceRp -> device rated power
-            notifyParent -> updates parent state with valNow
-    */
 
     const val = props.rawUsageVal / props.deviceRp
 
@@ -28,7 +15,16 @@ const DeviceUtilisationBar = props => {
             height={30}
         />
     );
+}
 
+DeviceUtilisationBar.defaultProps = {
+    rawUsageVal: 0,
+    deviceRp: 0
+}
+
+DeviceUtilisationBar.propTypes = {
+    rawUsageVal: PropTypes.number.isRequired,
+    deviceRp: PropTypes.number.isRequired
 }
 
 

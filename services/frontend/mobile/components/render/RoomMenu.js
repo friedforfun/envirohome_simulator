@@ -3,8 +3,9 @@ import { View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deviceArrProp, roomArrProp } from '../../constants/propTypes'
 
+import { deviceArrProp, roomArrProp } from '../../constants/propTypes'
+import { showDevice } from '../../store/actions/devices';
 import { updateMaxRatedPower } from '../../store/actions/settings';
 import { clearData } from '../../store/actions/charts';
 import { validDataTypes } from '../../store/reducers/charts';
@@ -28,9 +29,14 @@ const RoomMenu = props => {
     }
     setUpdatingPower(false)
   }
+  const revealDevice = (deviceId) => {
+    dispatch(showDevice(deviceId))
+  }
 
   const selectRoomHandler = (item) => {
-    dispatch(clearData(validDataTypes.FROM_NOW))
+    const visibleDevices = deviceArray.filter(device => device.room_id === item.room_id);
+    visibleDevices.map(device => revealDevice(device.device_id));
+    dispatch(clearData(validDataTypes.FROM_NOW));
     props.navigation.navigate('DevicesInRoom', {
       roomId: item.room_id,
       roomName: item.room_name,
@@ -62,7 +68,8 @@ const RoomMenu = props => {
 
   RoomMenu.propTypes = {
     deviceArray: deviceArrProp.deviceArr,
-    roomArray: roomArrProp.roomArr
+    roomArray: roomArrProp.roomArr,
+    navigation: PropTypes.object.isRequired
   }
 
   export default RoomMenu;

@@ -22,6 +22,8 @@ export const POPULATE_DEVICES = 'POPULATE_DEVICES';
 export const CLEAR_DEVICE_STORE = 'CLEAR_DEVICE_STORE';
 export const UPDATE_DEVICE = 'UPDATE_DEVICE';
 export const SET_USAGE_VAL = 'SET_USAGE_VAL';
+export const SET_VISIBLE = 'SET_VISIBLE';
+export const SET_HIDDEN = 'SET_HIDDEN';
 
 // rooms
 export const ADD_ROOM = 'ADD_ROOM';

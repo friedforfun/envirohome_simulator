@@ -13,6 +13,10 @@ const UsageText = props => {
     )
 }
 
+UsageText.defaultProps = {
+    rawUsageVal: 0,
+    ratedPower: 0
+}
 
 UsageText.propTypes = {
     rawUsageVal: PropTypes.number.isRequired,
