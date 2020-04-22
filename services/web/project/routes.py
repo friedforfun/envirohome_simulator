@@ -173,9 +173,9 @@ def get_devices():
 #
 @app.route("/api/device/<int:d_id>", methods=["GET"])
 def get_device(d_id):
-    devices = db.session.query(models.Devices).filter_by(device_id=d_id).first()
-    device_model = serialisers.DeviceSchema()
-    return jsonify(device_model.dump(devices))
+    device = db.session.query(models.Devices).filter_by(device_id=d_id).first()
+    device_model = get_device_model(device.type)
+    return jsonify(device_model().dump(device))
 
 
 @app.route("/api/device/<device_pk>/toggle_power", methods=["GET"])
@@ -187,10 +187,47 @@ def toggle_power(device_pk):
     return jsonify({'success': 'device ID: {} power is now {}'.format(device_pk, not power_state)})
 
 
-@app.route("/api/device", methods=["POST"])
-def add_device(name_pk, rated_power_pk, device_type_pk, room_pk):
+@app.route("/api/device/<string:device_type>", methods=["POST"])
+def add_device(device_type):
+    if device_type not in ['tv', 'plug', 'light', 'thermostat']:
+        raise APIError('no such device type', status_code=400)
+
+    device_data = request.get_json()
+    serialiser = get_device_model(device_type)
+    try:
+        serialiser().load(device_data)
+    except ValidationError as err:
+        raise APIError(err.messages, status_code=400)
+
+    duplicate = db.session.query(models.Devices).filter_by(device_name=device_data['device_name']).first()
+
+    if duplicate:
+        raise APIError('device with name {} already\
+                exists'.format(device_data['device_name'], status_code=409))
+
+    model = get_device_table_name(device_type)
+    db.session.add(model(**device_data))
     db.session.commit()
-    return models.Devices.get_delete_put_post(None)
+    return jsonify({'success': 'device {} has been added'.format(device_data['device_name'])}), 201
+
+
+@app.route("/api/device/<int:device_id>", methods=["PUT"])
+def change_device(device_id):
+    device = db.session.query(models.Devices).filter_by(device_id=device_id).first()
+    if device is None:
+        raise APIError('device does not exist', status_code=404)
+    device_model = get_device_model(device.type)
+    device_data = request.get_json()
+    for key in device_data.keys():
+        if key not in device_model().__dict__['declared_fields'].keys():
+            raise APIError('device does not have field of type {}'.format(key),
+                           status_code=400)
+
+    db.session.query(get_device_table_name(device.type)).filter_by(device_id=device_id).update(device_data, synchronize_session=False)
+    db.session.commit()
+
+    return jsonify({'success': 'successfully modified device'})
+
 
 
 ################# ROOM ROUTES ################################################
@@ -275,3 +312,14 @@ def get_room_current_power(room):
     if current_power is None:
         current_power = 0
     return current_power
+
+
+def get_device_table_name(device_type):
+    device_types = {
+        'light': models.Lights,
+        'tv': models.TV,
+        'plug': models.Plug,
+        'thermostat': models.Thermostat,
+    }
+
+    return device_types.get(device_type)

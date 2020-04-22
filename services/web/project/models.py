@@ -34,7 +34,7 @@ class Room(db.Model):
 class Devices(db.Model):
     __tablename__ = 'devices'
     device_id = db.Column(db.Integer, primary_key=True)
-    device_name = db.Column(db.String(64), nullable=False)
+    device_name = db.Column(db.String(64), nullable=False, unique=True)
     rated_power = db.Column(db.Integer, nullable=False)
     type = db.Column(db.String(50))
     is_fault = db.Column(db.Boolean, default=False, nullable=False)

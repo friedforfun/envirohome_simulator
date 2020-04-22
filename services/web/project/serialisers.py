@@ -26,20 +26,20 @@ RoomSchema = Schema.from_dict({
 })
 
 DeviceSchema = Schema.from_dict({
-    'device_id': fields.Int(required=True),
+    'device_id': fields.Int(),
     'device_name': fields.Str(required=True),
     'rated_power': fields.Int(required=True),
-    'type': fields.Str(required=True),
-    'is_fault': fields.Boolean(required=True),
-    'is_on': fields.Boolean(required=True),
+    'type': fields.Str(),
+    'is_fault': fields.Boolean(),
+    'is_on': fields.Boolean(),
     'room_id': fields.Int(required=True)
 })
 
 
 class TVSchema(DeviceSchema):
-    channel = fields.Int(required=True),
-    output = fields.Str(required=True),
-    volume = fields.Int(required=True)
+    channel = fields.Int()
+    output = fields.Str()
+    volume = fields.Int()
 
 
 class ThermostatSchema(DeviceSchema):
@@ -47,7 +47,7 @@ class ThermostatSchema(DeviceSchema):
 
 
 class LightSchema(DeviceSchema):
-    intensity = fields.Int(required=True),
+    intensity = fields.Int(required=True)
     colour = fields.Int(required=True)
 
 
