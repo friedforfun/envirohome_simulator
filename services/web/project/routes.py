@@ -17,7 +17,8 @@ from marshmallow import ValidationError
 from functools import wraps
 import project.models as models
 import project.serialisers as serialisers
-from project. serialisers import get_device_model
+from project.serialisers import get_device_model
+from project.tasks import post_to_stream
 import uuid
 import jwt
 import datetime
@@ -203,6 +204,10 @@ def add_device(device_type):
     model = get_device_table_name(device_type)
     db.session.add(model(**device_data))
     db.session.commit()
+    device = db.session.query(models.Devices).filter_by(device_name=device_data['device_name']).first()
+    post_to_stream('device_{}_second'.format(device.device_id), 0)
+    post_to_stream('device_{}_minute'.format(device.device_id), 0)
+    post_to_stream('device_{}_hour'.format(device.device_id), 0)
     return jsonify({'success': 'device {} has been added'.format(device_data['device_name'])}), 201
 
 
