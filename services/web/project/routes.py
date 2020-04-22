@@ -260,12 +260,14 @@ def get_devices_in_room(r_id):
 def get_room_device_count(room):
     return db.session.query(models.Devices).filter_by(room_id=room.room_id).count()
 
+
 def get_room_total_power(room):
     total_power = db.session.query(func.sum(models.Devices.rated_power)).filter_by(room_id=room.room_id).scalar()
 
     if total_power is None:
         total_power = 0
     return total_power
+
 
 def get_room_current_power(room):
     current_power = db.session.query(func.sum(models.Devices.rated_power)).filter(and_(models.Devices.room_id==room.room_id, models.Devices.is_on==True)).scalar()

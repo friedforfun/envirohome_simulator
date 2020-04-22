@@ -127,7 +127,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 tags
-household_power_consumption.txt
 dev_1.txt
 dev_2.txt
 dev_3.txt
