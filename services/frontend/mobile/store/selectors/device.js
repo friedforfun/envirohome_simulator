@@ -7,9 +7,10 @@ const deviceUsage = (state) => state.deviceStore.deviceUsage;
 const totalRatedPower = (state) => state.settingsStore.maxRatedPower;
 const currentPower = (state) => state.settingsStore.houseHoldPower;
 const livePlotData = (state, props) => state.chartStore[cType.FROM_NOW];
-const hourPlotData = (state, props) => state.chartStore[cType.LAST_HOUR][props.deviceId];
-const dayPlotData = (state, props) => state.chartStore[cType.LAST_DAY][props.deviceId];
-const allTimePlotData = (state, props) => state.chartStore[cType.ALL_TIME][props.deviceId];
+const hourPlotData = (state, props) => state.chartStore[cType.LAST_HOUR];
+const dayPlotData = (state, props) => state.chartStore[cType.LAST_DAY];
+const allTimePlotData = (state, props) => state.chartStore[cType.ALL_TIME];
+const plotPointLim = (state) => state.chartStore.plotPointLimit;
 
 const recieveProps = (_, props) => props;
 
@@ -72,25 +73,27 @@ export const houseHoldPowerStats = createSelector(
 )
 
 export const liveDataSlice = createSelector(
-    [livePlotData, recieveProps],
-    (livePlotData, recieveProps) => {
-        const dataPoints = recieveProps.chartSize;
+    [livePlotData, recieveProps, plotPointLim],
+    (livePlotData, recieveProps, plotPointLim) => {
         const deviceId = recieveProps.deviceId.toString()
+        const dataPoints = plotPointLim[recieveProps.deviceId];
         let data = livePlotData[deviceId]
-        console.log(data)
-        if (data !== undefined) {
+        if (data !== undefined && dataPoints !== undefined) {
             if (data.length > dataPoints && data.length >= 2) {
-                //console.log(livePlotData)
                 data = data.slice(data.length - dataPoints, data.length)
             }
             return {
                 ...recieveProps,
-                plotData: data
+                plotData: data.map(element => (element.data)),
+            }
+        } else if (data !== undefined) {
+            if (data.length > plotPointLim.default && data.length >= 2) {
+                data = data.slice(data.length - plotPointLim.default, data.length)
             }
         }
         return {
             ...recieveProps,
-            plotData: [0, 0]
+            plotData: [0, 0],
         }
     }
 )

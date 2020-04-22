@@ -5,18 +5,13 @@ import dateFormat from 'dateformat';
 
 
 const Chart = props => {
-    const plotValues = props.plotData.map(element => {
-        return element.data
-    })
-    const timeStamps = props.plotData.map(element => {
-        return element.timeStamp
-    })
     
+    //console.log(plotValues)
     const data = {
         labels: [],
         datasets: [
             {
-                data: plotValues
+                data: props.plotData
             }
         ]
     }

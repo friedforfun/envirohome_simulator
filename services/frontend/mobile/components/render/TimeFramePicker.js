@@ -1,42 +1,50 @@
 import React, { useState } from 'react';
 import { Picker, Item, Form, Icon, View } from 'native-base';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const pickItems = key => {
-    switch (key) {
-        case "key0":
-            // real time
-            return (
-                <View>
-
-                </View>
-            )
-
-        case "key1":
-            // last hour
-            break;
-
-        case "key2":
-        
-            break;
-
-        case "key3":
-
-            break;
-
-        default:
-            break;
-    }
-}
+import { updatePlotLimit } from '../../store/actions/charts';
 
 const ChartContentPicker = props => {
-    const [isVisible, setIsVisible] = useState(true)
-    const [selected, setSelected] = useState(props.selected);
+    const [selected, setSelected] = useState("key0");
+    const dispatch = useDispatch()
+
+    const onValueChange = (value) => {
+        realTimeHandler(value)
+        setSelected(value)
+    }
+
+    const realTimeHandler = value => {
+        switch (value) {
+            case "key0":
+                // dispatch set plot point limit = 10
+                dispatch(updatePlotLimit(props.deviceId, 10))
+                break;
+
+            case "key1":
+                console.log("dispatch 30s")
+                // dispatch set plot point limit = 30
+                dispatch(updatePlotLimit(props.deviceId, 30))
+                break;
+
+            case "key2":
+                // dispatch set plot point limit = 60
+                dispatch(updatePlotLimit(props.deviceId, 60))
+                break;
+
+            case "key3":
+                // dispatch set plot point limit = 300
+                dispatch(updatePlotLimit(props.deviceId, 300))
+                break;
+
+            default:
+                break;
+        }
+    }
 
     return (
         <Form>
-            {true &&
-                <Picker
+            <Picker
                 mode="dropdown"
                 placeholder="Real time"
                 iosIcon={<Icon name="arrow-down" />}
@@ -48,14 +56,14 @@ const ChartContentPicker = props => {
                 }}
                 itemTextStyle={{ color: '#788ad2' }}
                 style={{ width: undefined }}
-                selectedValue={() => console.log("Select value")}
-                onValueChange={() => console.log("change value")}
+                selectedValue={selected}
+                onValueChange={(val) => onValueChange(val)}
             >
                 <Picker.Item label="10 seconds" value="key0" />
                 <Picker.Item label="30 seconds" value="key1" />
                 <Picker.Item label="1 min" value="key2" />
                 <Picker.Item label="5 mins" value="key3" />
-            </Picker>}
+            </Picker>
         </Form>
     )
 }
