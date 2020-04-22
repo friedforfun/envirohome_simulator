@@ -27,9 +27,7 @@ def emit_usage_event(interval, stream_suffix):
     db.session.commit()
 
     for device in devices:
-        usage = device.rated_power * next(effective_gen) \
-                                   * interval \
-                if device.is_on else 0
+        usage = device.rated_power * -1 * interval if device.is_generator else device.rated_power * next(effective_gen) * interval if device.is_on else 0
 
         data = {'timestamp': datetime.datetime.now().__str__(),
                 'usage': usage}
@@ -39,8 +37,9 @@ def emit_usage_event(interval, stream_suffix):
         post_to_stream(stream_name, data)
 
     for room in rooms:
-        usage = sum([device.rated_power * next(effective_gen)
-                                        * interval
+        usage = sum([device.rated_power * -1 * interval
+                     if device.is_generator
+                     else device.rated_power * next(effective_gen) * interval
                      if device.is_on
                      else 0
                      for device in room.devices])
@@ -51,8 +50,9 @@ def emit_usage_event(interval, stream_suffix):
                                           stream_suffix)
         post_to_stream(stream_name, data)
 
-    usage = sum([device.rated_power * next(effective_gen)
-                                    * interval
+    usage = sum([device.rated_power * -1 * interval
+                 if device.is_generator
+                 else device.rated_power * next(effective_gen) * interval
                  if device.is_on
                  else 0
                  for device in devices])
