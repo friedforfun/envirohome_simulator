@@ -17,10 +17,6 @@ users (7)
 -- IF ADMIN: return user
 -- IF USER: only return user info if authenticated as said user
 
-- POST '/api/user': D
--- {username, email, password}: if no conflict, create user
--- return error status
-
 - DELETE '/api/user/<user_id>' {password}
 -- IF USER: must be authenticated, password used for confirmation
 -- IF ADMIN: just do it.  refuse to delete admin acct if only one admin
@@ -39,18 +35,6 @@ users (7)
 -- IF USER: change username if user is auth as user_id
 -- IF ADMIN: change username
 
-auth (2)
-----
-- POST '/api/auth/session': D
--- {email, password}
--- return token
-
-- DELETE '/api/auth/session': D
--- IF ADMIN: log user out
--- IF USER: log self out if ids match
--- return error code
--- delete token
-
 devices (6)
 -------
 - all routes need auth (at least user)
@@ -67,7 +51,7 @@ devices (6)
 - GET /api/device/types
 -- return list of all available types: (['tv', 'lights'...])
 
-- POST /api/device/<str:dev_type>, {device info}
+- POST /api/device/<str:dev_type>, {device info} X
 -- create device of type dev_type
 
 - DELETE /api/device/<device_id>
@@ -100,36 +84,3 @@ rooms (4)
 
 - DELETE /api/room/<room_id> X
 -- delete room
-
-usage (8)
------
-- get usage data for house
-- get usage data for room
-- get usage data for device
-- get producer data
-- get consumer data
-- all of the above between time stamps
-
-- GET /api/usage D
--- get usage data for entire house
-
-- GET /api/usage/device/<device_id> D
--- get usage data for device
-
-- GET /api/usage/room D
--- get usage data for room
-
-- GET /api/usage/producer D
--- get usage data for producers
-
-- GET /api/usage/consumer D
--- get usage data for consumers
-
-- GET /api/usage/producer/room/<room_id> D
--- get usage data for producers in room_id
-
-- GET /api/usage/consumer/room/<room_id> D
--- get usage data for consumers in room_id
-
-- GET <all of the above>/<timestamp_1>/<timestamp_2> D
--- get usage data in the formats between timestamps

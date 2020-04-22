@@ -8,13 +8,8 @@ import datetime
 import json
 
 celery = create_celery_app(app)
-
 base_url = 'http://' + os.environ['HOST_IP'] + ':2113/streams/'
-
 effective_gen = (float(row)/31.0 for row in open('data/household_power_consumption.txt'))
-
-
-
 
 
 def post_to_stream(stream_name, data):
