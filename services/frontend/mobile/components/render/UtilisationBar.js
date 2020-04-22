@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import ProgressBar from 'react-native-progress/Bar';
 import PropTypes from 'prop-types';
 

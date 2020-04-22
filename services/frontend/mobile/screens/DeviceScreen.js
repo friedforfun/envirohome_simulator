@@ -4,9 +4,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Divider, ListItem } from 'react-native-elements'
 import { useDispatch } from 'react-redux';
 
+
 import DeviceMenuWrapper from '../components/render/reduxConnect/DeviceMenuWrapper';
 import SettingsIcon from '../components/render/settings/SettingsIcon';
 import { openSettings } from '../store/actions/settings';
+import { hideDevice } from '../store/actions/devices'
+
 
 const DeviceScreen = props => {
 
@@ -28,11 +31,14 @@ const DeviceScreen = props => {
                 title={props.route.params.roomName}
                 subtitle={"Power: "+props.route.params.roomCurrentPower}
                 titleStyle={{ fontWeight: 'bold'}}
+                emptyListComponent={() => {
+                    <Text>No devices</Text>
+                }}
             />
             <Divider style={{backgroundColor: 'black', height:2}}/>
-            <ScrollView style={styles.content}>
-                <DeviceMenuWrapper roomId={props.route.params.roomId} />
-            </ScrollView>
+
+            <DeviceMenuWrapper roomId={props.route.params.roomId} />
+
         </View>
     );
 };

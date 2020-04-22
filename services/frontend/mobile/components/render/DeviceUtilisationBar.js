@@ -8,7 +8,7 @@ import { useInterval } from '../logic/useInterval';
 import { setUsageVal } from '../../store/actions/devices';
 import {  } from 'react';
 
-const DeviceUtilisationBar = React.memo(props => {
+const DeviceUtilisationBar = memo(props => {
     const dispatch = useDispatch()
     const [now, next] = useState(0)
     const usage = props.rawUsageVal
