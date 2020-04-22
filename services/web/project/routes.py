@@ -184,7 +184,7 @@ def toggle_power(device_pk):
 
 @app.route("/api/device/<string:device_type>", methods=["POST"])
 def add_device(device_type):
-    if device_type not in ['tv', 'plug', 'light', 'thermostat']:
+    if device_type not in ['tv', 'plug', 'light', 'thermostat', 'solar']:
         raise APIError('no such device type', status_code=400)
 
     device_data = request.get_json()
@@ -198,7 +198,7 @@ def add_device(device_type):
 
     if duplicate:
         raise APIError('device with name {} already\
-                exists'.format(device_data['device_name'], status_code=409))
+                exists'.format(device_data['device_name']), status_code=409)
 
     model = get_device_table_name(device_type)
     db.session.add(model(**device_data))
@@ -314,6 +314,7 @@ def get_device_table_name(device_type):
         'tv': models.TV,
         'plug': models.Plug,
         'thermostat': models.Thermostat,
+        'solar': models.Solar
     }
 
     return device_types.get(device_type)

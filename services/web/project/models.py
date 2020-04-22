@@ -38,7 +38,8 @@ class Devices(db.Model):
     rated_power = db.Column(db.Integer, nullable=False)
     type = db.Column(db.String(50))
     is_fault = db.Column(db.Boolean, default=False, nullable=False)
-    is_on = db.Column(db.Boolean, default=False, nullable=False)
+    is_on = db.Column(db.Boolean, default=True, nullable=False)
+    is_generator = db.Column(db.Boolean, default=False, nullable=False)
     usage = db.relationship('Usage', backref='device',
                             cascade="all,delete", uselist=False)
     room_id = db.Column(db.Integer, db.ForeignKey('room.room_id',
@@ -86,6 +87,14 @@ class Lights(Devices):
 
     __mapper_args__ = {
         'polymorphic_identity': 'lights'
+    }
+
+
+class Solar(Devices):
+    is_generator = True
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'solar'
     }
 
 
