@@ -3,7 +3,6 @@ import { View, Dimensions, Text } from 'react-native';
 import { LineChart } from "react-native-chart-kit";
 import dateFormat from 'dateformat';
 
-const screenWidth = Dimensions.get("window").width;
 
 const Chart = props => {
     const plotValues = props.plotData.map(element => {
@@ -12,7 +11,7 @@ const Chart = props => {
     const timeStamps = props.plotData.map(element => {
         return element.timeStamp
     })
-
+    
     const data = {
         labels: [],
         datasets: [

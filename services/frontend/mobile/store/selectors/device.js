@@ -6,7 +6,7 @@ const deviceArray = (state) => state.deviceStore.devices;
 const deviceUsage = (state) => state.deviceStore.deviceUsage;
 const totalRatedPower = (state) => state.settingsStore.maxRatedPower;
 const currentPower = (state) => state.settingsStore.houseHoldPower;
-const livePlotData = (state, props) => state.chartStore[cType.FROM_NOW][props.deviceId];
+const livePlotData = (state, props) => state.chartStore[cType.FROM_NOW];
 const hourPlotData = (state, props) => state.chartStore[cType.LAST_HOUR][props.deviceId];
 const dayPlotData = (state, props) => state.chartStore[cType.LAST_DAY][props.deviceId];
 const allTimePlotData = (state, props) => state.chartStore[cType.ALL_TIME][props.deviceId];
@@ -75,13 +75,13 @@ export const liveDataSlice = createSelector(
     [livePlotData, recieveProps],
     (livePlotData, recieveProps) => {
         const dataPoints = recieveProps.chartSize;
-        let data
-        if (livePlotData !== undefined) {
-            if (livePlotData.length > dataPoints && livePlotData.length >= 2) {
+        const deviceId = recieveProps.deviceId.toString()
+        let data = livePlotData[deviceId]
+        console.log(data)
+        if (data !== undefined) {
+            if (data.length > dataPoints && data.length >= 2) {
                 //console.log(livePlotData)
-                data = livePlotData.slice(livePlotData.length - dataPoints, livePlotData.length)
-            } else {
-                data = livePlotData
+                data = data.slice(data.length - dataPoints, data.length)
             }
             return {
                 ...recieveProps,

@@ -27,7 +27,7 @@ const DeviceUtilisationBar = memo(props => {
         const updateUsage = async () => {
             return await fetchHead(props.deviceId, "second")
                 .then(json => {
-                    console.log(json)
+                    //console.log(json)
                     if (json.content.data.usage !== undefined)
                         if (!cancel) {
                             dispatch(setUsageVal(json.content.data, props.deviceId))

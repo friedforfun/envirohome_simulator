@@ -11,10 +11,10 @@ export const validDataTypes = {
 import { ADD_DATA_POINT, CLEAR_DATA } from '../actions/charts'
 
 const initialState = {
-    "fromNow": [],
-    "lastHour": [],
-    "lastDay": [],
-    "allTime": []
+    "fromNow": {},
+    "lastHour": {},
+    "lastDay": {},
+    "allTime": {}
 }; 
 
 const ChartReducer = (state = initialState, action) => {
@@ -28,12 +28,14 @@ const ChartReducer = (state = initialState, action) => {
             const device_id = action.deviceId
 
             if (state[action.dataType][device_id] !== undefined){
-                const dataField = lodash.cloneDeep(state[action.dataType])
-                const checkFetchId = dataField[device_id].find(element => {
+
+                var mutator = lodash.cloneDeep(state[action.dataType][device_id])
+
+                const checkFetchId = mutator.findIndex(element => {
                     element.fetchId === action.fetchId
                 })
-                if (checkFetchId == undefined){
-                    var mutator = lodash.cloneDeep(state[action.dataType][device_id])
+                if (checkFetchId < 0){
+                    
                     mutator.push(newObj)
                     return { ...state, [action.dataType]: {...state[action.dataType], [device_id]: mutator} };
                 }
