@@ -26,7 +26,7 @@ const ChartData = props => {
             .then(json => {
                 const id = json.title.split("@").slice(0, 1)[0];
                 fetchId = id;
-                dispatch(addDataPoint(id, json.content.data, id, type.FROM_NOW));
+                dispatch(addDataPoint(deviceId, json.content.data, id, type.FROM_NOW));
             })
             .catch(error => console.log(error.message))
     }

@@ -82,7 +82,6 @@ const DeviceReducer = (state = initialState, action) => {
         
         case SET_USAGE_VAL:
             //console.log("state: "+ state)
-
             var mutator = lodash.cloneDeep(state.deviceUsage)
             //console.log(mutator)
             const findRoomId = getRoomId(action.deviceId)
@@ -129,7 +128,7 @@ const DeviceReducer = (state = initialState, action) => {
                     "isVisible": true,
                 }
 
-                console.log("SET_VISIBLE - new device")
+                //console.log("SET_VISIBLE - new device")
                 mutator.push(newVisibleItem);
                 
             }
@@ -146,8 +145,8 @@ const DeviceReducer = (state = initialState, action) => {
                 mutator.splice(updateIndex, 1, visibleDevice)
                 return { ...state, deviceUsage: mutator}
             } else {
-                console.log("Device not found.");
-                console.log("Device ID: " + action.deviceId);
+                //console.log("Device not found.");
+                //console.log("Device ID: " + action.deviceId);
             }
 
         default:

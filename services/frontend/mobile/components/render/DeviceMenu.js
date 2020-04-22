@@ -136,7 +136,7 @@ const DeviceMenu = React.memo(props => {
 
                     <Grid>
                         <Row style={styles.chartContainer}>
-                            <ChartWrapper chartSize={30} deviceId={item.device_id} key={uuidv4({ random: seed() })} />
+                            <ChartWrapper chartSize={10} deviceId={item.device_id} key={uuidv4({ random: seed() })} />
                         </Row>
 
                     </Grid>
