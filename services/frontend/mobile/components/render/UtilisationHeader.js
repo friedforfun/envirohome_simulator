@@ -9,6 +9,7 @@ import { useInterval } from '../logic/useInterval';
 import UtilisaionBar from './UtilisationBar';
 import { fetchHead } from '../logic/HomePower'
 import { updateHouseholdPower } from '../../store/actions/settings';
+import ChartDataWrapper from './reduxConnect/ChartDataWrapper';
 
 const UtilisationHeader = props => {
 
@@ -31,7 +32,7 @@ const UtilisationHeader = props => {
         // fetch current total power usage from eventstore here
         updateUsage()
 
-    }, 4000);
+    }, 1500);
 
 
     useEffect(() =>{
@@ -87,6 +88,7 @@ const UtilisationHeader = props => {
     return (
         <Grid {...props} style={styles.gridStyle}>
             <Col style={styles.columnStyle}>
+                <ChartDataWrapper />
                 <Text style={styles.textColour}>Energy Grade: {grade()}</Text>
                 <UtilisaionBar
                     value={percentage}
