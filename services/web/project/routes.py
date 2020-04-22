@@ -214,6 +214,8 @@ def add_device(device_type):
 @app.route("/api/device/<int:device_id>", methods=["PUT"])
 def change_device(device_id):
     device = db.session.query(models.Devices).filter_by(device_id=device_id).first()
+    if device is None:
+        raise APIError('device does not exist', status_code=404)
     device_model = get_device_model(device.type)
     device_data = request.get_json()
     for key in device_data.keys():
@@ -221,10 +223,10 @@ def change_device(device_id):
             raise APIError('device does not have field of type {}'.format(key),
                            status_code=400)
 
-    device = db.session.query(get_device_table_name(device.type)).filter_by(device_id=device_id).update(device_data, synchronize_session=False)
+    db.session.query(get_device_table_name(device.type)).filter_by(device_id=device_id).update(device_data, synchronize_session=False)
     db.session.commit()
 
-    return jsonify({'message': 'blah'})
+    return jsonify({'success': 'successfully modified device'})
 
 
 
