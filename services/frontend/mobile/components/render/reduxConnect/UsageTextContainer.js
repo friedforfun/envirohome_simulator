@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import UsageText from '../UsageText';
+import { getCurrentDeviceUsage } from '../../../store/selectors/device';
 
 const mapStateToProps = (state, ownProps) => {
-    const data = state.deviceStore.deviceUsage.find(entry => entry.device_id === ownProps.deviceId)
-
+    const data = getCurrentDeviceUsage(state, ownProps);
+    //console.log(data)
     if (data !== undefined) {
         return {
             ...ownProps,

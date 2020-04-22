@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Platform, View, Text, StyleSheet } from 'react-native';
+import React, { useEffect, useMemo } from 'react';
+import { Platform, Text, StyleSheet } from 'react-native';
 import { Col, Grid } from 'react-native-easy-grid';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
-import Colours, { hex2rgba } from '../../constants/Colours';
+import Colours from '../../constants/Colours';
 import { useInterval } from '../logic/useInterval';
 import UtilisaionBar from './UtilisationBar';
 import { fetchHead } from '../logic/HomePower'
@@ -32,7 +32,7 @@ const UtilisationHeader = props => {
         // fetch current total power usage from eventstore here
         updateUsage()
 
-    }, 1500);
+    }, 4000);
 
 
     useEffect(() =>{
@@ -54,6 +54,7 @@ const UtilisationHeader = props => {
         // G  <= 0.1
 
         const inversePercentage = 1 - percentage
+
         switch (true) {
             case  (inversePercentage > 0.9):
                 return "A+"
@@ -89,7 +90,7 @@ const UtilisationHeader = props => {
         <Grid {...props} style={styles.gridStyle}>
             <Col style={styles.columnStyle}>
                 <ChartDataWrapper />
-                <Text style={styles.textColour}>Energy Grade: {grade()}</Text>
+                <Text style={styles.textColour}>Energy Grade: {useMemo(() => grade(), [percentage])}</Text>
                 <UtilisaionBar
                     value={percentage}
                     height={14}
@@ -99,10 +100,7 @@ const UtilisationHeader = props => {
                 />
             </Col>
         </Grid>
-
-       
     );
-
 }
 
 UtilisationHeader.propTypes = {

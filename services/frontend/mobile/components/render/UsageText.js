@@ -4,12 +4,8 @@ import PropTypes from 'prop-types';
 
 
 const UsageText = props => {
-/*
-    props:
-        rawUsageVal
-*/
     return (
-        <Text>{props.rawUsageVal} / {props.ratedPower} Watts</Text>
+        <Text>{Math.trunc(props.rawUsageVal)} / {props.ratedPower} Watts</Text>
     )
 }
 

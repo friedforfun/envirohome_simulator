@@ -1,5 +1,4 @@
 import * as lodash from 'lodash/fp';
-import produce from 'immer';
 
 import { ADD_DEVICE, REMOVE_DEVICE, POPULATE_DEVICES, CLEAR_DEVICE_STORE, UPDATE_DEVICE, SET_USAGE_VAL, SET_VISIBLE, SET_HIDDEN, updateDevice } from '../actions/devices';
 
@@ -82,34 +81,35 @@ const DeviceReducer = (state = initialState, action) => {
             return { ...state, devices: populate };
         
         case SET_USAGE_VAL:
-            return produce(state, draftState => {
-                console.log("Update usage val")
-                console.log(draftState.deviceUsage)
-                const findRoomId = getRoomId(action.deviceId)
-                
-                const usageIndex = getUsageIndex(action.deviceId)
-                if (usageIndex >= 0) {
-                    const updatedItem = {
-                        ...draftState.deviceUsage[usageIndex],
-                        "usage": action.energy,
-                    }
-                    draftState.deviceUsage.splice(usageIndex, 1, updatedItem)
-                    
-                } else {
-                    const newItem = {
-                        "device_id": action.deviceId,
-                        "room_id": findRoomId,
-                        "usage": action.energy,
-                        "isVisible": false,
-                    }
-                    draftState.deviceUsage.push(newItem);
+            //console.log("state: "+ state)
+
+            var mutator = lodash.cloneDeep(state.deviceUsage)
+            //console.log(mutator)
+            const findRoomId = getRoomId(action.deviceId)
+            const usageIndex = getUsageIndex(action.deviceId)
+
+            if (usageIndex >= 0) {
+                const updatedItem = {
+                    ...state.deviceUsage[usageIndex],
+                    "usage": action.energy,
                 }
+                mutator.splice(usageIndex, 1, updatedItem)
                 
-            });
+            } else {
+                const newItem = {
+                    "device_id": action.deviceId,
+                    "room_id": findRoomId,
+                    "usage": action.energy,
+                    "isVisible": false,
+                }
+                mutator.push(newItem);
+            }
+            return { ...state, deviceUsage: mutator }
+
         
         case SET_VISIBLE:
-            console.log("action device id: "+action.deviceId)
-            console.log(state.deviceUsage)
+            //console.log("action device id: "+action.deviceId)
+            //console.log(state.deviceUsage)
             var mutator = lodash.cloneDeep(state.deviceUsage)
             const setVisIndex = getUsageIndex(action.deviceId)
             if (setVisIndex >= 0) {
@@ -134,21 +134,21 @@ const DeviceReducer = (state = initialState, action) => {
                 
             }
             return {...state, deviceUsage: mutator}
-
+ 
         case SET_HIDDEN:
-            return produce(state, draftState => {
-                const setHiddenIndex = getUsageIndex(action.deviceId);
-                if (setHiddenIndex >= 0) {
-                    const visibleDevice = {
-                        ...draftState.deviceUsage[setHiddenIndex],
-                        isVisible: false,
-                    }
-                    draftState.deviceUsage.splice(updateIndex, 1, visibleDevice);
-                } else {
-                    console.log("Device not found.");
-                    console.log("Device ID: " + action.deviceId);
+            var mutator = lodash.cloneDeep(state.deviceUsage)
+            const setHiddenIndex = getUsageIndex(action.deviceId);
+            if (setHiddenIndex >= 0) {
+                const visibleDevice = {
+                    ...state.deviceUsage[setHiddenIndex],
+                    isVisible: false,
                 }
-            });
+                mutator.splice(updateIndex, 1, visibleDevice)
+                return { ...state, deviceUsage: mutator}
+            } else {
+                console.log("Device not found.");
+                console.log("Device ID: " + action.deviceId);
+            }
 
         default:
             return { ...state };

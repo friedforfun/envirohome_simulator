@@ -1,12 +1,11 @@
 import { connect } from 'react-redux';
 
+import { getVisibleDeviceUsage } from '../../../store/selectors/device'
 import ChartData from '../ChartData';
 
 const mapStateToProps = (state, ownProps) => {
-    // map visible devices to props
-    const deviceStore = state.deviceStore.deviceUsage;
-    const visibleDevices = deviceStore.filter(device => device.isVisible === true)
-    //console.log(visibleDevices)
+    const visibleDevices = getVisibleDeviceUsage(state);
+    //console.log(visibleDevices);
     if (visibleDevices !== undefined && visibleDevices !== null){
         return {
             ...ownProps,
