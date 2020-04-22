@@ -16,5 +16,11 @@ export default {
 
     // room deleted
     Six: 6,
+
+    // device added
+    Seven: 7,
+
+    // device deleeted
+    Eight: 8,
     
 }

@@ -10,6 +10,7 @@ import ManageUsers from '../components/render/settings/ManageUsers';
 import NotificationSettings from '../components/render/settings/NotificationSettings';
 import PowerManager from '../components/render/settings/PowerManager';
 import RoomEditorWrapper from '../components/render/reduxConnect/RoomEditorWrapper';
+import DeviceEditorWrapper from '../components/render/reduxConnect/DeviceEditorWrapper';
 import StatsPage from '../components/render/settings/StatsPage';
 
 const SettingsContent = props => {
@@ -19,7 +20,7 @@ const SettingsContent = props => {
     
     React.useLayoutEffect(() => {
         props.navigation.setOptions({
-            headerRight: () => <TouchableOpacity><HomeIcon action={settingsNav} /></TouchableOpacity>
+            headerRight: () => <TouchableOpacity onPress={() => settingsNav()} ><HomeIcon action={settingsNav} /></TouchableOpacity>
         });
     }, [props.navigation])
 
@@ -31,11 +32,11 @@ const SettingsContent = props => {
         <View style={{flex: 1}}>
             {content === "powerManager" && <PowerManager />}
             {content === "editRooms" && <RoomEditorWrapper />}
+            {content === "editDevices" && <DeviceEditorWrapper roomId={props.route.params.roomId} />}
             {content === "stats" && <StatsPage />}
             {content === "notificationSettings" && <NotificationSettings />}
             {content === "manageUsers" && <ManageUsers />}
             {content === "logs" && <LogViewer />}
-
         </View>
         
 
