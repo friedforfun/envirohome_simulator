@@ -27,14 +27,13 @@ const ChartData = props => {
                 const id = json.title.split("@").slice(0, 1)[0];
                 fetchId = id;
                 dispatch(addDataPoint(id, json.content.data, id, type.FROM_NOW));
-                dispatch(setUsageVal(json.content.data, deviceId))
             })
             .catch(error => console.log(error.message))
     }
 
     useInterval(() => {
        nextRender(now + 1)
-    }, 4000);
+    }, 2000);
 
     useEffect(() => {
         //console.log(props.visibleDevices)
@@ -48,8 +47,22 @@ const ChartData = props => {
     )
 }
 
+ChartData.defaultTypes = {
+    visibleDevices: []
+}
+
 ChartData.propTypes = {
-    visibleDevices: deviceUsageArrProp.deviceUsageArr
+    visibleDevices: PropTypes.arrayOf(
+        PropTypes.oneOfType([
+            PropTypes.shape({
+            device_id: PropTypes.number,
+            room_id: PropTypes.number,
+            usage: PropTypes.number,
+            isVisible: PropTypes.bool
+        }),
+        PropTypes.object
+    ])
+    )
     
 }
 
