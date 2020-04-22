@@ -63,14 +63,8 @@ def token_required(func):
         except:
             raise APIError('token invalid', status_code=401)
 
-        return func(current_user, *args, **kwargs)
+        return func(*args, **kwargs)
     return wrapper
-
-
-@app.route("/")
-@token_required
-def hello_world(current_user):
-    return models.User.get_delete_put_post(1)
 
 
 @app.route("/auth/login", methods=["POST"])
@@ -179,6 +173,7 @@ def get_device(d_id):
 
 
 @app.route("/api/device/<device_pk>/toggle_power", methods=["GET"])
+@token_required
 def toggle_power(device_pk):
     device = db.session.query(models.Devices).filter_by(device_id=device_pk).first()
     power_state = device.is_on
@@ -227,7 +222,6 @@ def change_device(device_id):
     db.session.commit()
 
     return jsonify({'success': 'successfully modified device'})
-
 
 
 ################# ROOM ROUTES ################################################
