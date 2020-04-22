@@ -13,6 +13,13 @@ const allTimePlotData = (state, props) => state.chartStore[cType.ALL_TIME][props
 
 const recieveProps = (_, props) => props;
 
+export const findDeviceById = createSelector(
+    [deviceArray, recieveProps],
+    (deviceArray, recieveProps) => {
+        deviceArray.find(device => device.device_id == recieveProps.deviceId)
+    }
+)
+
 export const getVisibleDeviceUsage = createSelector(
     [deviceUsage],
     (deviceUsage) => {
