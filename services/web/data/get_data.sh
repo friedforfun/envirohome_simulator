@@ -1,4 +1,5 @@
 #!/bin/bash
+## generates values used to seed device energy usage streams
 if grep docker /proc/1/cgroup -qa; then
 	DATA_DIR="/usr/src/app/data"
 else

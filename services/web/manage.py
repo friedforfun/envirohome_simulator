@@ -27,21 +27,25 @@ cli = FlaskGroup(app)
 
 @cli.command('start_usage_second')
 def start_usage_second():
+    '''starts eventstore stream for usage data per second'''
     tasks.emit_usage_event_second.delay()
 
 
 @cli.command('start_usage_minute')
 def start_usage_minute():
+    '''starts eventstore stream for usage data per minute'''
     tasks.emit_usage_event_minute.delay()
 
 
 @cli.command('start_usage_hour')
 def start_usage_hour():
+    '''starts eventstore stream for usage data per hour'''
     tasks.emit_usage_event_hour.delay()
 
 
 @cli.command('create_db')
 def create_db():
+    '''initialise database'''
     db.reflect()
     db.drop_all()
     db.create_all()
@@ -50,6 +54,7 @@ def create_db():
 
 @cli.command('seed_db')
 def seed_db():
+    '''seed db with test values database'''
     living_room = models.Room(room_id=0, room_name='Living Room')
     outside = models.Room(room_name='Outside')
     bedroom_1 = models.Room(room_name='Bedroom 1')
