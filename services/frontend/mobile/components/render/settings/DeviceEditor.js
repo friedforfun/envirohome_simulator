@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import colours from '../../../constants/Colours'
-import AddRoomPopup from './AddRoomPopup';
+import AddDevicePopup from './AddDevicePopup';
 import DeleteDevice from '../../logic/DeleteDevice';
 import { testResponse } from '../../logic/fetchFunc';
 import Fetching from '../Fetching';
@@ -92,7 +92,7 @@ const DeviceEditor = props => {
                     ready={fetchCompleteHandler}
                 />
             }
-            <AddRoomPopup visible={overlayState} visHandler={changeOverlayState} refresh={refreshDevice} />
+            <AddDevicePopup visible={overlayState} visHandler={changeOverlayState} refresh={refreshDevice} roomId={props.roomId}/>
             <ScrollView style={styles.content}>
                 {
                     props.deviceList.map((item, i) => {
