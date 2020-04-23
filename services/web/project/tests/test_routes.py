@@ -1,6 +1,7 @@
 from project import app, db
 import project.routes as r
 import project.models as m
+import project.serialisers as s
 import unittest
 import json
 import os
@@ -83,38 +84,57 @@ class TestRoutes(unittest.TestCase):
         data = ast.literal_eval(res.data.decode('UTF-8'))
         self.assertEquals(len(data['rooms']), 1)
 
+    def test_add_device(self):
+        room = {'room_name': 'New Room'}
+        self.app.post('/api/room', data=json.dumps(room), content_type='application/json')
+        device = {'device_name': 'New Device', 'rated_power': 40, 'room_id': 1}
+        response = self.app.post('/api/device/tv', data=json.dumps(device), content_type='application/json')
+        self.assertEquals(response.status_code, 201)
+        new_device = db.session.query(m.Devices).filter_by(device_name=device['device_name']).first()
+        self.assertIsNotNone(new_device)
+
     def test_get_devices(self):
-        pass
+        room = {'room_name': 'New Room'}
+        self.app.post('/api/room', data=json.dumps(room), content_type='application/json')
+        device_1 = {'device_name': 'New Device 1', 'rated_power': 40, 'room_id': 1}
+        device_2 = {'device_name': 'New Device 2', 'rated_power': 40, 'room_id': 1}
+        self.app.post('/api/device/tv', data=json.dumps(device_1), content_type='application/json')
+        self.app.post('/api/device/tv', data=json.dumps(device_2), content_type='application/json')
+        res = self.app.get('/api/device')
+        self.assertEquals(res.status_code, 200)
 
     def test_get_device(self):
-        pass
-
-    def test_toggle_power(self):
-        pass
-
-    def test_add_device(self):
-        pass
+        room = {'room_name': 'New Room'}
+        self.app.post('/api/room', data=json.dumps(room), content_type='application/json')
+        device = {'device_name': 'New Device', 'rated_power': 40, 'room_id': 1}
+        self.app.post('/api/device/tv', data=json.dumps(device), content_type='application/json')
+        res = self.app.get('/api/device/1')
+        self.assertEquals(res.status_code, 200)
 
     def test_change_device(self):
-        pass
-
-    def test_get_devices_in_room(self):
-        pass
-
-    def test_get_room_device_count(self):
-        pass
-
-    def test_get_room_total_power(self):
-        pass
-
-    def test_get_room_current_power(self):
-        pass
+        room = {'room_name': 'New Room'}
+        self.app.post('/api/room', data=json.dumps(room), content_type='application/json')
+        device = {'device_name': 'New Device', 'rated_power': 40, 'room_id': 1}
+        self.app.post('/api/device/tv', data=json.dumps(device), content_type='application/json')
+        new_data = {'device_name': 'New Device Name!'}
+        self.app.put('/api/device/1', data=json.dumps(new_data),
+                     content_type='application/json')
+        new_name = db.session.query(m.Devices).filter_by(device_name='New Device Name!').first()
+        self.assertIsNotNone(new_name)
 
     def test_get_device_table_name(self):
-        pass
+        self.assertEquals(r.get_device_table_name('light'), m.Lights)
+        self.assertEquals(r.get_device_table_name('tv'), m.TV)
+        self.assertEquals(r.get_device_table_name('plug'), m.Plug)
+        self.assertEquals(r.get_device_table_name('thermostat'), m.Thermostat)
+        self.assertEquals(r.get_device_table_name('solar'), m.Solar)
 
     def test_get_device_model(self):
-        pass
+        self.assertEquals(s.get_device_model('lights'), s.LightSchema)
+        self.assertEquals(s.get_device_model('tv'), s.TVSchema)
+        self.assertEquals(s.get_device_model('plug'), s.DeviceSchema)
+        self.assertEquals(s.get_device_model('thermostat'), s.ThermostatSchema)
+        self.assertEquals(s.get_device_model('solar'), s.DeviceSchema)
 
 
 if __name__ == '__main__':

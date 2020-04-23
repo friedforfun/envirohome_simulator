@@ -11,6 +11,8 @@ then
     echo "PostgreSQL started"
 fi
 
+nose2
+
 ./data/get_data.sh
 
 celery -A project.tasks.celery worker --loglevel=info &
