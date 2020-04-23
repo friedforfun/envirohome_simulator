@@ -1,86 +1,107 @@
 users (7)
 -----
-- get all users for home (ADMIN)
-- get information for user (ADMIN / SPECIFIC USER)
-- delete user (ADMIN / SPECIFIC USER)
-- change password (ADMIN / SPECIFIC USER) (ADMINS CAN CHANGE EACHOTHERS PASSWORD)
-- promote user to admin (ADMIN)
-- log user in
-- register new user
-- log user out
-- NOTE: NO FORGOT PASSWORD, AS NO EMAIL FUNCTIONALITY IS USED
 
-- GET '/api/user': X
--- IF ADMIN: return all users
+- GET '/api/user':
+-- return all users, route is for testing only
 
-- GET '/api/user/<user_id>': X
--- IF ADMIN: return user
--- IF USER: only return user info if authenticated as said user
-
-- DELETE '/api/user/<user_id>' {password}
--- IF USER: must be authenticated, password used for confirmation
--- IF ADMIN: just do it.  refuse to delete admin acct if only one admin
--- return error status
-
-- PUT '/api/user/<user_id>/password_reset', {new_password, old_password}
--- IF USER: if authenticated as said user
--- IF ADMIN: only new_password mandatory
--- return error status
-
-- PUT '/api/user/<user_id>/admin'
--- IF ADMIN: promote user_id to admin
--- return error status
-
-- PUT '/api/user/<user_id>/username/<username>'
--- IF USER: change username if user is auth as user_id
--- IF ADMIN: change username
+- GET '/api/user/<int:user_id>':
+-- return specific user, route is for testing only
 
 devices (6)
 -------
-- all routes need auth (at least user)
-- get device info (all or specific device)
-- change device info (room, on status, etc)
-- certain state changing routes (remove, add, rename) need admin
-
-- GET '/api/devices' X
+- GET '/api/device':
 -- get all devices in home
 
-- GET /api/device/<device_id> X
+- GET /api/device/<int:device_id>
 -- get specific device information
 
-- GET /api/device/types
--- return list of all available types: (['tv', 'lights'...])
-
-- POST /api/device/<str:dev_type>, {device info} X
+- POST /api/device/<str:dev_type>
 -- create device of type dev_type
 
-- DELETE /api/device/<device_id>
--- IF ADMIN: delete device
+request format if dev_type is "tv":
 
-- PUT /api/device/<device_id>/<field>/<value>
--- update _field_ of _device_ to be _value
--- EX: /api/device/4/is_on/false => turn device 4 off
--- fields rated_power, device_name require ADMIN 
+{
+    "device_name": <str>,
+    "room_id": <int>,
+    "rated_power: <int>,
+    ["is_on": <bool:-true>,]
+    ["is_fault": <bool:-false>,]
+    ["channel: <int:-1>,]
+    ["output": <"HDMI1|HDMI2|ANT|DVD|VIDEO":-"HDMI1">,]
+    ["volume": <int:-100>]
+
+}
+
+request format if dev_type is "thermostat"
+
+{
+    "device_name": <str>,
+    "room_id": <int>,
+    "rated_power: <int>,
+    ["is_on": <bool:-true>,]
+    ["is_fault": <bool:-false>,]
+    ["temp": <int:-23>]
+
+}
+
+request format if dev_type is "plug"
+
+{
+    "device_name": <str>,
+    "room_id": <int>,
+    "rated_power: <int>,
+    ["is_on": <bool:-true>,]
+    ["is_fault": <bool:-false>,]
+
+}
+
+request format is "lights"
+
+{
+    "device_name": <str>,
+    "room_id": <int>,
+    "rated_power: <int>,
+    ["is_on": <bool:-true>,]
+    ["is_fault": <bool:-false>,]
+    ["intensity: <int:-1>,]
+    ["colour": <int:-0>,]
+
+}
+
+request format if dev_type is "solar"
+
+{
+    "device_name": <str>,
+    "room_id": <int>,
+    "rated_power: <int>,
+    ["is_on": <bool:-true>,]
+    ["is_fault": <bool:-false>,]
+}
+
+
+- PUT /api/device/<device_id>
+-- update <property> of <device> to be <value>
+
+request format:
+{
+    "<property>": "<value>",
+    ...
+}
 
 rooms (4)
 -----
-- add rooms
-- remove rooms
-- get all devices in a room
-- rename rooms
+- GET /api/room
+-- get all rooms
 
-- GET /api/room X
--- get all rooms in the form [{room_id, room_name}]
-
-- POST /api/room, {room_name} X
+- POST /api/room 
 -- create room, return room_id
+request format:
+{
+    "room_name": <str>
+}
 
-- PUT /api/room/<room_id>/<name> X
--- change room name
--- /api/room/4?room_name='kitchen'
+- GET /api/room/<room_id>
+-- get information for room
 
-- GET /api/room/<room_id> X
--- get information for room in the form {room_id, room_name}
-
-- DELETE /api/room/<room_id> X
+- DELETE /api/room/<room_id>
 -- delete room
