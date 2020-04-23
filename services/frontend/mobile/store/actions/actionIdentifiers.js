@@ -12,8 +12,9 @@ export const REQUEST_ERROR = 'REQUEST_ERROR';
 export const SET_DID_TRY_AL = 'SET_DID_TRY_AL';
 
 // chart
-export const ADD_DATA_POINT = 'ADD_DATA_POINT'
-export const CLEAR_DATA = 'CLEAR_DATA'
+export const ADD_DATA_POINT = 'ADD_DATA_POINT';
+export const CLEAR_DATA = 'CLEAR_DATA';
+export const UPDATE_PLOT_LIMIT = 'UPDATE_PLOT_LIMIT';
 
 // devices
 export const ADD_DEVICE = 'ADD_DEVICE';

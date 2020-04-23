@@ -8,13 +8,17 @@ export const validDataTypes = {
     ALL_TIME: "allTime"
 }
 
-import { ADD_DATA_POINT, CLEAR_DATA } from '../actions/charts'
+import { ADD_DATA_POINT, CLEAR_DATA, UPDATE_PLOT_LIMIT } from '../actions/charts'
+
 
 const initialState = {
     "fromNow": {},
     "lastHour": {},
     "lastDay": {},
-    "allTime": {}
+    "allTime": {},
+    "plotPointLimit": {
+        "default": 10,
+    },
 }; 
 
 const ChartReducer = (state = initialState, action) => {
@@ -28,24 +32,54 @@ const ChartReducer = (state = initialState, action) => {
             const device_id = action.deviceId
 
             if (state[action.dataType][device_id] !== undefined){
-
                 var mutator = lodash.cloneDeep(state[action.dataType][device_id])
 
-                const checkFetchId = mutator.findIndex(element => {
-                    element.fetchId === action.fetchId
-                })
-                if (checkFetchId < 0){
+                if (state[action.dataType][device_id].length < state.plotPointLimit[device_id]){
                     
+                    const checkFetchId = mutator.findIndex(element => {
+                        element.fetchId === action.fetchId
+                    })
+                    if (checkFetchId < 0){
+                        
+                        mutator.push(newObj)
+                        return { ...state, [action.dataType]: {...state[action.dataType], [device_id]: mutator} };
+                    }
+                    break;
+                } else {
+                    mutator.shift();
                     mutator.push(newObj)
-                    return { ...state, [action.dataType]: {...state[action.dataType], [device_id]: mutator} };
+                    return { ...state, [action.dataType]: { ...state[action.dataType], [device_id]: mutator } };
                 }
-                break;
             } else {
-                return { ...state, [action.dataType]: {...state[action.dataType], [device_id]: [newObj]} };
+                return { 
+                    ...state, 
+                    plotPointLimit: {
+                        ...state.plotPointLimit,
+                        [device_id]: lodash.cloneDeep(state.plotPointLimit.default),
+                    },
+                    [action.dataType]: {
+                        ...state[action.dataType], 
+                        [device_id]: [newObj]
+                    }
+                };
             }
         
         case CLEAR_DATA:
             return { ...state, [action.dataType]: [] }
+
+        case UPDATE_PLOT_LIMIT:
+            return {
+                ...state,
+                plotPointLimit: {
+                    ...state.plotPointLimit,
+                    [action.deviceId]: action.numberOfPlots
+                }
+            }
+            break;
+
+
+
+
 
 
         default:

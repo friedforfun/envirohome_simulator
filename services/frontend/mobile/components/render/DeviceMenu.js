@@ -40,7 +40,7 @@ const DeviceMenu = React.memo(props => {
             return tempDevice
         }
 
-        TogglePower(device)
+        TogglePower(device, props.authToken)
             .then(response => {
                 return testResponse(response)
             })
@@ -130,13 +130,13 @@ const DeviceMenu = React.memo(props => {
                             <ChartContentPicker />
                         </Col>
                         <Col>
-                            <TimeFramePicker />
+                            <TimeFramePicker deviceId={item.device_id}/>
                         </Col>
                     </Grid>
 
                     <Grid>
                         <Row style={styles.chartContainer}>
-                            <ChartWrapper chartSize={10} deviceId={item.device_id} key={uuidv4({ random: seed() })} />
+                            <ChartWrapper deviceId={item.device_id} key={uuidv4({ random: seed() })} />
                         </Row>
 
                     </Grid>
