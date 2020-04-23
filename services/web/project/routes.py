@@ -144,12 +144,6 @@ def get_all_users():
         } for user in users]
     return jsonify(user_list)
 
-
-@app.route("/user/<public_id>", methods=["DELETE"])
-def delete_user():
-    pass
-
-
 ################# DEVICE ROUTES ################################################
 
 

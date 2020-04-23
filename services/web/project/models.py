@@ -40,8 +40,6 @@ class Devices(db.Model):
     is_fault = db.Column(db.Boolean, default=False, nullable=False)
     is_on = db.Column(db.Boolean, default=True, nullable=False)
     is_generator = db.Column(db.Boolean, default=False, nullable=False)
-    usage = db.relationship('Usage', backref='device',
-                            cascade="all,delete", uselist=False)
     room_id = db.Column(db.Integer, db.ForeignKey('room.room_id',
                                                   ondelete='cascade'))
 
@@ -96,14 +94,3 @@ class Solar(Devices):
     __mapper_args__ = {
         'polymorphic_identity': 'solar'
     }
-
-
-# Create usage table in database, with id, date, time and energy usage columns
-class Usage(db.Model):
-    usage_id = db.Column(db.Integer, primary_key=True, nullable=False,
-                         autoincrement=True)
-    device_id = db.Column(db.Integer, db.ForeignKey('devices.device_id',
-        ondelete='cascade'))
-    date = db.Column(db.Date, nullable=False, primary_key=True)
-    time = db.Column(db.Time, nullable=False, primary_key=True)
-    energy_usage = db.Column(db.Float)
