@@ -1,96 +1,120 @@
 from project import app, db
-from project.routes import get_usage
-from project.models import User, Devices, Usage
+import project.routes as r
+import project.models as m
 import unittest
 import json
 import os
-import csv
+import ast
+
+TEST_DB = 'test.db'
 
 
-class TestStringMethods(unittest.TestCase):
+class TestRoutes(unittest.TestCase):
     def setUp(self):
-        with app.app_context():
-            app.config['TESTING'] = True
-            app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL",
-                                                              "sqlite://")
-            self.app = app.test_client()
-            db.create_all()
-            self.create_db()
-            self.seed_db()
-
-    def create_db(self):
+        app.config['TESTING'] = True
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL", "sqlite://")
+        self.app = app.test_client()
         db.drop_all()
         db.create_all()
-        db.session.commit()
-
-    def seed_db(self):
-        db.session.add(User(username='admin', email='nobody@nowhere.address',
-                            password_hash='totally a real hash'))
-
-        db.session.add(Devices(device_id=0, device_name='Living Room TV',
-                            rated_power=700, device_type='tv', fault=False,
-                            room='living_room', on=True))
-        db.session.add(Devices(device_name='Outside Lights', rated_power=40,
-                            device_type='lights', fault=False, room='outside',
-                            on=True))
-        db.session.add(Devices(device_name='Bedroom 1 Lights', rated_power=40,
-                            device_type='lights', fault=False, room='bedroom_1',
-                            on=True))
-        db.session.add(Devices(device_name='Bedroom 2 Lights', rated_power=40,
-                            device_type='lights', fault=False, room='bedroom_2',
-                            on=True))
-        db.session.add(Devices(device_name='Kitchen Lights', rated_power=40,
-                            device_type='lights', fault=False, room='kitchen',
-                            on=True))
-        db.session.add(Devices(device_name='Living Room Lights 1', rated_power=40,
-                            device_type='lights', fault=False, room='living_room',
-                            on=True))
-        db.session.add(Devices(device_name='Living Room Lights 2', rated_power=40,
-                            device_type='lights', fault=False, room='living_room',
-                            on=True))
-        db.session.add(Devices(device_name='Bathroom 1 Lights', rated_power=40,
-                            device_type='lights', fault=False, room='bathroom_1',
-                            on=True))
-
-        db.session.add(Devices(device_name='Kitchen Plug', rated_power=500,
-                            device_type='plug', fault=True, room='kitchen',
-                            on=True))
-        db.session.commit()
-
-        with open(os.getcwd() + '/mock_data/dev_1.txt', 'r') as f:
-            reader = csv.reader(f, delimiter=';', quoting=csv.QUOTE_NONE)
-            next(reader)  # skip csv header
-            for row in reader:
-                db.session.add(Usage(device_id=row[0], date=row[1], time=row[2],
-                            energy_usage=row[3]))
-
-        with open(os.getcwd() + '/mock_data/dev_2.txt', 'r') as f:
-            reader = csv.reader(f, delimiter=';', quoting=csv.QUOTE_NONE)
-            next(reader)  # skip csv header
-            for row in reader:
-                db.session.add(Usage(device_id=row[0], date=row[1], time=row[2],
-                            energy_usage=row[3]))
-
-        with open(os.getcwd() + '/mock_data/dev_3.txt', 'r') as f:
-            reader = csv.reader(f, delimiter=';', quoting=csv.QUOTE_NONE)
-            next(reader)  # skip csv header
-            for row in reader:
-                db.session.add(Usage(device_id=row[0], date=row[1], time=row[2],
-                            energy_usage=row[3]))
-        db.session.commit()
 
     def tearDown(self):
-        with app.app_context():
-            db.session.remove()
-            db.drop_all()
+        db.session.close()
+        db.drop_all()
 
-    def test_get_usage(self):
-        with app.app_context():
-            json_api = get_usage(1, '30012020', '00:37:00')
-            json_real = json.loads('[ { "date": "2020-01-30", "device_id": 1, "energy_usage": 0.0, "time": "00:37:00" } ]')
+    def test_new_user(self):
+        user = {'username': 'chs', 'email': 'chs@localhost', 'password': 'letmein'}
+        self.app.post('/auth/register', data=json.dumps(user), content_type='application/json')
+        db_user = db.session.query(m.User).filter_by(username='chs').first()
+        self.assertIsNotNone(db_user)
 
-            self.assertEqual(json_api.get_json(), json_real)
-            self.assertEqual(json_api.mimetype, 'application/json')
+    def test_login(self):
+        user = {'username': 'chs', 'email': 'chs@localhost', 'password': 'letmein'}
+        self.app.post('/auth/register', data=json.dumps(user), content_type='application/json')
+        db_user = db.session.query(m.User).filter_by(username='chs').first()
+        self.assertIsNotNone(db_user)
+
+        user_login = {'email': 'chs@localhost', 'password': 'letmein'}
+        response = self.app.post('/auth/login', data=json.dumps(user_login), content_type='application/json')
+        self.assertEquals(response.status_code, 200)
+
+    def test_add_room(self):
+        room = {'room_name': 'New Room'}
+        response = self.app.post('/api/room', data=json.dumps(room), content_type='application/json')
+        self.assertEquals(response.status_code, 201)
+        new_room = db.session.query(m.Room).filter_by(room_name=room['room_name']).first()
+        self.assertIsNotNone(new_room)
+
+    def test_get_room(self):
+        room = {'room_name': 'New Room'}
+        prev_response = self.app.post('/api/room', data=json.dumps(room), content_type='application/json')
+        self.assertEquals(prev_response.status_code, 201)
+        response = self.app.get('/api/room/1')
+        self.assertEquals(response.status_code, 200)
+
+    def test_get_all_rooms(self):
+        room_1 = {'room_name': 'New Room 1'}
+        room_2 = {'room_name': 'New Room 2'}
+        res1 = self.app.post('/api/room', data=json.dumps(room_1), content_type='application/json')
+        res2 = self.app.post('/api/room', data=json.dumps(room_2), content_type='application/json')
+        self.assertEquals(res1.status_code, 201)
+        self.assertEquals(res2.status_code, 201)
+
+        res = self.app.get('/api/room')
+        self.assertEquals(res.status_code, 200)
+        data = ast.literal_eval(res.data.decode('UTF-8'))
+        self.assertEquals(len(data['rooms']), 2)
+
+    def test_delete_room(self):
+        room_1 = {'room_name': 'New Room 1'}
+        room_2 = {'room_name': 'New Room 2'}
+        res1 = self.app.post('/api/room', data=json.dumps(room_1), content_type='application/json')
+        res2 = self.app.post('/api/room', data=json.dumps(room_2), content_type='application/json')
+        self.assertEquals(res1.status_code, 201)
+        self.assertEquals(res2.status_code, 201)
+
+        res = self.app.get('/api/room')
+        self.assertEquals(res.status_code, 200)
+        data = ast.literal_eval(res.data.decode('UTF-8'))
+        self.assertEquals(len(data['rooms']), 2)
+
+        self.app.delete('/api/room/1')
+        res = self.app.get('/api/room')
+        self.assertEquals(res.status_code, 200)
+        data = ast.literal_eval(res.data.decode('UTF-8'))
+        self.assertEquals(len(data['rooms']), 1)
+
+    def test_get_devices(self):
+        pass
+
+    def test_get_device(self):
+        pass
+
+    def test_toggle_power(self):
+        pass
+
+    def test_add_device(self):
+        pass
+
+    def test_change_device(self):
+        pass
+
+    def test_get_devices_in_room(self):
+        pass
+
+    def test_get_room_device_count(self):
+        pass
+
+    def test_get_room_total_power(self):
+        pass
+
+    def test_get_room_current_power(self):
+        pass
+
+    def test_get_device_table_name(self):
+        pass
+
+    def test_get_device_model(self):
+        pass
 
 
 if __name__ == '__main__':
