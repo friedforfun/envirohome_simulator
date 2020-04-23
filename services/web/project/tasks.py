@@ -7,21 +7,33 @@ import requests
 import datetime
 import json
 
+# create celery app
 celery = create_celery_app(app)
+
+# base url for publishing to streams
 base_url = 'http://' + os.environ['HOST_IP'] + ':2113/streams/'
+
+# generator for device power usage coefficients
+# is seeded by household_power_consumption.txt
 effective_gen = (float(row)/31.0 for row in open('data/household_power_consumption.txt'))
 
 
 def post_to_stream(stream_name, data):
-    headers = {"Content-Type": "application/json",
-               "ES-EventType": "UploadUsageData",
-               "ES-EventId": "{}".format(uuid.uuid4())}
+    '''publish data to a given stream
+    args:
+        :stream_name: which stream to publish to
+        :data: data to publish to :stream_name:
+    '''
+    headers = {'Content-Type': 'application/json',
+               'ES-EventType': 'UploadUsageData',
+               'ES-EventId': '{}'.format(uuid.uuid4())}
 
     requests.post(base_url + stream_name, json=data, headers=headers,
                   auth=requests.auth.HTTPBasicAuth('admin', 'changeit'))
 
 
 def emit_usage_event(interval, stream_suffix):
+    '''publish usage information per unit time'''
     devices = db.session.query(models.Devices).all()
     rooms = db.session.query(models.Room).all()
     db.session.commit()
@@ -67,12 +79,14 @@ def emit_usage_event(interval, stream_suffix):
 
 @celery.task
 def emit_usage_event_second():
+    '''celery task for publishing per second streams'''
     while True:
         emit_usage_event(1, 'second')
 
 
 @celery.task
 def emit_usage_event_minute():
+    '''celery task for publishing per minute streams'''
     time.sleep(2)
     devices = db.session.query(models.Devices).all()
     rooms = db.session.query(models.Room).all()
@@ -104,6 +118,7 @@ def emit_usage_event_minute():
 
 @celery.task
 def emit_usage_event_hour():
+    '''celery task for publishing per hour streams'''
     time.sleep(2)
     devices = db.session.query(models.Devices).all()
     rooms = db.session.query(models.Room).all()

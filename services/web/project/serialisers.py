@@ -1,3 +1,4 @@
+# defines serialisers used for validating and returning database objects
 from marshmallow import Schema, fields
 
 UsageSchema = Schema.from_dict({
@@ -9,13 +10,13 @@ UsageSchema = Schema.from_dict({
 
 
 UserSchema = Schema.from_dict({
-    "username": fields.Str(required=True),
-    "email": fields.Email(required=True),
-    "password": fields.Str(required=True)})
+    'username': fields.Str(required=True),
+    'email': fields.Email(required=True),
+    'password': fields.Str(required=True)})
 
 LoginSchema = Schema.from_dict({
-    "email": fields.Email(required=True),
-    "password": fields.Str(required=True)})
+    'email': fields.Email(required=True),
+    'password': fields.Str(required=True)})
 
 RoomSchema = Schema.from_dict({
     'room_id': fields.Int(),

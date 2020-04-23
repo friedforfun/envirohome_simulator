@@ -23,8 +23,11 @@ import uuid
 import jwt
 import datetime
 
+# NOTE: api is documented fully in api.txt
+
 
 class APIError(Exception):
+    ''' custom api error handling class '''
     error_code = 400
 
     def __init__(self, detail, status_code=None):
@@ -35,20 +38,24 @@ class APIError(Exception):
 
     def to_dict(self):
         err_msg = {
-            "status_code": self.status_code,
-            "detail": self.detail
+            'status_code': self.status_code,
+            'detail': self.detail
         }
-        return {"error": err_msg}
+        return {'error': err_msg}
 
 
+# register APIError with Flask app
 @app.errorhandler(APIError)
 def handle_api_error(err):
+    ''' handle api errors gracefully'''
     res = jsonify(err.to_dict())
     res.status_code = err.status_code
     return res
 
 
 def token_required(func):
+    '''used to decorate functions which should be used by authenticated users
+    only'''
     @wraps(func)
     def wrapper(*args, **kwargs):
         token = None
@@ -60,7 +67,6 @@ def token_required(func):
 
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
-            current_user = models.User.query.filter_by(public_id=data['public_id']).first()
         except:
             raise APIError('token invalid', status_code=401)
 
@@ -68,8 +74,9 @@ def token_required(func):
     return wrapper
 
 
-@app.route("/auth/login", methods=["POST"])
+@app.route('/auth/login', methods=['POST'])
 def login():
+    '''create and return jwt token to user if credentials supplied are valid'''
     user_data = request.get_json()
     try:
         serialisers.LoginSchema().load(user_data)
@@ -86,15 +93,16 @@ def login():
             'admin': user.is_admin,
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
         }, app.config['SECRET_KEY'])
-        return jsonify({"token": token.decode('UTF-8'),
+        return jsonify({'token': token.decode('UTF-8'),
                         'email': user.email,
                         'user_id': user.public_id})
     else:
         raise APIError('incorrect username or password', status_code=401)
 
 
-@app.route("/auth/register", methods=["POST"])
+@app.route('/auth/register', methods=['POST'])
 def new_user():
+    '''create new user if username and email are uniqe'''
     user_data = request.get_json()
     try:
         serialisers.UserSchema().load(user_data)
@@ -107,30 +115,32 @@ def new_user():
         raise APIError('email or username taken', status_code=409)
 
     hashed_password = generate_password_hash(user_data['password'],
-                                             method="pbkdf2:sha256:8000")
+                                             method='pbkdf2:sha256:8000')
 
     user = models.User(public_id=uuid.uuid4(), username=user_data['username'],
                        email=user_data['email'], password_hash=hashed_password)
 
     db.session.add(user)
     db.session.commit()
-    return jsonify({"user_id": "{}".format(user.public_id)})
+    return jsonify({'user_id': '{}'.format(user.public_id)})
 
 
 ################# USER ROUTES ################################################
+# FOR TESTING ONLY
 
 
-@app.route("/user/<public_id>", methods=["GET"])
+@app.route('/user/<public_id>', methods=['GET'])
 def get_user(public_id):
+    '''return user with public_id <public_id>'''
     user = models.User.query.filter_by(public_id=public_id).first()
     if not user:
-        raise APIError(detail="user {} does not exist".format(public_id),
+        raise APIError(detail='user {} does not exist'.format(public_id),
                        status_code=404)
     return models.User.get_delete_put_post(prop_filters={'public_id':
                                            public_id})
 
 
-@app.route("/user", methods=["GET"])
+@app.route('/user', methods=['GET'])
 def get_all_users():
     users = models.User.query.all()
     user_list = [{
@@ -147,12 +157,9 @@ def get_all_users():
 ################# DEVICE ROUTES ################################################
 
 
-@app.route("/api/device", methods=["GET"])
-## \brief get_devices()
-# instatiates a session to the database and parses everything in the devices table
-# formats it into JSON
-# Returns all devices in JSON format
+@app.route('/api/device', methods=['GET'])
 def get_devices():
+    ''' get all devices '''
     devices = db.session.query(models.Devices).all()
     device_model = serialisers.DeviceSchema(many=True)
     return jsonify({'devices': device_model.dump(devices)})
@@ -160,16 +167,18 @@ def get_devices():
 ## \brief get_device()
 #
 #
-@app.route("/api/device/<int:d_id>", methods=["GET"])
+@app.route('/api/device/<int:d_id>', methods=['GET'])
 def get_device(d_id):
+    ''' get device with device_id <d_id> '''
     device = db.session.query(models.Devices).filter_by(device_id=d_id).first()
     device_model = get_device_model(device.type)
     return jsonify(device_model().dump(device))
 
 
-@app.route("/api/device/<device_pk>/toggle_power", methods=["GET"])
+@app.route('/api/device/<device_pk>/toggle_power', methods=['GET'])
 @token_required
 def toggle_power(device_pk):
+    ''' toggle power for specified device '''
     device = db.session.query(models.Devices).filter_by(device_id=device_pk).first()
     power_state = device.is_on
     device.is_on = not power_state
@@ -177,8 +186,9 @@ def toggle_power(device_pk):
     return jsonify({'success': 'device ID: {} power is now {}'.format(device_pk, not power_state)})
 
 
-@app.route("/api/device/<string:device_type>", methods=["POST"])
+@app.route('/api/device/<string:device_type>', methods=['POST'])
 def add_device(device_type):
+    ''' add device of type <device_type> to database '''
     if device_type not in ['tv', 'plug', 'light', 'thermostat', 'solar']:
         raise APIError('no such device type', status_code=400)
 
@@ -205,8 +215,9 @@ def add_device(device_type):
     return jsonify({'success': 'device {} has been added'.format(device_data['device_name'])}), 201
 
 
-@app.route("/api/device/<int:device_id>", methods=["PUT"])
+@app.route('/api/device/<int:device_id>', methods=['PUT'])
 def change_device(device_id):
+    ''' modify device '''
     device = db.session.query(models.Devices).filter_by(device_id=device_id).first()
     if device is None:
         raise APIError('device does not exist', status_code=404)
@@ -228,6 +239,7 @@ def change_device(device_id):
 
 @app.route('/api/room', methods=['GET'])
 def get_all_rooms():
+    ''' get all rooms '''
     rooms = db.session.query(models.Room).all()
     for room in rooms:
         room.total_power = get_room_total_power(room)
@@ -239,6 +251,7 @@ def get_all_rooms():
 
 @app.route('/api/room/<int:r_id>', methods=['GET'])
 def get_room(r_id):
+    ''' get specified room '''
     room = db.session.query(models.Room).filter_by(room_id=r_id).first()
     if room is None:
         raise APIError(detail='cannot find room with ID: {}'.format(r_id),
@@ -251,6 +264,7 @@ def get_room(r_id):
 
 @app.route('/api/room/<int:r_id>', methods=['DELETE'])
 def delete_room(r_id):
+    ''' delete specified room '''
     room = db.session.query(models.Room).filter_by(room_id=r_id).first()
     if room is None:
         raise APIError(detail='cannot find room with ID: {}'.format(r_id),
@@ -263,6 +277,7 @@ def delete_room(r_id):
 
 @app.route('/api/room', methods=['POST'])
 def add_room():
+    ''' add room '''
     room_data = request.get_json()
     if not room_data['room_name']:
         raise APIError(detail='no room name supplied', status_code=400)
@@ -276,6 +291,7 @@ def add_room():
 
 @app.route('/api/room/<int:r_id>/devices', methods=['GET'])
 def get_devices_in_room(r_id):
+    ''' return list of all devices in the room specified '''
     room = db.session.query(models.Room).filter_by(room_id=r_id).first()
     if room is None:
         raise APIError(detail='cannot find room with ID: {}'.format(r_id),
@@ -288,10 +304,12 @@ def get_devices_in_room(r_id):
 
 ################# HELPER FUNCTIONS ################################################
 def get_room_device_count(room):
+    ''' get number of devices in a room '''
     return db.session.query(models.Devices).filter_by(room_id=room.room_id).count()
 
 
 def get_room_total_power(room):
+    ''' sum total_power for all devices in room '''
     total_power = db.session.query(func.sum(models.Devices.rated_power)).filter_by(room_id=room.room_id).scalar()
 
     if total_power is None:
@@ -300,14 +318,18 @@ def get_room_total_power(room):
 
 
 def get_room_current_power(room):
+    ''' sum total_power only for devices that are actually on '''
     current_power = db.session.query(func.sum(models.Devices.rated_power)).filter(and_(models.Devices.room_id==room.room_id, models.Devices.is_on==True)).scalar()
 
+    # .scalar() will return None if no devices are on!
     if current_power is None:
         current_power = 0
     return current_power
 
 
 def get_device_table_name(device_type):
+    ''' used for when device types are not known ahead of time (ie, serialising
+    list of mixed device objects)'''
     device_types = {
         'light': models.Lights,
         'tv': models.TV,

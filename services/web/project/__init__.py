@@ -14,11 +14,15 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
 CELERY_TASK_LIST = [
-    'project.tasks',
+    'project.tasks',  # where to find celery async tasks
 ]
 
 
 def create_celery_app(app):
+    ''' create celery app using factory pattern
+    app: Flask
+    return: Celery
+    '''
     celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'],
                     include=CELERY_TASK_LIST,
                     backend=app.config['CELERY_BROKER_URL'])
@@ -35,17 +39,13 @@ def create_celery_app(app):
     celery.Task = ContextTask
     return celery
 
-
-## \brief from passlib.apps import custom_app_context as pwd_context
-#
-#
+# initalise flask app
 app = Flask(__name__)
 
-## \brief Pull the config in init
-#
-#
-app.config.from_object("project.config.Config")
+# load config object from config.py
+app.config.from_object('project.config.Config')
 
+# initialise db
 db = SQLAlchemy(app)
 CORS(app)
 
