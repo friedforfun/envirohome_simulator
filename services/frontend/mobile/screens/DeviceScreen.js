@@ -16,7 +16,7 @@ const DeviceScreen = props => {
     const dispatch = useDispatch();
     React.useLayoutEffect(() => {
         props.navigation.setOptions({
-            headerRight: () => <TouchableOpacity><SettingsIcon action={settingsNav} /></TouchableOpacity>
+            headerRight: () => <TouchableOpacity onPress={() => settingsNav()}><SettingsIcon action={settingsNav} /></TouchableOpacity>
         });
     }, [props.navigation])
 

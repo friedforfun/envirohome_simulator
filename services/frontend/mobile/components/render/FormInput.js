@@ -48,6 +48,7 @@ const FormInput = forwardRef((props, ref) => {
   // basic input validation
   const textChangeHandler = text => {
     const emailRegex =  /^([a-zA-Z0-9]|[^.!#$%&'*+/=?^_`{|}~-])+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const numbersOnlyRegex = /^[\d]+$/
     let isValid = true;
     if (props.required && text.trim().length === 0) {
       isValid = false;
@@ -56,6 +57,9 @@ const FormInput = forwardRef((props, ref) => {
         isValid = false;
     }
     if (props.minLength != null && text.length < props.minLength){
+      isValid = false;
+    }
+    if (props.numbersOnly && !numbersOnlyRegex.test(text.toLowerCase())){
       isValid = false;
     }
     dispatch({ type: INPUT_CHANGE, value: text, isValid: isValid });

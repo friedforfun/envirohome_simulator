@@ -21,6 +21,13 @@ export const findDeviceById = createSelector(
     }
 )
 
+export const devicesByRoomId = createSelector(
+    [deviceArray, recieveProps],
+    (deviceArray, recieveProps) => {
+        return deviceArray.filter(device => (device.room_id === recieveProps.roomId))
+    }
+)
+
 export const getVisibleDeviceUsage = createSelector(
     [deviceUsage],
     (deviceUsage) => {

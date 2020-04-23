@@ -1,41 +1,32 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView, StyleSheet, Alert, Text } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 import { Button } from 'react-native';
 import { useSelector } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
 
 import colours from '../../../constants/Colours'
-import AddRoomPopup from './AddRoomPopup';
-import DeleteRoom from '../../logic/DeleteRoom';
+import AddDevicePopup from './AddDevicePopup';
+import DeleteDevice from '../../logic/DeleteDevice';
 import { testResponse } from '../../logic/fetchFunc';
 import Fetching from '../Fetching';
-import GetAllRooms from '../../logic/GetAllRooms';
+import GetAllDevices from '../../logic/GetAllDevices';
 import { log } from '../../logic/PostLog';
 
-const RoomEditor = props => {
+const DeviceEditor = props => {
     const userEmail = useSelector(state => state.authStore.email)
     const [overlayState, setOverlayState] = useState(false)
-    const [fetchingRooms, setFetchingRooms] = useState(false)
+    const [fetchingDevices, setFetchingDevices] = useState(false)
 
-    const navigator = useNavigation();
+    console.log(props.deviceList)
 
-    const selectRoomHandler = (roomId) => {
-        navigator.push('SettingsContent', {
-            content: "editDevices",
-            roomId: roomId
-        });
-    };
-
-
-    const confirm = (roomId) => {
+    const confirm = (deviceId) => {
         Alert.alert(
             'Are you sure?',
-            'This action will delete this room and all related devices',
+            'This action will delete this device, this cannot be undone.',
             [
                 { text: 'CANCEL', onPress: () => { console.log("Cancel") } },
-                { text: 'OK', onPress: () => deleteRoom(roomId) },
+                { text: 'OK', onPress: () => deleteRoom(deviceId) },
             ],
             { cancelable: false },
         );
@@ -44,10 +35,10 @@ const RoomEditor = props => {
     const changeOverlayState = (bool) => {
         setOverlayState(bool)
     }
-    
-    const deleteRoom = (roomId) => {
-        
-        DeleteRoom(roomId)
+
+    const deleteDevice = (deviceId) => {
+
+        DeleteDevice(deviceId)
             .then(Response => {
                 return testResponse(Response)
             })
@@ -57,12 +48,12 @@ const RoomEditor = props => {
             .then(json => {
                 console.log(json)
                 if (json.success) {
-                    log(userEmail, 6, "Room " + roomId + " deleted sucessfully. Response ok.", "Room " + roomId + " deleted")
+                    log(userEmail, 8, "Device " + deviceId + " deleted sucessfully. Response ok.", "Device " + deviceId + " deleted")
                     Alert.alert(
                         'Success',
                         json.success,
                         [
-                            { text: 'OK', onPress: () => refreshRooms() },
+                            { text: 'OK', onPress: () => refreshDevice() },
                         ],
                         { cancelable: false },
                     );
@@ -71,12 +62,12 @@ const RoomEditor = props => {
             .catch(error => {
                 console.log(error.message)
                 if (error.message === "Network request failed") {
-                    log(userEmail, 6, "Room "+roomId+" was deleted with the error: Network request failed.", "Room "+roomId+" deleted")
+                    log(userEmail, 8, "Device " + deviceId + " was deleted with the error: Network request failed.", "Device " + deviceId + " deleted")
                     Alert.alert(
                         'Network request failed',
                         'Invalid response from server, this may indicate a problem with your network. Please refresh the page.',
                         [
-                            { text: 'OK', onPress: () => refreshRooms() },
+                            { text: 'OK', onPress: () => refreshDevice() },
                         ],
                         { cancelable: false },
                     );
@@ -84,39 +75,36 @@ const RoomEditor = props => {
             })
     }
 
-    const refreshRooms = () => {
-        setFetchingRooms(true)
+    const refreshDevice = () => {
+        setFetchingDevices(true)
     }
 
     const fetchCompleteHandler = () => {
-        setFetchingRooms(false)
+        setFetchingDevices(false)
     }
-
+    console.log(props.deviceList)
     return (
         <View style={styles.container}>
-            {fetchingRooms && 
-            <Fetching 
-                fetchFunc={GetAllRooms}
-                fetchWhat={"rooms"}
-                ready={fetchCompleteHandler}
-            />
+            {fetchingDevices &&
+                <Fetching
+                    fetchFunc={GetAllDevices}
+                    fetchWhat={"devices"}
+                    ready={fetchCompleteHandler}
+                />
             }
-            <AddRoomPopup visible={overlayState} visHandler={changeOverlayState} refresh={refreshRooms} />
+            <AddDevicePopup visible={overlayState} visHandler={changeOverlayState} refresh={refreshDevice} roomId={props.roomId}/>
             <ScrollView style={styles.content}>
                 {
-                    props.roomList.map((item, i) =>{
-
-                        return(
+                    props.deviceList.map((item, i) => {
+                        
+                        return (
                             <ListItem
-                                key={i}
-                                title={item.room_name}
+                                key={i+1}
+                                title={item.device_name}
                                 bottomDivider
                                 rightElement={
                                     <View style={styles.horizontalView}>
-                                        <TouchableOpacity onPress={() => selectRoomHandler(item.room_id)} style={styles.plusIcon}>
-                                            <Button title={"Add/Remove Devices"} color={colours.center} />
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => confirm(item.room_id)}>
+                                        <TouchableOpacity onPress={() => confirm(item.device_id)}>
                                             <Icon
                                                 name="trashcan"
                                                 type="octicon"
@@ -135,16 +123,16 @@ const RoomEditor = props => {
                         type='octicon'
                         size={100}
                         color="grey"
-                        onPress={() => refreshRooms()}
+                        onPress={() => refreshDevice()}
                     />
                 </View>
             </ScrollView>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={() => changeOverlayState(true)}>
-                    <Button 
-                        title={"Add Room"}
+                    <Button
+                        title={"Add Device"}
                         color={colours.left}
-                        
+
                     />
                 </TouchableOpacity>
             </View>
@@ -160,7 +148,7 @@ const styles = StyleSheet.create({
         flex: 10,
     },
     buttonContainer: {
-        
+
     },
     horizontalView: {
         flexDirection: 'row'
@@ -175,4 +163,4 @@ const styles = StyleSheet.create({
 
 
 });
-export default RoomEditor;
+export default DeviceEditor;
